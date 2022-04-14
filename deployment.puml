@@ -1,0 +1,54 @@
+@startuml
+
+node navigateur
+
+node "machine virtuelles 4" << serveur >> {
+    component api_gateway as "API Gateway"
+}
+
+node "machine virtuelle 5" << serveur >> {
+    component monitoring as "Monitoring"
+}
+
+node "machine virtuelle 1" << serveur >> {
+    component app as "serveur web"
+    component chat as "passerelle de chat"
+}
+
+node "machine virtuelle 2" << serveur >> as m2 {
+    component videobridge
+}
+
+node "machine virtuelle 3" << serveur >> as m3 {
+    component plugin as "__plugin__: enregistrement du flux audio / video"
+    component api as "__API__: Gestion des documents"
+
+}
+
+
+node "service du fournisseur IT Astra Recherche" {
+    node "scalables" as scale {
+        collections "machines virtuelles"
+    }
+    database reu as "Repository réunions"
+    queue pubsub << bus >> [
+        Redis
+    ]
+}
+
+navigateur -- api_gateway
+app -- reu
+navigateur -- api_gateway
+api_gateway -- app
+api_gateway -- videobridge
+api_gateway -- monitoring
+app -- chat
+app -- videobridge
+plugin -- api
+chat -- pubsub
+pubsub -- plugin
+scale -down-> m3
+scale -left-> m2
+
+
+@enduml

@@ -1,0 +1,57 @@
+1. Présentation
+2. But de la présentation
+   - récapitulatif du contexte
+3. L'audit
+   - la méthodologie: approche par les risques
+   - analyse de l'existant
+     rappel des couts des logiciels
+   - les risques associés
+4. Solution envisagée
+   - rappel des contraintes de la nouvelle solution
+   - architecure envisagée
+     Développement d'une solution en interne pour l'ERP
+     Utilisation massive de service Google Cloud Platform (Saas, etc...)
+     Pourquoi ? Prendre l'exemple de risques que la nouvelle architecture atténue ou supprime
+   - Comment réaliser le projet ?
+     - Rappel des besoins humains
+     - Planning de dévelopements
+       Rappeler les phases de migration et de formations
+      - Rappeler que le CLoud a aussi un cout
+   - les risques associés à la nouvelle architecture
+
+5. Conclusion
+   
+   
+mettre la formation avant la migration dan sle schéma du plannig
+Plan de transition des dévelopepurs existant
+formation des utilsateurs dan schaque bureua
+
+
+1. Présentation
+2. But de la présentation
+   - Choix des patterns d'architectures
+   - Présentation de l'architecure recommandée
+   - Exigence de qualité de la solution
+3. Pattern d'architecture
+4. 
+
+comment je respecte les contraintes du projet
+comment les solutions open source résuise le support et la facture
+
+
+1. Avancées de l’étudiant sur son projet depuis la dernière session
+
+    Fin de la rédaction de framework d'architecture
+    Document de définition d'architecture presque fini (diagramme des cas d'usages, impacts...)
+
+2. Principaux sujets abordés pendant la session, obstacles à surmonter (le cas échéant), et actions nécessaires pour atteindre ces objectifs
+
+    Revue Document de définition d'architecture
+    Discussions sur le reste à faire et la présentation
+
+3. Objectifs 'SMART' fixés par l'étudiant et le mentor pour la prochaine session
+
+    Rédiger les parties suivantes du Document de définition d'architecture
+        Texte accompagnants les cas d'utilisations
+        Paragraphe Evolutivité / Maintenabilité
+    Faire le diagramme de déploiement

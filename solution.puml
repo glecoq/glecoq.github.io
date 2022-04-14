@@ -1,0 +1,86 @@
+@startuml
+!define GCPPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-icons-GCP/master/dist
+!include GCPPuml/GCPCommon.puml
+!include GCPPuml/Compute/Cloud_Functions.puml
+!include GCPPuml/Networking/Cloud_Firewall_Rules.puml
+!include GCPPuml/Compute/Compute_Engine.puml
+!include GCPPuml/Storage/Cloud_Storage.puml
+!include GCPPuml/Networking/Cloud_Load_Balancing.puml
+!include GCPPuml/Databases/Cloud_SQL.puml
+!include GCPPuml/Management_Tools/Stackdriver.puml
+!include GCPPuml/Security/Cloud_IAM.puml
+!include <awslib/AWSCommon>
+!include <awslib/AWSSimplified.puml>
+!include <awslib/Compute/all.puml>
+!include <awslib/mobile/all.puml>
+!include <awslib/general/all.puml>
+
+'!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!include <c4/C4_Component.puml>  
+
+'ref http://plantuml.com/stdlib
+!include <office/Users/user.puml>
+!include <office/Users/mobile_user.puml>
+
+'LAYOUT_TOP_DOWN
+'LAYOUT_AS_SKETCH()
+'LAYOUT_WITH_LEGEND()
+
+title Communication avec un seul bureau
+
+
+
+'skinparam linetype polyline
+ skinparam linetype ortho
+
+
+
+'top to bottom direction 
+Boundary(c0, "Utilisateurs", "Poste de travail") {
+    Person(Employed  , "Employés" , " accède à l'ERP " )
+    Person(Transporter  , "Transporteurs" , " accède au TMS " )
+}
+
+
+Boundary(c1, "Inter Région GCP", "Google Cloud Platform") {
+    together {
+    Cloud_Firewall_Rules(Cloud_Firewall_Rules_Friend,"Firewall", "Cloud Firewall Rules")
+    Cloud_Load_Balancing(lb, "load balancer https", "Cloud Load Balancing")
+    
+            Boundary(c2, "Region GCP", "Google Cloud Platform") {
+                Cloud_Load_Balancing(lb2, "load balancer tcp/udp", "Cloud Load Balancing")
+                Compute_Engine(ERP0, "ERP + TMS + WMS", "Compute Engine")
+        }
+    Cloud_SQL(sql, "base de données (Geo-sharding)", "Cloud SQL")
+    Stackdriver(log, "Suivi opérationnel", "Cloud Monitoring / Logging")
+    Cloud_IAM(iam, "Gestion des utilisateurs", "Cloud Identity")
+    }
+}
+
+lb -LEFT->> c2
+c2 -LEFT->>  lb2: **Choix du bureau **\n**grâce au **\n**sous domaine**\n //~[HTTP~]// " "
+
+'Rel_D(Employed, Cloud_Firewall_Rules_Friend, "utilise", "HTTPS")
+'Rel_D(Transporter, Cloud_Firewall_Rules_Friend, "utilise", "HTTPS")
+Employed -LEFT->> Cloud_Firewall_Rules_Friend
+Transporter -LEFT->> Cloud_Firewall_Rules_Friend
+
+'Lay_D(Transporter, Cloud_Firewall_Rules_Friend)
+
+'Utilisateurs -r-> Cloud_Firewall_Rules_Friend
+Cloud_Firewall_Rules_Friend --> lb
+'lb --> region
+lb2 --> ERP0
+ERP0 --> sql
+ERP0 --> log
+sql --> log
+
+ERP0 --> iam
+
+
+'Lay_D(sql, log)
+'Lay_R(ERP0, log)
+'Lay_D(lb, log)
+
+
+@enduml

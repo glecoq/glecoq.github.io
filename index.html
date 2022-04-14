@@ -1,0 +1,1415 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="dist/reveal.css" />
+  <link rel="stylesheet" href="dist/theme/biquet.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <p class="complementaire">Objectifs</p>
+        <h2>Présenter l'organisation du projet</h2>
+        de la
+        <h2>Plateforme Crypto</h2>
+        <p>en date du 9 Février 2022</p>
+        <aside class="notes">
+          - du projet de plateforme Crypto
+        </aside>
+      </section>
+      <section>
+        <p>Guillaume Lecoq</p>
+        <p class="gris">Architecte logiciel</p>
+        Société GitmeMoney
+      </section>
+      <section>
+        <h2 class="gris">Sommaire</h2>
+        <ol class="maliste">
+          <li>Rappel du contexte</li>
+          <li>Présentation de la planification</li>
+          <li>Présentation du Backlog et des tâches associées</li>
+          <li>Ressources nécessaires au projet</li>
+          <li>KPIs liées à l'équipe</li>
+          <li>Présentation des bonnes pratiques</li>
+          <li>Conclusion</li>
+        </ol>
+        <aside class="notes">
+          Afin d'organiser le contenu de ma présentation
+          - je ferai un bref rappel du contexte de l'architecture existante et du travail réalisé sur la documentation de l'architecture cible
+          - je présenterai la planification du projet d'implémentation de la plateforme crypto
+          - je détaillerai le backlog ainsi que ses taches
+          - je présenterai les ressource nécessaires ainsi que les KPIS lié aux performances de l'équipe
+          - je présenterai également le contenu de mon guide de recommandation
+        </aside>
+      </section>
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
+        <p class="fragment fade-in">
+          Nouveau produit
+        </p>
+        <p class="fragment fade-in fonce">
+          connectant les sites marchands de cryptomonnaies et les banques
+        </p>
+        <aside class="notes">
+          Le projet consiste en la création d'un nouveau produit. Ce dernier devrait permettre d’atteindre les objectifs fonctionnels suivants :
+          - s’inscrire comme client ;
+          - en tant que client identifié, acheter de la cryptomonnaie ;
+          - se faire référencer comme vendeur de cryptomonnaie ;
+          - en tant que vendeur référencé, vendre de la cryptomonnaie ;
+          - permettre de s’interfacer avec l’API de la plateforme pour de la consultation (ainsi les données pourront
+          être intégrées à des applicatifs tiers).
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>Architecture existante</p>
+        <img style="margin: 0;" src="existant_projet10.png" />
+         <aside class="notes">
+        - Comme on le remarque sur le schéma, seuls les employés de la sociét GitmeMoney peuvent accéder à la gestion
+        des cryptomonnaies avec la seule application tiers présentes: la plateforme Kraken. La plateforme n'est pas
+        intégré à un applicatif existant
+        au sein de la société.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>Architecture cible</p>
+        <img style="margin: 0;" src="cible_projet10.png" />
+         <aside class="notes">
+        - Architecture technique basée sur 3 couches: couche Front (avec l'interface web et l'API publique), couche service 
+        pour la gestion des utilisateurs et la gestion des cryptomonnaies et la couche data avec les données stockées par GitmeMoney
+        et la connecxion à l'API d'autres produits financiers comme les plateformes d'échange de cryptomonnaies
+        - On notera que la stack technique doit reposer sur Java au moins pour les couche data et service.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
+        <p class="fragment fade-in fonce">
+          Besoin de prioriser et de planifier les fonctionnalités
+        </p>
+        <p class="fragment fade-in fonce">
+          D'évaluer les ressources humaines
+        </p>
+        <p class="fragment fade-in fonce">
+          D'encadrer les pratiques de l'équipe
+        </p>
+        <aside class="notes">
+          - Besoin de prioriser et planifier les fonctionnalités en utilisant les pratiques agile pour l'organisation du
+          travail (et nous le verrons à l'aide du framework Scrum).
+          - D'évaluer les ressources humaines: voir si dans l'équipe actuel, nous pouvons réutiliser des ressources et
+          sinon recruter en ayant au préalable fait des fiches de poste avec les compétences associées
+          - D'encadrer les pratiques de l'équipe en indiquant ce que nous réutiliserons du framework Scrum, en indiquant les
+          postes clés lié à la gouvernance, et en indiquant les pratiques de développement recommandées
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Le projet: </span>La planification</p>
+      </section>
+
+      <section>
+        <img style="margin: 0px;" src="gantt.png" />
+        <aside class="notes">
+          - Nous pouvons remarquer que le projet est divisé de la manière suivante:
+          - La première semaine est composé de Spikes d'une journée chacune afin d'explorer les solutions techniques à
+          utiliser sur le projet.
+          - Puis le reste du projet est divisé en 3 sprints d'une semaine
+          - Un sprint est composé de user stories réparties en thèmes. Le thème peut se référer à un besoin bussiness ou
+          un besoin technique.
+          - Un sprint comporte également des phases propres à Scrum tel que le sprint planning, ou encore la review ou
+          la retrospective.
+          - A la fin de chaque release hormis la release 0, une version du projet peut etre déployé dans un
+          environnement de preprod voire de production si les parties prenantes sont d'accord.
+          - La planification sur le gantt est basé sur la complexité en story points (basé sur les nombres de la suite
+          de fibonnci) de
+          chaque story. Il m'a sembler pertinent de convertir les story points
+          en heures pour les besoins du gantt. Le gantt sera amené à être réévaluer, en fonction de la
+          vélocité de l'équipe ou d'une nouvelle estimation des stories.
+          - (Le gantt est un outil prédictif)
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Le projet: </span>Le backlog</p>
+        <p class="fragment fade-in fonce">
+          Utilisation de Github project (board Kanban)
+        </p>
+        <p class="fragment fade-in fonce">
+          Definition Of Done pour les user / technical stories
+        </p>
+        <aside class="notes">
+          - La plateforme Github permettra également d'héberger le code de la plateforme ainsi que son pipeline
+          d'intégration continue
+          - Comme le montre l'export du kanban, les différentes taches décrivent
+          des notes GIthub et pourront être traduites en Github Issue pour décrire par exemple une user story avec ses critères d'acceptance.
+          - Chaque Github issue sera associé à une milestone qui correspondra à une release
+          - la résolution d'une story aura lieu à travers une Pull request associé à l'issue créée
+
+          - La definition of done permettra de déterminer si une tâche va dans la colonne Done dans le tableau Kanban
+          - Dans notre contexte la definition of done devra: avoir un coverage de tests unitaires d'au moins 80%, être
+          conforme aux tests d'acceptances si fournisseur
+          déployé sur un environnement de production avant la fin du sprint, avoir un pull request validée par le lead
+          développeur, intégration au CI / CD et tests de régressions réussis
+
+
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Le projet: </span>Le backlog</p>
+        <p class="fragment fade-in fonce">
+          6 Spikes
+        </p>
+        <p class="fragment fade-in fonce">
+          11 technical stories
+        </p>
+        <p class="fragment fade-in fonce">
+          10 user stories
+        </p>
+        <aside class="notes">
+          - un Spike est une activité déclenchée justement pour explorer un sujet, réduire le risque et l’incertude liés
+          à la possible mise en oeuvre d’une User Story
+          - un spike dans notre projet a une durée d'une journée et n'est pas estimé en story points
+          - le résultat d'un spike est par exemple la sélection d'une brique technologique formalisé sous forme d'une
+          ADR (architecture decision record), un POC réutilisable pour les prochaines technical ou user story
+
+          - Les Spikes ici sont rédigés sous forme de quesitons:
+          ex. Comment intégrer l’interface web? Avec quelles technologies?
+          - Doit-on développer la couche d’accès aux données des autres produits financiers? ou
+          existe t-il des composants réutilisables open source ou propriétaires?
+
+
+          - Les technical stories n’obéissent pas à un formalisme rédactionnel particulier. Ils sont estimés en story points comme les user story.
+
+
+          - Les user stories suivent le formatisme suivant:En tant que [rôle de l’utilisateur], je veux que [capacité à
+          réaliser un besoin métier] afin que/de [valeur métier qui va ressortir de cette action].
+          - Elle essaye au maximum de respecter l'acronyme INVEST (indépendante, négociable, valorisable,
+          estimable, petite, testable)
+          - La taille d'une user story ne doit pas dépasser 13h sinon on considère qu'il s'agit d'une Epic
+          et elle devrait nécessairement être divisée afin de ne pas créer de mauvaises surprises en cours d’itération
+          - Une user story est toujours accompagné d'au moins un critère d'acceptance au format suivant:
+          Étant donné que [action réalisée par tel rôle utilisateur], quand [définition de la condition], alors
+          [définition de la conséquence attendue].
+          Cela permet de valider que la fonctionnalité est bien terminée.
+
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Le projet: </span>Exemple de technical stories</p>
+        <p class="fragment fade-in fonce">
+          Création des dépôts Git
+        </p>
+        <p class="fragment fade-in fonce">
+          Intégration au pipeline CI / CD
+        </p>
+        <p class="fragment fade-in fonce">
+          Intégration du fournisseur d'identité
+        </p>
+        <p class="fragment fade-in fonce">
+          Mise en place du projet sur la plateforme cloud
+        </p>
+        <aside class="notes">
+          - dépôts pour l'interface web, le user management, le le cryptocurrecy management service
+          - Intégration au workflow CI / CD avec par exemple Github actions: conditions d'execution du workflow,
+          segmentation en jobs
+          - Intégration du fournisseur d'identité à l'API gateway
+          - Mise en place du projet sur la plateforme cloud: ex. gestion des accès, gestion des quotas pour les produits
+          utilisés
+          - Mais aussi: la mise en place des storybook par le développeur front, etc...
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Le projet: </span>Exemple de user story</p>
+        <p class="fragment fade-in fonce">
+          En tant qu’employé de la division «cryptocurrency branch», je souhaite que
+          la plateforme intègre la gestion des devises afin de développer l’ensemble de son offre
+          auprès des clients
+        </p>
+        <p class="fragment fade-in">
+          estimation: 13 story points
+        </p>
+        <aside class="notes">
+          - Ce qui implique potentiellement le développement backend d’un package intégrant des APIs tierces de conversion de
+          devises crypto / non crypto d'ou une estimation importante
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Le projet: </span>Exemple de critères d'acceptance</p>
+        <p class="fragment fade-in fonce">
+          Etant donné un client connecté sur la plateforme Crypto, quand le client accède à la
+          page du prix des cryptomonnaies, alors le client peut visualiser au moins deux crypotomonnaies avec leur prix
+          d’acquisition dans une monnaie fiduciaire (ex. euros)
+        </p>
+        <aside class="notes">
+          - Ce critère d'acceptance met l'accent sur le fait de disposer de plusieurs devises à la fin du développement
+        </aside>
+      </section>
+
+
+      <section>
+        <p><span class="complementaire">Ressources nécessaires: </span>Les profils clés</p>
+        <p class="fragment fade-in fonce">
+          Lead développeur Java
+        </p>
+        <p class="fragment fade-in fonce">
+          Product Owner
+        </p>
+        <p class="fragment fade-in fonce">
+          Architecte cloud Google Cloud Platform
+        </p>
+        <p class="fragment fade-in fonce">
+          Développeur frontend senior (Javascript)
+        </p>
+        <p class="fragment fade-in fonce">
+          Développeur fullstack Java
+        </p>
+        <aside class="notes">
+          - Lead développeur Java: il encadre l'équipe de développeurs, collabore étroitement avec le product owner, et met en place les bonnes pratiques
+          établies dans le guide des recommendations
+          - Product Owner: il est responsable de la vision produit, il identifier les besoins et exigences fonctionnels des experts métiers,
+          il participe à la mise en oeuvre des pratiques du framework Scrum
+          - Architecte cloud Google Cloud Platform: il a la responsabilité de traduire l’architecture cible sur la plateforme GCP, 
+          d'automatiser et industrialiser le déploiement, de concevoir la surveillance / monitoring
+          - Développeur frontend senior (Javascript): il selectionne les outils frontend pour l’élaboration de la solution et cadre les différents POC, il aura aussi
+          la responsabilité du développement à savoir l'intégration du backend et du design UX / UI
+          - Développeur fullstack Java:  il aura la responsabilité de développer, de maintenir les services Java et pourra intervenir en soutien sur
+          la partie front sur le nouveau projet.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Ressources nécessaires: </span>L'équipe</p>
+        <p class="fragment fade-in fonce">
+          4 profils à recruter / missionner
+        </p>
+        <p class="fragment fade-in fonce">
+          1 profil déjà disponible: Développeur fullstack Java
+        </p>
+        <p class="fragment fade-in">
+          mais nécessite de monter en compétences 
+        </p>
+        <aside class="notes">
+          - recruter car nous avons besoin sur le long terme d'un  Lead développeur Java et d'un développeur front end senior
+          - missionner pour les besoins de l'implémentation:  Architecte cloud Google Cloud Platform,  Product Owner
+          - David Merle, Senior Software Engineer, occupera également le poste de développeur Java et
+          viendra en support du développement front. Il sera nécessaire de compléter ses compétences avec une formation sur la plateforme GCP  (réaliser par le cloud architecte si possible)
+          ainsi que d’une formation supplémentaire sur le framework front selectionné (Ex. React).
+          - Les autres profils présents dans le rooster de l’entreprise n’ont pas été retenus à cause d’un écart trop
+          important avec les postes désirés pour la réalisation du projet.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">KPIs: </span>Indicateurs de performance agile</p>
+        <p class="fragment fade-in fonce">
+          Vélocité de l’équipe
+        </p>
+        <p class="fragment fade-in fonce">
+          Humeur de l’équipe
+        </p>
+        <aside class="notes">
+          - la vélocité mesure la quantité de travail (un certain nombre de user stories) accomplie dans
+          un sprint
+          - la vélocité sera représentée par un Sprint Burndown Chart lors d'un sprint et permettra 
+          de suivre l’évolution de la quantité de travail restante pour une période donnée
+          
+          -  l’humeur de l’équipe pourra être évaluée en établissant des points réguliers avec les colla-
+          borateurs ou encore la mise en place de tableaux de bord affichéx lors de chaque retropsective permettant aux collaborateurs 
+          d'indiquer avec des smileys leur humeur à la manière des équipes de Spotify, sur par exemple la valeur estimée du travail de l'équipe, la vitesse de l'équipe et bien 
+          d'autres indicateurs
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">KPIs: </span>Autres indicateurs de performance</p>
+        <p class="fragment fade-in fonce">
+          Deployment Frequency
+        </p>
+        <p class="fragment fade-in fonce">
+          Change Failure Rate
+        </p>
+        <p class="fragment fade-in fonce">
+          MTTR
+        </p>
+        <p class="fragment fade-in fonce">
+          Lead Time for Changes
+        </p>
+        <aside class="notes">
+          - avec des métriques qui permettent également de mesurer la vélocité mais aussi la stabilité.
+          - Fréquence de déploiement afin de mesurer combien de fois l'organisation déploie avec succès ces release en production
+          - Change Failure Rate c'est à dire le pourcentage de déploiement causant une défaillances en production
+          - Mean time to recovery (MTTR) ou combien de temps met l'organisation à se remettre d'une défaillance en production
+          - Lead Time for Changes c'est à dire le temps moyen pour lequel le dernier commit se trouve en production
+
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Guide de Recommandations: </span>Sommaire</p>
+        <p class="fragment fade-in fonce">
+          Gouvernance de l’équipe agile
+        </p>
+        <p class="fragment fade-in fonce">
+          Elements du framework Scrum utilisés
+        </p>
+        <p class="fragment fade-in fonce">
+          Méthodes de travail de l’équipe de développement
+        </p>
+        <aside class="notes">
+          - Le contenu de mon guide de recommandations est organisé de manière à répondre à deux questions:
+          - comment s’assurer que les standards internes de développement sont maintenus et que l’archi-
+          tecture est respectée?
+          - quelles sont les méthodes de travail de l’équipe de développement?
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Guide de Recommandations: </span>Gouvernance</p>
+        <p class="fragment fade-in fonce">
+          Autour de 3 rôles
+        </p>
+        <p class="fragment fade-in fonce">
+          Product Owner, Scrum master, Lead développeur
+        </p>
+        <aside class="notes">
+          - Le rôle du product owner est de définir le produit, sa roadmap, et de veiller à
+          ce que celui-ci réponde aux attentes des utilisateurs mais également aux besoins du client
+          - Le Scrum master a pour objectif de faciliter l’organisation de l’équipe autour des
+          bonnes pratiques proposées par le framework Scrum. Il sera partagé par l'équipe de développement.
+        - Le rôle du lead développeur est d’accompagner toute une équipe de déve-
+        loppeurs afin de garantir la réussite du développement technique du projet
+        </aside>
+      </section>      
+
+      <section>
+        <p><span class="complementaire">Guide de Recommandations: </span>Elements de Scrum utilisés</p>
+        <p class="fragment fade-in fonce">
+          Sprint Planning
+        </p>
+        <p class="fragment fade-in fonce">
+          Revue de sprint
+        </p>
+        <p class="fragment fade-in fonce">
+          Rétrospective de sprint
+        </p>
+        <aside class="notes">
+          - Sprint Planning: Le Sprint Planning est une réunion dont la durée peut aller jusqu'a 2h et qui a pour but de définir le contenu du sprint
+          à venir et clarifier tous les éléments du backlog du sprint. C'est à ce moment que l'équipe de développement procéde à l'estimation des user stories
+          - Revue de sprint: la revue de sprint (Sprint Review) est le moment où l'équipe de développement présente le travail effectué lors 
+          du sprint aux différentes parties prenantes du projet à la fin du sprint courant. On ne montre que les fonctionnalités entièrement fini. La revue de sprint
+          devra durée 2h
+          - Rétrospective de sprint:  Elle a lieu après la revue de sprint et son objectif est d’identifier les dysfonctionnements dans l’organisation de l’équipe 
+          afin de pouvoir définir des actions concrètes à mettre en place dans les sprints suivants et les résoudre. Sa durée sera de 1h30 compte tenu de la durée d'un sprint qui est 
+          de 1 semaine.
+
+          J'aura également pui citer le daily scrum: le principe de cette pratique consiste à réunir l'équipe de développement chaque matin pour
+          une durée maximale de 15min afin de partager le travail de la veille, ce qu'on compte faire aujourd'hui et les éventuels points de blocages
+        </aside>
+      </section>
+      
+      <section>
+        <p><span class="complementaire">Guide de Recommandations: </span>Méthodes de travail</p>
+        <p class="fragment fade-in fonce">
+          Test driven Development
+        </p>
+        <p class="fragment fade-in fonce">
+          Behavior driven development
+        </p>
+        <p class="fragment fade-in fonce">
+          Revue de code
+        </p>
+        <aside class="notes">
+          - Test driven Development: Le Test Driven Development (Développement Dirigé par les Tests),
+           est une technique de développement qui impose l’écriture de tests avant même l’écriture de la première ligne de code. L’intérêt de cette technique est qu’elle permet d'améliorer le design du code de la solution et d'avoir
+           une meilleure couverture de tests.
+           - Behavior driven development:  il s'agit d'une méthodologie dont le but est de s'assurer que l'ensemble des parties prenantes du développement logiciel 
+           partagent la même compréhension du comportement logiciel attendu. Pour cela, les équipes métiers et technique rédigent ensemble des scénarios pour décrire le comportement
+           du logiciel et les développeurs automatisent ces scénarios sous la forme de tests exécutables.
+           - La revue de code est l'occcasion pour le lead développeur de passer en revue le code développé par un des membres de son équipe avant une fusion
+           avec le code de production. Le lead développeur vérifie à cette occasion que le code repecte les standards de qualité du projet.           
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Guide de Recommandations: </span>Méthodes de travail</p>
+        <p class="fragment fade-in fonce">
+          Intégration continue
+        </p>
+        <p class="fragment fade-in fonce">
+          Logiciel de gestion de version décentralisé
+        </p>
+        <aside class="notes">
+          - Intégration continue: L'intégration continue est un ensemble de pratiques utilisées en génie logiciel, consistant à vérifier, 
+          à chaque modification réalisés par de multiples développeur dans le code source que le résultat des modifications ne produit pas de régression dans l'application développée
+          lors de l'intégration du travail de chacun.
+          
+          - Logiciel de gestion de version décentralisé: 
+          un système de gestion de versions est un système qui enregistre toutes les modifications apportées à une liste de fichiers. 
+          Le fait qu'il soit décentralisé fait qu’il est possible de travailler en mode déconnecté avec son dépôt de code tout en gardant des fonctionnalités avancées de collaboration lorsqu’on est connecté
+          je recommande l'usage de Git et d'un système de gestion des branches nommé Gitflow.
+        </aside>
+      </section>
+
+      <section>
+        <p>Conclusion</p>
+
+        <aside class="notes">
+          - A travers une première version du backlog, j'ai décrit les fonctionnalités qui pourraient être développées, qu'elle soit technique ou non. 
+          La planifications de chacune de ces fonctionnalités se retrouve dans le gantt, qui sera modifié régulièrement par rapport aux priorités de 
+          l'equipe de développement ou encore de sa vélocité. J'ai donné l'ensemble des éléments pour constituer l'équipe de développement à travers la création
+          de fiches de postes ou la réutilisation d'une ressource déjà disponible en interne.
+          Afin que l'implémentation de l'architecture soit respecté, j'ai indiqué le cadre de gouvernance de l'équipe, les éléments
+          du framework Scrum à réutiliser et les méthodes de développement utiles à la réalisation du projet 
+
+          Je vous remercie de votre attention, Avez-vous des questions ?
+        </aside>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>L'existant</p>
+        <p class="fragment fade-in fonce">
+          Echanges sur l'article hors solution
+        </p>
+        <p class="fragment fade-in fonce">
+          Pas de gestion des accès
+        </p>
+        <p class="fragment fade-in fonce">
+          Gestion des données centralisée
+        </p>
+        <aside class="notes">
+          - par mail ou par téléphone, ce qui diminue la fluidité des échnages et entraine un retard de publication
+          - le dossier partagé est accessible pour tous les collaborateurs sur site
+          - de plus aucun document ne fait mention de procédures de sauvegarde, ce qui implique aussi la perte de la
+          tracibilité
+          des changements faits sur les articles
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>La cible</p>
+        <img style="margin: 0;" src="general_projet9.png" />
+        <aside class="notes">
+          - l'architecture cible repose sur deux patterns d'architecture: les micro frontend et les microservices
+          - l'implémentation des micro frontend restera à déterminer à la suite d'un Poc
+          - Tous les microservices délégueront la gestion de la persistance de données à des fournisseurs externes
+          - Certains comme le microservice de gestion de document fera appel à une API intermédiare, la Content
+          Repository API for Java
+          dont le but est d'unifier l'accès au stockage des données et de la structurer.
+          - des logiciels supports de l'architecture seront nécessaires pour assurer: la sécurisation des accès avec un
+          Identity Management system
+          - mais aussi une gestion opérationnele avec l'intégration d'outils de monitoring, d'alerting et de tracing
+          distribués
+          - le tout géré par un orchestrateur de conteneur
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">La roadmap: </span>Le planning</p>
+        <ol>
+          <li class="fragment fade-in fonce">
+            Elaboration d'un PoC orienté micro frontend / microservice
+          </li>
+          <li class="fragment fade-in fonce">
+            Développement des microservices
+          </li>
+          <li class="fragment fade-in fonce">
+            Phase de déploiement
+          </li>
+        </ol>
+        <aside class="notes">
+          - Ce PoC se concentrera sur le cas d'usage de la gestion des utilisateurs, il devra déterminer de
+          l'intégration des micro frontend
+          - pour répondre aux question suivnates: intégration hoizontal (micro frotnend sur une meme page)? vertical
+          (séparé par des urls)?
+          - est-ce que la composition des micro frtonend sur le client est satisfaisante ? Utilise t-on un framework
+          comme Single SPA ?
+          - le développement des microservices devra gérer en parallèle des micro front end, ce qui implique une
+          organisation que chaque équipe de développement
+          soit répartie par domaine (User, Document, Comment) avec des compétences liées à la fois au front, au back et
+          au déploiement
+          - Phase de déploiement: à savoir la migration des données et la formation
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">La roadmap: </span>Exemples de risques</p>
+        <ul>
+          <li class="fragment fade-in fonce">
+            Accès non autorisés
+          </li>
+          <li class="fragment fade-in fonce">
+            Corruption des données (ex. concurrence)
+          </li>
+          <li class="fragment fade-in fonce">
+            Disponibilité et latence du service de notification
+          </li>
+        </ul>
+        <aside class="notes">
+          - La liste exhaustive des risques est contenu dans le document architecture raodmap.
+          - Accès non autorisés: non conformité aux règles de gestion fixés dans le cahier des charges. Possibiliter de
+          diminuer le risques
+          avec une gestion des droits RBAC et une intégration de standard comme OpenID Connect pour l'authentification
+          ou encore une gestion des
+          ACL sur les blob storage
+          - Corruption des données: possibiliter de dimuner le risque avec l'intégration du standard JCR et de son
+          implémentation
+          la plus connue : Apache Jackrabbit. Et avec la non utilisation de transaction distribuée de type SAGA.
+          - Possibiliter de diminuer le risque en monitorant le service de notification et en choississant un
+          prestataire externe délivrant des
+          SLAs adaptés
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">La roadmap: </span>Exemples de risques</p>
+        <ul>
+          <li class="fragment fade-in fonce">
+            Impossibilité de migration des données
+          </li>
+          <li class="fragment fade-in fonce">
+            Perte d'assets (articles, commentaires)
+          </li>
+        </ul>
+        <aside class="notes">
+          - Impossibilité ou difficulté de migration des données: ex. extraction des données difficiles à cause de leur
+          format multiple par exmple des fichier excel ou odt
+          - Perte d'assets due à la non réplication des données sur une meme zone géographique ou différentes zones
+          - J'aurai également pu citer des risques liées à une latence trop élévé de l'interface avec le choix d'un
+          pattern microfrontend inadapté
+          mais je me suis concentré sur les risques les plus importants
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">La roadmap: </span>Les KPIs</p>
+        <p class="fragment fade-in fonce">
+          KPIs centrés sur la productivité
+        </p>
+        <p class="fragment fade-in fonce">
+          sur des exigences fonctionnelles
+        </p>
+        <p class="fragment fade-in fonce">
+          et sur des critères opérationnels
+        </p>
+        <aside class="notes">
+          - sur la productivité pour mesurer l'avantage de l'implémentation de l'archiecture, cela inclut par exemple:
+          le temps moyen de transmission d'un article de l'état de brouillon à l'état cloturé, le pourcentage d'article
+          cloturé sur Une
+          pérdiode de temps donnée
+          temps moyen de transmission d’un article d’un état « brouillon» à un état « clôturé»
+          - sur des exigences fonctionnelles: le nombre de commentaire sur un article, le nombre de document téléchargé
+          au forma PDF
+          - sur des critères opérationnels: pendant le développement avec le cout de l'implémentation (nombre de
+          prestataires engagés sur le développement, durée de réalisation de l’implémentation), lors de sa mise en
+          production avec
+          par exemple le nombres de défaillances sur des services développés en interne mais aussi des services Saas, le
+          nombre de failles de sécurité détectés et
+          la gravité des menaces
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">La roadmap: </span>Les SBB</p>
+        <p class="fragment fade-in fonce">
+          Micro frontends, Microservices
+        </p>
+        <p class="fragment fade-in fonce">
+          Les logiciels supports (ex. API Gateway)
+        </p>
+        <p class="fragment fade-in fonce">
+          L'automatisation du déploiement à travers la conteneurisation
+        </p>
+        <aside class="notes">
+          - les micro frontends associés à chaque microservice
+          - pour les microservices: le User Management Service, le Document Management Service et le comment management
+          service
+          - la conteneurisation passe également l'intégration à une plateforme cloud disposant d'un orchestrateur
+          permettant Une
+          mailleure vélocité, une meilleure interopérabilité, et assurant les besoins de scalabilité sur la plateforme
+          cloud comme Google Cloud
+          Platform
+          - tous les solution building block disposent des taches à réaliser pour les intégrer à l'architecture, la plus
+          commune etant la conteneurisation
+          de chaque service
+          - à noter le bloc PoC qui permettra de selectionner l'intégration des micro frtonend
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Compliance Assessment: </span>La checklist</p>
+        <p class="fragment fade-in">
+          Centrée sur
+        </p>
+        <p class="fragment fade-in fonce">
+          Les bonnes pratiques en terme de
+        </p>
+        <p class="fragment fade-in fonce">
+          développement, de sécurité et d'infrastructure
+        </p>
+        <aside class="notes">
+          - sous forme de principe à respecter
+          - de questions plus ou moins ouvertes
+          - de conformité à une norme, un standard ou encore un guide
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Compliance Assessment: </span>Quelques exemples</p>
+        <p class="fragment fade-in fonce">
+          L'hébergement de la solution
+        </p>
+        <p class="fragment fade-in fonce">
+          Conformité avec le style architectural
+        </p>
+        <p class="fragment fade-in fonce">
+          Types de tests
+        </p>
+        <p class="fragment fade-in fonce">
+          Liste des types d'applications nécessaires
+        </p>
+        <p class="fragment fade-in fonce">
+          Gestion de l’authentification et des autorisations
+        </p>
+        <p class="fragment fade-in fonce">
+          Management de l’infrastructure
+        </p>
+        <aside class="notes">
+          - Aucun élément de l’architecture cible ne doit être déployé sur une infrastructure de type On-
+          premise
+          - La gestion physique du matériel est déléguée à un fournisseur cloud. Recommandation de four-
+          nisseur cloud : Google Cloud Platform
+          - les SLAs des produits utilisés par l’architecture cible sur la plateforme cloud doivent être
+          compatibles avec les SLRs (Service-level requirement) / KPIs désirés par l’entreprise SCS
+          Magazine
+
+          - est-ce que les microservices seront indépendamment déployables?
+          - chaque microservice aura son propre référentiel de persistence de données
+          - est-ce que l’implémentation d’un microservice s’appuie sur une segmentation par couches
+          et respecte les principes de l’architecture hexagonale?
+          - est-ce que les APIs sont documentées avec la spécification OpenAPI ?
+
+          - est-ce que le style d’implémentation micro-frontend permet une indépendance dans le déploiement du service?
+          - est-ce que le système de persistence choisi permet de définir le niveau de réplication?
+          - est-ce que la non-inclusion d’un type de test n’entraine pas l’augmentation du risque de
+          défaillances / vulnérabilités sur la solution ?
+
+          - Les applications suivantes seront nécessaires dans le cadre d’une architecture microservice: Service
+          discovery, API Gateway
+          - pipeline CI / CD
+          - Outils de monitoring et d'observabilité
+          - solution Saas de notification mail
+
+          - Est-ce que l’authentification est gérée au niveau de l’API Gateway et fait appel à un « Identity And
+          Access Management» certifié OpenID Connect? est-ce que la gestion des autorisations s’effectue (à travers la
+          transmission d’un token JWT)
+          à l’intérieur de chaque microservice?
+
+          - Est-ce que l’infrastructure est définie en tant que « Infrastructure as code» ?
+          - Est-ce que la gestion des conteneurs en production est assurée par un orchestrateur?
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Compliance Assessment: </span>La checklist</p>
+        <p class="fragment fade-in">
+          Mais aussi sur
+        </p>
+        <p class="fragment fade-in fonce">
+          Les bonnes pratiques en terme
+        </p>
+        <p class="fragment fade-in fonce">
+          de gestion de données et de méthodologies
+        </p>
+        <aside class="notes">
+          - Rien
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Compliance Assessment: </span>Quelques exemples</p>
+        <p class="fragment fade-in fonce">
+          Intégration des données et interopérabilité
+        </p>
+        <p class="fragment fade-in fonce">
+          Gouvernance des données et législation
+        </p>
+        <p class="fragment fade-in fonce">
+          L'utilisation d'une méthode agile
+        </p>
+        <aside class="notes">
+          - Les données relatives à la gestion de documents doivent être enregistrées à travers l’API Java
+          «Content Repository» (JSR-283) et seront exportables au format XML
+          - Est-ce que l’implémentation de la JCR permet de communiquer avec des systèmes de persis-
+          tence « cloud native» ?
+
+          - Est-ce que l’implémentation de l’architecture cible est conforme au RGPD ? st-ce qu’une analyse d’impact
+          relative à la protection de la donnée a été réalisée (AIPD) ?
+
+          - Est-ce que la méthodologie SCRUM est employée?
+        </aside>
+      </section>
+
+      <section>
+        <p>Conclusion</p>
+
+        <aside class="notes">
+          - A travers le document Architecture Roadmap, j'ai décrit les risques associés à l'implémentation de la
+          nouvelle
+          architecture et les moyens de réduire ces derniers. Dans ce meme document, j'ai indiqué les critères de
+          mesures qui permettront de valider
+          l'implémentation de l'architecture cible. Pour valider la conformité, ces critères sont complétés par des
+          checklists dans un document séparé,
+          décrivant les orientations sous différents angles: applicatif, data, sécurité, management de l'infrastructure,
+          méthodologies. Ces checklists permettront
+          à l'équipe de développement de développer les solution building block en réduisant les divergences avec la
+          vision architecturale.
+
+          Je vous remercie de votre attention, Avez-vous des questions ?
+        </aside>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- <section>
+          <p><span class="complementaire">Rappel des fonctionnalités améliorées</span> pour la captation data</p>
+          <p class="fragment fade-in fonce">
+            Analyse de la qualité à travers
+          </p>
+          <ol>
+            <li class="fragment fade-in fonce">
+              la QoS et la QoE
+            </li>
+            <li class="fragment fade-in fonce">
+              des expérimentations marketing
+            </li>
+          </ol>
+          <aside class="notes">
+            - QoS: ex. le jitter, la bande passante, les packets perdus, le bitrate
+            - QoE: qualité d'expérience (nombre de sauts dans la vidéo pour avancer ou reculer, déinitition de la vidéo, erreurs rencontrées lors de la lecture, passivité de l'utilisateur 
+            face au contenu interactif calculé par avec le nombre de choix alternative par rapport au parcours d'une vidéo avec les choix par défault)
+            - AB testing / tests multivarié / multi armed bandit, tous destinés à améliorer la conversion d'un utilisateur
+          </aside>
+        </section>
+        <section>
+          <p class="gris">Architecture cible</p>
+          <img style="margin: 0;" src="all.jpg"/>
+          <aside class="notes">
+            - Dans ce schéma , nous pouvons faire correspondre les fonctionnalités de lecture vidéo au player
+            - l'analyse de la qualité et les expérimentation avec le SDk et la plateforme Analytics
+            - l'édition des vidéos interactives avec l'éditeur
+            - On remarque que la plateforme de streaming qui va servir le contenu va être délégué à des plateformes externes. La raison est que la valueurs 
+            ajoutés est plus porté par la lecture d'un contenu interactif et par l'aquisition de données dans un contexte ou l'entreprise ne fait que produire du contenu, à la différence de la plateforme de stremaing qui peut
+            être couteuse en terme de ressources
+            - De plus l'acquisition de données va permettre de mettre en place des SLAs à contractualiser avec les plateformes de streaming adoptant le lecteur
+            - cette architecture entretient une faible dépendances avec les outils existants dans l'entreprise si ce n'est avec le dépot multimédia
+          </aside>
+        </section> -->
+      <!-- <section>
+          <p>Lacunes de l'architecture existante</p>
+          <p class="fragment fade-in fonce">
+            Pas de distribution ou de lecture des vidéos
+          </p>
+          <p class="fragment fade-in gris">
+            Pas de plateforme d'analytics / d'expérimentation
+          </p>
+          <p class="fragment fade-in fonce">
+            Pas d'informations sur les outils déjà mis en place
+          </p>
+          <aside class="notes">
+            - 
+            - Analyse suivant différents facteurs (technique, organisationnel,
+            opérationnel, calendrier, financière)
+          </aside>
+        </section> -->
+      <!-- <section>
+          <p><span class="complementaire">Zoom sur </span> l'éditeur de vidéos interactives</p>
+          <img style="margin: 0;" src="editor_techno.jpg"/>
+          <aside class="notes">
+            - une solution sous forme d'application web
+            - un éditeur non destructif, seules les métadonnées permettront à la plafteorme de vidéo streaming de faire l'export définitif
+            ce qui nécessite dans le cadre des tests un effort sur les tests du composant "matadata Exporter"
+            - De plus ce composant pourra exporter les métadonnées concernant la lecture du contenu interactif qui prendra la forme d'un
+            fichier Webvtt
+            - architecture par couche dont les composants principaux sont visibles sur le schéma
+            - optimisation des perfoemance dans un contexte peu propice avec l'intégration module webassembly pour le décodage
+            du codec vidéo permettant de manipuler, la réutilisation pour la prévisualisation d'un outils open source videojs
+        
+
+          </aside>
+        </section>
+        <section>
+          <p><span class="complementaire">Zoom sur </span> le lecteur de vidéos interactives</p>
+          <img style="margin: 0;"  width="80%" src="player_techno.jpg"/>
+          <aside class="notes">
+            - une solution basée sur le lecteur open source videojs. Pourquoi ? capacité à tracker ses métriques internes, compatibilité avec le 
+            streaming adaptatif, un plugin VR 360 déjà fournie
+            - 4 plugin dont 1 qui permet à l'entreprise de plateforme streaming de configurer l'accès à ces vidéos (ex. avec le protocole openconnectid)
+            - et un plugin qui se base sur une bilbiothèque indépendante de videojs: le composant Branchning logic, ce qui permettra de le tester en isolation
+
+        
+
+          </aside>
+        </section>
+
+        <section>
+          <p><span class="complementaire">Zoom sur </span> le SDK Analytics</p>
+          <img style="margin: 0;"  width="55%" src="sdk_techno.jpg"/>
+          <aside class="notes">
+            - sdk basé sur des composants de collectes de métriques, à travers les API présents sur le navigateur mais aussi des métriques internes à videojs
+            - la communication avec la plateforme Analytics sera réaliser au travers d'une API REST JSON dont le format reste à déterminer dans les prochaines itérations
+
+          </aside>
+        </section>
+
+        <section>
+          <p><span class="complementaire">Zoom sur </span> la plateforme Analytics</p>
+          <img style="margin: 0;"  width="47%" src="analytics_techno.jpg"/>
+          <aside class="notes">
+            - Plateforme analytics basé sur un datawahrehouse car le format envoyé par le SDK sera connu, pas besoin d'une archi avec data lake
+            - Réutilisation du datawarehouse de Google Bigquery après enregistrement dans un espace de stokage intermédiaire.
+            - La plus grosse brique à développer sera le Front, pour simplifier le travail de maintenace et de déploiement, App Engine sera utilisé
+            - un front analytics externalisé
+
+          </aside>
+        </section> -->
+
+      <!-- <section>
+          <p>Composants à construire</p>
+          <p class="fragment fade-in fonce">
+            Editeur vidéo: UI, selecteur d'assets, logique arborescente des segments vidéos, preview vidéo / audio (2D, 3D)
+          </p>
+          <p class="fragment fade-in gris">
+            Lecteur vidéo: plugin video.js (lecture de métadonées embarquées, affichage de l'UI interactive) pour la lecture interactive
+          </p>
+          <p class="fragment fade-in fonce">
+            SDK analytics: plugin video.js de collecte de données
+          </p>
+          <p class="fragment fade-in gris">
+            Plateforme d'analytics (management de données): API REST de collecte, data warehouse
+          </p>
+          <aside class="notes">
+            - Création de nouveaux processus métiers liés à l'automatisation de
+            certaines taches comme la prise de rdv, le suivi temps réel des livraisons, le suivi de l'activité à travers un tableau de bord
+            pour chaque département, ou la gestion de l'outillage à travers une  - un SGBD unifié dans
+            l'architecture cible avec Oracle
+          </aside>
+        </section> -->
+      <!-- <section>
+          <p>Mapping Composants => Fonctionnalités</p>
+          <p class="fragment fade-in fonce">
+            Composants : logique arborescente des segments vidéos (éditeur), plugin video.js lecture interactive
+          </p>
+          <p class="fragment fade-in gris">
+            avec la fonctionnalité "Choix des segments vidéos en des choix utilisateurs"
+          </p>
+          <p class="fragment fade-in fonce">
+            Composants : plugin videojs-vr (pas de développement)
+          </p>
+          <p class="fragment fade-in fonce">
+            avec la fonctionnalité "Utilisation de la VR pour les vidéos 360"
+          </p>
+        </section> -->
+      <section>
+        <p>Le plan de tests</p>
+        <p class="fragment fade-in fonce">
+          Document basé sur la norme IEEE 29119-3
+        </p>
+        <p class="fragment fade-in fonce">
+          Tests des 4 applications avec différents niveaux et types de tests
+        </p>
+        <p class="fragment fade-in gris">
+          priorisés par type de risques
+        </p>
+
+        <aside class="notes">
+          -
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Tests communs : </span>types de tests</p>
+        <p class="fragment fade-in fonce">technique (unitaires, composants, intégrations)</p>
+        <p class="fragment fade-in fonce">de sécurité: SAST (ex. gosec), DAST (OWASP ZAP)</p>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Tests communs : </span>Exécution et tracabilité</p>
+        <p class="fragment fade-in fonce">CI / CD avec Github Actions</p>
+        <p class="fragment fade-in fonce">Management des tests (eg. TestRail)</p>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Workflow des tests</span></p>
+        <p class="fragment fade-in fonce">unitaires, composants, intégrations, fonctionnels, sécurités</p>
+        <p class="fragment fade-in fonce">automatiser le plus possible</p>
+        <p class="fragment fade-in fonce">exécuter dans 2 types d'environnement</p>
+        <aside class="notes">
+          - tests rédigés dans le langage de programmation adaptés au contexte d'éxecution et exécuter à chaque nouveau
+          commit sur
+          la branche de développpement sauf pour les tetss d'intégration et les tests fonctionnels qui seront exécuter.
+          Tests complet de régression
+          lors du merge sur la branche principal.
+          - métriques pour chaque type de tests (ex. pourcentage de défaut ciritque, % de coverage en fonction des
+          priorité, )
+          - pas d'usage de DSL pour les tests fonctionnels mais des outils dédiés au web comme Selenium
+          - 2 env: un de test partagé par tous les développeur, un de préproduction pour réaliser certains tests
+          fonctonnelles et d'acceptances
+          ex. avec Biqquery séparation dans des tables distinctes dont le nom sera préfixé par le nom de l'envoronnement
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Workflow des tests</span></p>
+        <p class="fragment fade-in fonce">tests d'acceptance</p>
+        <p class="fragment fade-in fonce">revue manuelle avec critères</p>
+        <p class="fragment fade-in fonce">sur l'environnement de préproduction</p>
+        <aside class="notes">
+          - basé sur l'écriture des user stories lors du démarage d'un sprints
+          - critères d'acceptances basées sur la formule Given / When / Then ou des checklits
+          - veiller à ne pas oublier les attibut de qualité basés sur des SLI et des SLOs
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Editeur de vidéos interactives</span></p>
+        <p class="fragment fade-in fonce">Risques: erreurs dans l'export des métadonnées</p>
+        <p class="fragment fade-in fonce">Priorité: tests de composants, intégrations</p>
+        <p class="fragment fade-in fonce">Pipeline Github Actions, framework Testify (Go) et Jest (Javascript)</p>
+        <p class="fragment fade-in fonce">Tests GUI avec Selenium / Browserstack</p>
+        <p class="fragment fade-in fonce">Tests acceptances manuels</p>
+        <aside class="notes">
+          - composants ave le Metadata Exporter, et intégration avec le décodage des codecs vidéo
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Lecteur de vidéos interactives</span></p>
+        <p class="fragment fade-in fonce">Risques: problèmes de QoS, parsing des métadonnées</p>
+        <p class="fragment fade-in fonce">Priorité: tests QoS, tests de composants, intégrations</p>
+        <!-- <p class="fragment fade-in fonce">Tests automatisés sur la qualité réseau (simulation)</p> -->
+        <p class="fragment fade-in fonce">Pipeline Github Actions</p>
+        <p class="fragment fade-in fonce">Tests GUI avec Selenium / Browserstack</p>
+        <aside class="notes">
+          - composants avec la bibliothèque Branching Logic permettatn d'assurer la lecture des éléments interactifs sur
+          videojs
+
+          - résultats des tests QoS, QoE sous forme de reporting
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Lecteur de vidéos interactives</span></p>
+        <p class="fragment fade-in fonce">Risques: mauvaise ergonomie, contenu non populaire</p>
+        <p class="fragment fade-in fonce">Priorités: tests d'usabilités</p>
+        <p class="fragment fade-in fonce">AB testing, tests multivariés, multi-armed bandit</p>
+        <p class="fragment fade-in fonce">en production</p>
+        <p class="fragment fade-in fonce">Analyse avec la plateforme Analytics</p>
+        <aside class="notes">
+          - multi armed bandit: concurrence des phases d'expérimentation et des phases d'expolitation sans attendrer la
+          fin d'une expérimentation
+        </aside>
+      </section>
+
+      <!-- <section>
+          <p>Lecteur de vidéo</p>
+          <p class="fragment fade-in fonce">Risques: accès non autorisé</p>
+          <p class="fragment fade-in fonce">Tests sur la gestion des autorisations avec</p>
+          <p class="fragment fade-in fonce">Newman (Postman Cli)</p>
+          <p class="fragment fade-in fonce">sur le pipeline CI / CD, env de test</p>
+        </section> -->
+
+      <section>
+        <p><span class="complementaire">SDK Analytics (Tracker JS)</span></p>
+        <p class="fragment fade-in fonce">Risques: asymétrie avec la spécification de l'API</p>
+        <p class="fragment fade-in fonce">Priorités: tests de composants, d'intégrations</p>
+        <p class="fragment fade-in fonce">Pipeline Github Actions, framework Jest</p>
+        <p class="fragment fade-in fonce">Tests d'intégration avec l'API de la plateforme Analytics</p>
+        <aside class="notes">
+          - tests de composant sur les composants liés au métrique, et d'intégration avec les api web et les api de
+          videojs de videojs
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Plateforme Analytics</span></p>
+        <p class="fragment fade-in fonce">Risques: scalabilité, disponibilité</p>
+        <p class="fragment fade-in fonce">Priorités: tests de performance, de composants et d'intégrations</p>
+        <p class="fragment fade-in fonce">Pipeline Github Actions, framework Testify (Go)</p>
+        <p class="fragment fade-in fonce">Tests de performance avec k6</p>
+        <aside class="notes">
+          - test de composants sur le Front Collector API et d'intégration avec la communication avec Google CLoud
+          Storage
+        </aside>
+      </section>
+
+      <section>
+        <p>Conclusion</p>
+
+        <aside class="notes">
+          - Les nouvelles fonctionnlités entraine la création de 4 logiciels, qui auront peu d'impact sur l'architecture
+          existante.
+          La conformité des éléments présentant des risques sera controlé par les tests définis dans le plan de tests à
+          travers des tests techniques
+          mais également des tests markeing
+        </aside>
+      </section>
+
+
+
+
+      <section>
+        <p>Faisabilité technique</p>
+        <p class="fragment fade-in fonce">
+          Une nouvelle architecture ne reposant que sur les données à extraire
+        </p>
+        <p class="fragment fade-in fonce">
+          Des risques liés à la gestion de la donnée, avec des solutions
+          d'atténuation
+        </p>
+        <aside class="notes">- TODO -</aside>
+      </section>
+      <section>
+        <p>Faisabilité opérationnelle</p>
+        <p class="fragment fade-in fonce">
+          Pas d'interruptions des activités durant la bascule
+        </p>
+        <p class="fragment fade-in fonce">
+          Nécessite des temps de formations impactant la disponibilité du
+          personnel
+        </p>
+        <p class="fragment fade-in fonce">
+          Ne nécessite pas de reprovisionner les postes utilisateurs
+        </p>
+
+        <aside class="notes">
+          - le SI existant sera toujours opérationnel - formation d'une demie
+          journée pour chaque département - Hypothèse: application web pour le
+          non provisionnement complet d'une application, au pire une mise à jour des postes et des navigateurs mais
+          n'impacte pas l'architecture cible
+          et peut etre fait par le respojnsable des services IT de l'entreprise
+        </aside>
+      </section>
+
+      <section>
+        <p>Faisabilité financière et organisationnelle</p>
+        <table style="font-size: 0.6em;">
+          <thead>
+            <tr>
+              <th>Intervenant / Ressource</th>
+              <th>Coût</th>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr>
+              <td>un ingénieur data pour le développement des scripts</td>
+              <td class="fonce">450 euros / 20 jours</td>
+            </tr>
+            <tr>
+              <td>un DBA senior en soutien</td>
+              <td class="fonce">1100 euros / 7 jours</td>
+            </tr>
+            <tr>
+              <td>un architecte logiciel pour définir le processus</td>
+              <td class="fonce">600 euros / 10 jours</td>
+            </tr>
+            <tr class="gris">
+              <td>Coût de l'infrastructure cloud</td>
+              <td>2000 euros (budget max)</td>
+            </tr>
+            <tr style="font-weight: bold;">
+              <td>Total</td>
+              <td>24 700 euros</td>
+            </tr>
+          </tbody>
+        </table>
+        <aside class="notes">
+          - estimation basée sur le fait que l'ingénieur data ne passera que 5 jours par département (4 départements à
+          migrer)
+          - DBA senior pour ne pas prendre de risques sur la migration
+          - donc inférieur de motiée au 50 000 euros
+          - c'est du prévisionnel
+          - budget cible de l'infrastrcuture cloud: 2000 euros sachant que le cout est estimé pour l'instant de la
+          manière suivante:
+          cout de la plateforme de migration si le service loué était utilisé 5 heures par jours pendant 20 jours,
+          disposerait d’un stockage de 1 To, le coût serait d’environ
+          100 euros pour un mois
+          - Ce cout ne fait pas mention d'une événtuelle étape intermédiaire consistant à faire du lift and shift dans
+          une première phase,
+      </section>
+
+      <section>
+        <p>Calendrier</p>
+        <p class="fragment fade-in fonce">
+          1 mois réparti sur les différents sprints de développement de la
+          nouvelle architecture
+        </p>
+        <p class="fragment fade-in gris">
+          Prise en considération des données à migrer en fonction des user
+          stories
+        </p>
+        <p class="fragment fade-in fonce">
+          Phase de migration par département priorisée par dépendances de données
+        </p>
+        <aside class="notes">
+          - certians département comme le département fournisseur n'est pas relié dan sl'architecture cible avec l'API
+          d'un autre département
+        </aside>
+      </section>
+
+      <section>
+        <p>Feuille de route (migration)</p>
+        <p class="fragment fade-in fonce">
+          1. Application liée au département "Gestion des fournisseurs"
+        </p>
+        <p class="fragment fade-in fonce">
+          2. Application CRM Client pour le département "Gestion des clients"
+        </p>
+        <p class="fragment fade-in fonce">
+          3. Application de réservation du département "Gestion des clients"
+        </p>
+        <p style="font-style: italic;" class="fragment fade-in gris">
+          4. Application CRM Client du département "Gestion des ressources entreprise"
+        </p>
+        <aside class="notes">
+          - Pour les 3 premières aplications citées, les éléments de travail attendus sont les suivants:
+          - un ETL de fiablilisation de la donnée et de déchargement de données dans un fichier plat
+          - cet ETL devra aussi prendre en compte la gestion d'état de controle (ex. nombre d'enregistrement avant et
+          après transformation, monitoring des anomalies remontées)
+          - la spécifciation des critères de reprise (TODO: expliciter le terme)
+          - mais aussi le développement d'un script de migration lié au framework de migration choisir pour la base de
+          donnée cible, Oracle dans notre cas
+          (pour le rechargement des données)
+
+          - pour la 4ème application, pas de développement nécessaires pour la migration, juste une migration manuelle
+          due à la faible volumétrie du nombre de clients
+
+
+          - Pourquoi cet ordre ?
+          - pour minimiser les dépendances non satisfaites par la communication avec les API
+          - cela suppose que le développement de l'application se fasse de manière séquentiel en respectant l'ordre des
+          migrations
+          - en cas de dépendances envers une API d'un autre service: préférer ne pas déployer l'application dans un
+          environnement
+          de production et établir une dépendance à un mock
+        </aside>
+      </section>
+      <section>
+        <p>Feuille de route (suite)</p>
+        <p style="font-style: italic;" class="fragment fade-in gris">
+          5. Application de Gestion du Stock
+        </p>
+        <p style="font-style: italic;" class="fragment fade-in gris">
+          6. Application du domaine de production
+        </p>
+        <p style="font-style: italic;" class="fragment fade-in gris">
+          7. Application de facturation (Saas)
+        </p>
+        <aside class="notes">
+          - Application de gestion du stock: dans un premier temps analyser le fichier Excel et ses macros avace une
+          solution antivirus pour savoir si les données sont corrompues
+          - Puis Procéder à la livraison des memes éléments de travail que les application sprécèdentes
+        </aside>
+      </section>
+      <section>
+        <p>Le plan d'implémentation</p>
+        <p class="fragment fade-in gris">
+          Stratégie basée de migration de données basée sur le workflow suivant:
+        </p>
+        <p class="fragment fade-in fonce">
+          1. Définition des données à migrer
+        </p>
+        <p class="fragment fade-in fonce">
+          2. Définition des règles métiers et des standards de qualité à appliquer aux données (avec le métier)
+        </p>
+        <p class="fragment fade-in fonce">
+          3. Implémentation d'un ETL (batch) sur Apache Airflow
+        </p>
+        <aside class="notes">
+          - La qualité des données peut etre mesurée suivants les 15 dimensions du framework de Strong-Wang
+          - ETL: cleansing des données: inclut les données considérés comme potentiels menances en terme de sécurité ou
+          bien des données à ne pas conserver
+          car la régelementation sur le RGPD indique de les détruire
+          - Audit de la qualité des données à migrer sur le référentiel existant: technique de Data profiling (technique
+          statistique)
+          - Définition des techniques de remédiation des données: ceci peut inclure l'ajout de colonne comme des
+          métadonnées sur les bases existantes
+
+        </aside>
+      </section>
+
+      <section>
+        <p>Le plan d'implémentation (suite)</p>
+        <p class="fragment fade-in fonce">
+          4. Execution des tests de l’ETL
+        </p>
+        <p class="fragment fade-in fonce">
+          5. Audit des bases de données et vérification des contrôles
+        </p>
+        <p class="fragment fade-in fonce">
+          6. Analyse des anomalies (pour correction)
+        </p>
+        <p class="fragment fade-in fonce">
+          7. (Optionnel) Rollback de la migration avec Flyway
+        </p>
+        <aside class="notes">
+          - tests de l'ETL: tests unitaires, intégration mais aussi bascule à blanc avec un échantillon de données
+          - controle quantitatif (ex. est-ce que le nombres de lignes de la table source est également au nombre de
+          ligne après la phase d'extraction ou de transformation)
+          - controle qualitatif (ex. est-ce un aggrégat de données (données clientes) est cohérent avec le métier du
+          département)
+          - ex. d'anomalies: saisie non corrigeables avec les règles de migration actuelle et qui fera peut etre l'objet
+          d'une saisie manuelle
+          - Pourquoi Flyway ? framework de migration qui permet de tracer les modifications et les schémas et les
+          données ajoutées/ Flyway présente des option pour upgrader une base mais
+          aussi faire un downgrade
+        </aside>
+      </section>
+      <section>
+        <p>Les métriques de qualités à considérer</p>
+        <img data-src="quality.png" width="100%" />
+        <aside class="notes">
+          - Ces métriques devront pouvoir analyser l'avant et l'après migration. Il est recommendé de faire une analyse
+          après la selection des données
+          en utilisant comme critères d'évaluation les métrique indiquant l'exhaustivité, l'unicité , la validité et
+          l'exactitude des données ou en réalisant un dashboard suite au profillage de la donnée
+          - Ex de métriques: % de données clients complétés, le nombre de département impacté par la donnée, cout de
+          remédiation
+        </aside>
+      </section>
+      <section>
+        <p>Stratégie de développement d'un ETL et impacts</p>
+        <p class="fragment fade-in fonce">
+          Définir un pipeline permettant de réaliser
+        </p>
+        <p class="fragment fade-in fonce">
+          le cleansing, la transformation des données pour l'intégration à un framework de migration sous Oracle
+        </p>
+        <p class="fragment fade-in fonce">
+          Pas de rollback sur l'existant: les données seront conservées 3 mois après la migration sur l'architecture
+          cible
+        </p>
+        <aside class="notes">
+          - Un Ex. de data cleansing: Suppression de la duplication (de-duping), vérification des controles d'intégrité
+          et des contraintes sur les formats des données
+          mais aussi suppression des enregistrements pouvant provoquer des failles de sécurité,
+          - la transformation des données basées sur les specification de regles de migration: règles de mapping, les
+          conversions sémantique, les filtres à appliquer sur les données
+        </aside>
+      </section>
+      <section>
+        <p>Procédure de migration pour le développeur</p>
+        <p class="fragment fade-in fonce">
+          1. Développement de l'ETL avec Apache Airflow. <span class="gris">Output: Fichier de migration Flyway, script
+            de backfill après déploiement</span>
+        </p>
+        <p class="fragment fade-in fonce">
+          2. Tests sur des volumes réduits (staging)
+        </p>
+        <p class="fragment fade-in fonce">
+          3. Déploiement sur l'environnement de production et exécution
+        </p>
+        <p class="fragment fade-in fonce">
+          (Optionnel) 4. Exécution du script de backfill sur l'environnement de production (nouvelle architecture) ou
+          <span style="color: red;">rollback</span>
+        </p>
+        <aside class="notes">
+          - le fichier de migration Flyyway contiendra aussi le rollback
+          - 3. qui sera planifié à une date avec Apache Airflow
+          - le script de backfill permettra lors du passage des utilisateurs de l'architecture existante à
+          l'architecture cible
+          de ne migrer que les données non présentes sur la nouvelle architecture du à l'exécution des deux
+          architectures en parallèles
+        </aside>
+      </section>
+
+      <section>
+        <h2>En conclusion</h2>
+        <aside class="notes">
+          La migration repose avant tout sur la migration des données, essentiel à l'entreprise. Ces données devront
+          être analysé
+          et respecté le management de la qualité défini par le métier. Le processus de développement des scripts de
+          migration
+          sera intégré au processus de développement de l'architecture cible et la migration sera incrémental ce qui
+          diminuera les risques.
+          La bascule prendra en compte les scénrios ou des anomlies seraient trouvé et ou il faudrait faire un rollback
+          des données sans perturbé
+          l'activité de l'entreprise. Enfin l'estimation du cout de la migration est moitié inférieur au cout prévue
+          initialement avec planning
+          reespecté.
+          Avez-vous des questions ?
+        </aside>
+      </section>
+    </div>
+  </div>
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script>
+    Reveal.initialize({
+      plugins: [RevealMarkdown],
+      progress: true,
+      slideNumber: true,
+    });
+
+    Reveal.on("fragmenthidden", (event) => {
+      console.log(event);
+      // event.fragment = the fragment DOM element
+    });
+
+    Reveal.on("fragmentshown", (event) => {
+      console.log(event);
+      // event.fragment = the fragment DOM element
+    });
+  </script>
+  <script src="socket.io/socket.io.js"></script>
+  <script src="node_modules/reveal-notes-server/client.js"></script>
+</body>
+
+</html>
