@@ -10,79 +10,372 @@
     <div class="slides">
       <section>
         <p class="complementaire">Objectifs</p>
-        <h2>Présenter l'organisation du projet</h2>
-        de la
-        <h2>Plateforme Crypto</h2>
-        <p>en date du 9 Février 2022</p>
+        <h2>Présentation du POC</h2>
+        lié au
+        <h2>système d'intervention d'urgence</h2>
+        <p>en date du 21 Avril 2022</p>
         <aside class="notes">
-          - du projet de plateforme Crypto
+          - Présentation du POC à travers les élèments du 
+          dépot architectural et le code associé
         </aside>
       </section>
       <section>
         <p>Guillaume Lecoq</p>
         <p class="gris">Architecte logiciel</p>
-        Société GitmeMoney
+        Société MedHead
       </section>
       <section>
         <h2 class="gris">Sommaire</h2>
         <ol class="maliste">
           <li>Rappel du contexte</li>
-          <li>Présentation de la planification</li>
-          <li>Présentation du Backlog et des tâches associées</li>
-          <li>Ressources nécessaires au projet</li>
-          <li>KPIs liées à l'équipe</li>
-          <li>Présentation des bonnes pratiques</li>
+          <li>Analyse de la méthodologie et des hypothèses</li>
+          <li>Présentation des résultats et des recommendations</li>
+          <li>Présentation des documents TOGAF et du plan de tests</li>
           <li>Conclusion</li>
         </ol>
         <aside class="notes">
           Afin d'organiser le contenu de ma présentation
-          - je ferai un bref rappel du contexte de l'architecture existante et du travail réalisé sur la documentation de l'architecture cible
-          - je présenterai la planification du projet d'implémentation de la plateforme crypto
-          - je détaillerai le backlog ainsi que ses taches
-          - je présenterai les ressource nécessaires ainsi que les KPIS lié aux performances de l'équipe
-          - je présenterai également le contenu de mon guide de recommandation
+          - je ferai un bref rappel du contexte à savoir le besoin de vérifier la faisabilité technique du système d'urgence face
+          à des problématiques temps réel
+          - j'introduirai la méthodologie utilisée pour l'évaluation du POC à savoir l'usage de rapport généré par le
+          pipeline d'intégration continue
+          - je présenterai les résultats et j'indiquerai mes recommendations sur la suite à données aux poc
+          - je présenterai les documents TOGAF rédigés par exemple avec la mise à jour de la déclaration de travail
+          - je finirai par récapituler
         </aside>
       </section>
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
         <p class="fragment fade-in">
-          Nouveau produit
+          Plateforme de services
         </p>
         <p class="fragment fade-in fonce">
-          connectant les sites marchands de cryptomonnaies et les banques
+          basée sur une architecture microservice
         </p>
         <aside class="notes">
-          Le projet consiste en la création d'un nouveau produit. Ce dernier devrait permettre d’atteindre les objectifs fonctionnels suivants :
-          - s’inscrire comme client ;
-          - en tant que client identifié, acheter de la cryptomonnaie ;
-          - se faire référencer comme vendeur de cryptomonnaie ;
-          - en tant que vendeur référencé, vendre de la cryptomonnaie ;
-          - permettre de s’interfacer avec l’API de la plateforme pour de la consultation (ainsi les données pourront
-          être intégrées à des applicatifs tiers).
+          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous, des ressources humaines, et du
+          l'accès au dossier médical du patient donc l'objectif final est d'améliorer l'accès aux soins dispensés aux patients.
+          Ce projet est initié par un consortium de 5 organisations.
         </aside>
       </section>
 
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Architecture existante</p>
-        <img style="margin: 0;" src="existant_projet10.png" />
+        <img style="margin: 0;" src="projet11/architecture_existante.png" />
          <aside class="notes">
-        - Comme on le remarque sur le schéma, seuls les employés de la sociét GitmeMoney peuvent accéder à la gestion
-        des cryptomonnaies avec la seule application tiers présentes: la plateforme Kraken. La plateforme n'est pas
-        intégré à un applicatif existant
+        - Comme on le remarque sur le schéma, la synchronisation des systèmes se fait manuellement, les échanges entre les hopitaux
+        ne sont pas en temps réel et la prise en charge est plus longue.
         au sein de la société.
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Rappel du contexte: </span>Architecture cible</p>
-        <img style="margin: 0;" src="cible_projet10.png" />
-         <aside class="notes">
-        - Architecture technique basée sur 3 couches: couche Front (avec l'interface web et l'API publique), couche service 
-        pour la gestion des utilisateurs et la gestion des cryptomonnaies et la couche data avec les données stockées par GitmeMoney
-        et la connecxion à l'API d'autres produits financiers comme les plateformes d'échange de cryptomonnaies
-        - On notera que la stack technique doit reposer sur Java au moins pour les couche data et service.
+        <p><span class="complementaire">Rappel du contexte: </span>Le POC</p>
+        <p class="fragment fade-in">
+          centré sur le système d'intervention d'urgence
+        </p>
+        <p class="fragment fade-in fonce">
+          afin d'étudier la faisabilité technique du projet
+        </p>
+        <p class="fragment fade-in fonce">
+          face aux contraintes et aux risques découverts
+        </p>
+        <aside class="notes">
+          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir quelle tehnologie vont être utilisés et de les comparer pour 
+          définir si elles répondent aux critères établis
+          - face aux contraintes par exemple l'emploi d'une architecture microservice
+          -  et aux risques potentiellement présents: le temps de latence du service, l'exactitude des informations
         </aside>
       </section>
+
+      <section>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>La méthodologie du POC</p>
+        <p class="fragment fade-in fonce">
+          Basée sur les KPIs 
+        </p>
+        <p class="fragment fade-in fonce">
+          et sur les résultats du pipeline CI / CD
+        </p>
+        <aside class="notes">
+          - Basée sur les KPIs définis en amont du PoC
+          - et sur les résultats du pipeline CI / CD à travers les différents rapports d'éxécutions au format html
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Les hypothèses</p>
+        <p class="fragment fade-in fonce">
+          un microservice basé sur le framework Spring
+        </p>
+        <p class="fragment fade-in fonce">
+          un calcul de l'hopital le plus proche réalisé par une base MongoDB
+        </p>
+        <p class="fragment fade-in fonce">
+          un déploiement basé sur GCP
+        </p>
+        <aside class="notes">
+          - un microservice basé sur le framework Spring et sa suite d'outils pour améliorer la 
+          productivité des développeurs
+          - un calcul de l'hopital le plus proche réalisé par une base MongoDB c'est à dire une base de données
+          noSQL qui intégre le calcul des distances en utilisant le référentiel géodésique WGS84, il s'agit du calcul à vol d'oiseau
+          - un déploiement basé sur GCP et en particulier sur un service à base de conteneur managé avec le produit Cloud Run
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Les résultats</p>
+        <p class="fragment fade-in fonce">
+          aux tests de performance par appel du microservice:
+        </p>
+        <p class="fragment fade-in">
+          625ms pour 800 requêtes / sec
+        </p>
+        <p class="fragment fade-in fonce">
+          sur un environnement Cloud Run 
+        </p>
+        <aside class="notes">
+          - 625ms pour 800 requêtes / sec: 95percentile sur une période de tests de 30 sec
+          - sur un environnement Cloud Run avec les spec suivantes: 2 vCPU, 1 GB de ram 
+          sur un seul container (pas de paramétre de scalabilité)
+          - tests sur un env de préproduction réalisé avec Gatling sur la base d'un scénario de 800 requetes
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Les résultats</p>
+        <p class="fragment fade-in fonce">
+          aux tests de performance (profiling) du calcul de disponibilité des lits:
+        </p>
+        <p class="fragment fade-in">
+          120ms pour 800 requêtes / sec
+        </p>
+        <p class="fragment fade-in fonce">
+          avec Prometheus et une métrique micrometer
+        </p>
+        <p class="fragment fade-in fonce">
+          sur un environnement Cloud Run 
+        </p>
+        <aside class="notes">
+          - 120ms pour 800 requêtes / sec: moyenne sur 30 secondes
+          - avec Prometheus et une métrique micrometer à savoir celle basée sur le temps
+          - sur un environnement Cloud Run le même que celui du test avec Gatling
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Les résultats</p>
+        <p class="fragment fade-in fonce">
+          temps sur le pipeline CI / CD:
+        </p>
+        <p class="fragment fade-in">
+          inférieur à 30 sec sur les tests d'intégration
+        </p>
+        <p class="fragment fade-in fonce">
+          pipeline basé sur les Github Actions
+        </p>
+        <p class="fragment fade-in fonce">
+          sur environnement Cloud Run et Github Runner
+        </p>
+        <aside class="notes">
+          - inférieur à 30 sec sur les tests d'intégration avec 4 endpoints testés: mise à jour de la disponibilité d'un lit pour un hopital,
+          récupération du lit le plus proche en fonction de la spécialité, récupération du lit au niveau national
+          - pipeline basé sur les Github Actions, un outils d'orchestrateur de workflow managé par Github
+          - sur environnement Cloud Run et Github Runner: exécution des tests e2e sur Cloud run et les autres types de tests sur un Github Runner
+          il s'agissait de ma propre machine avec les caractéristiques suivnates: 6 cpu, 16Go de ram
+
+        </aside>
+      </section>
+    
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Mes recommendations</p>
+        <p class="fragment fade-in fonce">
+          séparer le traitement de la disponibilité des lits
+        </p>
+        <p class="fragment fade-in">
+          mettre en place du sharding en fonction des secteurs géographique
+        </p>
+        <p class="fragment fade-in fonce">
+          utiliser un framework cloud native
+        </p>
+        <aside class="notes">
+          - séparer le traitement de la disponibilité des lits c'est à dire créer 2 endpoints, un pour la gestion des lits les plus proches 
+          en fonction de la spécialité désirée, un pour la gestion des lits les plus proches quelque soit la spécialité et au niveau national
+          - mettre en place du sharding en fonction des secteurs géographique: mettre en place un cluster avec MongoDB pour améliorer la performance
+          de la base, et mettre en place un load balancer géosharder
+          - utiliser un framework cloud native: avec Quarkus la performance d'appel d'un endpoint avec désérialisation JSON est de 160ms en moyenne
+
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Mes recommendations</p>
+        <p class="fragment fade-in fonce">
+          assurer la scalabilité du service avec la plateforme Google Cloud
+        </p>
+        <p class="fragment fade-in">
+          se séparer de la stack Java
+        </p>
+        <p class="fragment fade-in fonce">
+          mettre en place un appel d'offre
+        </p>
+        <aside class="notes">
+          - assurer la scalabilité du service avec la plateforme Google Cloud: cela ne permet pas toutefois prendre en compte
+          la contraintes de 800 req / sec pour une seule instance mais garantit le support de la charge
+          - employer des technologies moins gourmandes en terme de ressources comme le Go ou le NodeJs (voir benchmark ?)
+          - mettre en place un appel d'offre afin de mettre en concurrence des prestataires selectionnés sur critères d'évaluation et
+          sur cahier des charges 
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Document TOGAF: </span>Ennoncé somaire des travaux</p>
+        <p class="fragment fade-in fonce">
+          Mise à jour des KPIs
+        </p>
+        <p class="fragment fade-in">
+          KPIs basées sur:
+        </p>
+        <p class="fragment fade-in fonce">
+          la disponibilité (SLA)
+        </p>
+        <p class="fragment fade-in fonce">
+          sur le temps de réponse
+        </p>
+        <p class="fragment fade-in fonce">
+          temps d'éxecution du pipeline CI / CD
+        </p>
+        <p class="fragment fade-in fonce">
+          mais aussi des KPIs bussiness
+        </p>
+        <aside class="notes">
+          - mais aussi des KPIs bussiness: nombre de patient pris en charge par le sytème d'intervention 
+          pendant une période de temps donnée
+          - nombre de patient qui ont trouvé un lit dans la bonne spécialité
+          - distance des trajets comparés à la distance de l'itinér'air GPS
+          - nombre de requetes aux systèmes d'intervention lors d'une réservation concurentielle
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">KPIs: </span>Autres indicateurs de performance</p>
+        <p class="fragment fade-in fonce">
+          Deployment Frequency
+        </p>
+        <p class="fragment fade-in fonce">
+          Change Failure Rate
+        </p>
+        <p class="fragment fade-in fonce">
+          MTTR
+        </p>
+        <p class="fragment fade-in fonce">
+          Lead Time for Changes
+        </p>
+        <aside class="notes">
+          - avec des métriques qui permettent également de mesurer la vélocité mais aussi la stabilité.
+          - Fréquence de déploiement afin de mesurer combien de fois l'organisation déploie avec succès ces release en production
+          - Change Failure Rate c'est à dire le pourcentage de déploiement causant une défaillances en production
+          - Mean time to recovery (MTTR) ou combien de temps met l'organisation à se remettre d'une défaillance en production
+          - Lead Time for Changes c'est à dire le temps moyen pour lequel le dernier commit se trouve en production
+
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Document TOGAF: </span>SBB</p>
+        <p class="fragment fade-in fonce">
+          Modules de construction génériques:
+        </p>
+        <p class="fragment fade-in">
+          Framework Spring Boot
+        </p>
+        <p class="fragment fade-in">
+          Cucumber / Gherkin
+        </p>
+        <p class="fragment fade-in">
+          Github
+        </p>
+        <p class="fragment fade-in">
+          Google Cloud Platform
+        </p>
+
+        <aside class="notes">
+          - TODO
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Document TOGAF: </span>SBB</p>
+        <p class="fragment fade-in fonce">
+          Modules de construction de la preuve de concept:
+        </p>
+        <p class="fragment fade-in">
+          JHipster
+        </p>
+        <p class="fragment fade-in">
+          MongoDB
+        </p>
+        <aside class="notes">
+          - TODO
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Autres documents: </span>Plan de tests</p>
+        <p class="fragment fade-in fonce">
+          orienté sur la stratégie de test
+        </p>
+        <p class="fragment fade-in fonce">
+          les différents types de tests
+        </p>
+        <p class="fragment fade-in fonce">
+          sur les métriques à collecter
+        </p>
+        <p class="fragment fade-in fonce">
+          sur les environnements de tests
+        </p>
+        <p class="fragment fade-in fonce">
+          l'organisation des branches Git
+        </p>
+
+        <aside class="notes">
+          - orienté sur la startégie de test: écriture de user tory et des critères d'acceptances en amont du développement,
+          puis écriture des tests unitaires avec la méthodologie TDD, écriture des tests e2e avec Cucumber et écriture des tests d'intégration avec
+          l'outils de test du framework Spring Boot
+          
+          - critères d'acceptance au format Gherkin
+
+          - les différents types de tests et le moment de leur exécution automatique
+
+          - métriques à collecter:
+            - code coverage %
+
+            - % de tests réussis
+
+            - % de tests échoués
+
+            - durée des tests unitaires / tests intégration / tests aceptance
+
+            - temps de latence pour les tests de performance
+
+            - consommation des ressources sur les environnements de tests (ex. CPU, RAM) pour les tests de performance
+          - sur les environnements de tests au nombre de deux: dev, preprod
+
+        </aside>
+      </section>
+
+      <section>
+        <p>Conclusion</p>
+
+        <aside class="notes">
+          - A travers l'étude du POC, nous avons pu déterminé que les tehcnologies utiliés en tant que standart dans 
+          l'univers de Java et de son pendant web ne correespondent pas aux critères de performances énoncés dans les contraintes du projet.
+          Il nous faudra donc soit du temps et des ressources supplémentaires pour tester d'autres solutions précédementn énnoncés soit 
+          mettre en place un appel d'offre. 
+
+          Je vous remercie de votre attention, Avez-vous des questions ?
+        </aside>
+      </section>
+
 
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
