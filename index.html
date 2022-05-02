@@ -13,9 +13,9 @@
         <h2>Présentation du POC</h2>
         lié au
         <h2>système d'intervention d'urgence</h2>
-        <p>en date du 21 Avril 2022</p>
+        <p>en date du 29 Avril 2022</p>
         <aside class="notes">
-          - Présentation du POC à travers les élèments du 
+          - Présentation du POC à travers les élèments du
           dépot architectural et le code associé
         </aside>
       </section>
@@ -35,26 +35,24 @@
         </ol>
         <aside class="notes">
           Afin d'organiser le contenu de ma présentation
-          - je ferai un bref rappel du contexte à savoir le besoin de vérifier la faisabilité technique du système d'urgence face
+          - je ferai un bref rappel du contexte à savoir le besoin de vérifier la faisabilité technique du système
+          d'urgence face
           à des problématiques temps réel
-          - j'introduirai la méthodologie utilisée pour l'évaluation du POC à savoir l'usage de rapport généré par le
+          - j'introduirai la méthodologie utilisée pour l'évaluation du POC à savoir l'usage de rapports générés par le
           pipeline d'intégration continue
-          - je présenterai les résultats et j'indiquerai mes recommendations sur la suite à données aux poc
-          - je présenterai les documents TOGAF rédigés par exemple avec la mise à jour de la déclaration de travail
+          - je présenterai le travail, les résultats et j'indiquerai mes recommendations sur la suite à données aux poc
+          - je présenterai les documents TOGAF rédigés
           - je finirai par récapituler
         </aside>
       </section>
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
-        <p class="fragment fade-in">
-          Plateforme de services
-        </p>
-        <p class="fragment fade-in fonce">
-          basée sur une architecture microservice
-        </p>
+        <img style="margin: 0;" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/domain-model.png?token=GHSAT0AAAAAABSXEB4VFMYRWBDER5JEEXEYYTL74LQ" />
         <aside class="notes">
-          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous, des ressources humaines, et du
-          l'accès au dossier médical du patient donc l'objectif final est d'améliorer l'accès aux soins dispensés aux patients.
+          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous, des
+          ressources humaines, et de
+          l'accès au dossier médical du patient donc l'objectif final est d'améliorer l'accès aux soins dispensés aux
+          patients.
           Ce projet est initié par un consortium de 5 organisations.
         </aside>
       </section>
@@ -62,221 +60,208 @@
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Architecture existante</p>
         <img style="margin: 0;" src="projet11/architecture_existante.png" />
-         <aside class="notes">
-        - Comme on le remarque sur le schéma, la synchronisation des systèmes se fait manuellement, les échanges entre les hopitaux
-        ne sont pas en temps réel et la prise en charge est plus longue.
-        au sein de la société.
+        <aside class="notes">
+          - Comme on le remarque sur le schéma, la synchronisation des systèmes se fait manuellement, les échanges entre
+          les hopitaux
+          ne sont pas en temps réel et la prise en charge est plus longue.
+          au sein de la société.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Rappel du contexte: </span>La nouvelle architecture</p>
+        <img style="margin: 0;" src="projet11/architecture_cible.png" />
+        <aside class="notes">
+          L'architecture cible de la plateforme présente un découpage des différents domaines d'activité vu dans le 
+          modèle en microservice. Ces derniers communiqueront entre eux en utilisant un bus d'évènement (nous verrons les simplifications
+          proposées par le POC à ce sujet), se découvriront avec un service discovery (comme Consul) 
+          et l'observabilité sera assuré par l'intermédiare de container de type side car proxy. Les microservices sur le schéma sont orchestré par une API
+          gateway.
         </aside>
       </section>
 
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Le POC</p>
         <p class="fragment fade-in">
-          centré sur le système d'intervention d'urgence
+          autour du <span class="fonce" style="font-size: 1.3em;">système d'intervention d'urgence</span>
         </p>
-        <p class="fragment fade-in fonce">
-          afin d'étudier la faisabilité technique du projet
+        <p class="fragment fade-in">
+          étude de la <span class="fonce" style="font-size: 1.3em;">faisabilité technique du projet</span>
         </p>
-        <p class="fragment fade-in fonce">
-          face aux contraintes et aux risques découverts
+        <p class="fragment fade-in">
+          face aux <span class="fonce" style="font-size: 1.3em;">risques</span>
         </p>
         <aside class="notes">
-          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir quelle tehnologie vont être utilisés et de les comparer pour 
+          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir quelle tehnologie vont être utilisés
+          et de les comparer pour
           définir si elles répondent aux critères établis
           - face aux contraintes par exemple l'emploi d'une architecture microservice
-          -  et aux risques potentiellement présents: le temps de latence du service, l'exactitude des informations
+          - et aux risques potentiellement présents: la latence des requetes du microservice, l'exactitude des informations
         </aside>
       </section>
 
       <section>
         <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>La méthodologie du POC</p>
-        <p class="fragment fade-in fonce">
-          Basée sur les KPIs 
-        </p>
-        <p class="fragment fade-in fonce">
-          et sur les résultats du pipeline CI / CD
-        </p>
+        <img style="margin: 0;" src="https://solopracticeuniversity.com/files/2018/01/kpi.jpg" />
         <aside class="notes">
           - Basée sur les KPIs définis en amont du PoC
-          - et sur les résultats du pipeline CI / CD à travers les différents rapports d'éxécutions au format html
+          Pour donner quelques exmples de KPI:
+          - rapport de requêtes HTTP en erreur sur sur le nombre de requêtes en succès
+          - côut par requête HTTP (prise en compte des ressources: nombres d'instance, CPU / RAM consommé)
+          - temps de réponse de l'algorithme chargé du calcul des hopitaux les proches
+          
+          - Ces KPIs sont mesurées à partir des rapports générés des tests exécutés dans le pipeline d'intégration continue
+          et de déploiment continu
         </aside>
       </section>
 
       <section>
         <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Les hypothèses</p>
         <p class="fragment fade-in fonce">
-          un microservice basé sur le framework Spring
+          temps de réponse de moins de 200 millisecondes 
+        </p>
+        <p class="fragment fade-in">
+          calcul orthodromique
         </p>
         <p class="fragment fade-in fonce">
-          un calcul de l'hopital le plus proche réalisé par une base MongoDB
+          le rayon couvert par la recherche sera de 50km
         </p>
-        <p class="fragment fade-in fonce">
-          un déploiement basé sur GCP
+        <p class="fragment fade-in">
+          il existe au moins un hôpital dans un rayon de 50km
         </p>
         <aside class="notes">
-          - un microservice basé sur le framework Spring et sa suite d'outils pour améliorer la 
-          productivité des développeurs
-          - un calcul de l'hopital le plus proche réalisé par une base MongoDB c'est à dire une base de données
-          noSQL qui intégre le calcul des distances en utilisant le référentiel géodésique WGS84, il s'agit du calcul à vol d'oiseau
-          - un déploiement basé sur GCP et en particulier sur un service à base de conteneur managé avec le produit Cloud Run
+          - un temps de réponse de moins 
+          de 200 millisecondes avec une charge 
+          de travail allant jusqu'à 800 requêtes par seconde, par instance de service
+          - calcul orthodromique  c'est à dire à vol d'oiseau car  le coût d'une API externe semble élevé
+          - le rayon couvert par la recherche sera de 50km du à  la contrainte de temps de traitement d'une urgence (12 minutes souhaitées)
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Résultats et des recommendations: </span>Les résultats</p>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Les simplifications</p>
         <p class="fragment fade-in fonce">
-          aux tests de performance par appel du microservice:
+          2 endpoints pour la recherche
         </p>
         <p class="fragment fade-in">
-          625ms pour 800 requêtes / sec
+          1 endpoint pour la réservation d'un lit
         </p>
         <p class="fragment fade-in fonce">
-          sur un environnement Cloud Run 
+          communication REST entre microservices
         </p>
         <aside class="notes">
-          - 625ms pour 800 requêtes / sec: 95percentile sur une période de tests de 30 sec
-          - sur un environnement Cloud Run avec les spec suivantes: 2 vCPU, 1 GB de ram 
-          sur un seul container (pas de paramétre de scalabilité)
-          - tests sur un env de préproduction réalisé avec Gatling sur la base d'un scénario de 800 requetes
+          - 1 endpoint pour la recherche d'un lit disponible sans mentionner la spécialité
+          - 1 endpoint pour la recherche d'un lit dans la spécialité demandé<em>
+          - 1 endpoint de mise à jour des informations sur les données d'un hopital
+          - communication REST entre microservices au lieu d'une communication à travers un bus de données. Cela évite
+          pour les besoins du POC de créer un consommateur à l'écoute d'évènement.
+          </em>
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Résultats et des recommendations: </span>Les résultats</p>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Les explorations</p>
         <p class="fragment fade-in fonce">
-          aux tests de performance (profiling) du calcul de disponibilité des lits:
+          Jhipster et Spring Boot
         </p>
         <p class="fragment fade-in">
-          120ms pour 800 requêtes / sec
+          MongoDB
         </p>
         <p class="fragment fade-in fonce">
-          avec Prometheus et une métrique micrometer
+          Github Actions
         </p>
-        <p class="fragment fade-in fonce">
-          sur un environnement Cloud Run 
+        <p class="fragment fade-in">
+          Google Cloud Platform
         </p>
         <aside class="notes">
-          - 120ms pour 800 requêtes / sec: moyenne sur 30 secondes
-          - avec Prometheus et une métrique micrometer à savoir celle basée sur le temps
-          - sur un environnement Cloud Run le même que celui du test avec Gatling
+          - Jhipster pour générer un template d'application et Spring Boot pour le développement d'une API rest
+          - MongoDB pour stocker les données d'un hopital et surtout calculer la proximité des hopitaux
+          - Github action pour mettre en place un pipeline CI / CD
+          - GCP pour exécuter les tests de performance dans un environnement dédié et pour profiter des
+          avantages d'une plateforme cloud (par exemple la scalabilité, offre de produit)
+          </em>
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Résultats et des recommendations: </span>Les résultats</p>
-        <p class="fragment fade-in fonce">
-          temps sur le pipeline CI / CD:
-        </p>
-        <p class="fragment fade-in">
-          inférieur à 30 sec sur les tests d'intégration
-        </p>
-        <p class="fragment fade-in fonce">
-          pipeline basé sur les Github Actions
-        </p>
-        <p class="fragment fade-in fonce">
-          sur environnement Cloud Run et Github Runner
-        </p>
+        <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
+        <img style="margin: -5px;" width="80%" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/performances.png?token=GHSAT0AAAAAABSXEB4VHKNDKMO6DNM7KY5MYTL7UGA" />
         <aside class="notes">
-          - inférieur à 30 sec sur les tests d'intégration avec 4 endpoints testés: mise à jour de la disponibilité d'un lit pour un hopital,
-          récupération du lit le plus proche en fonction de la spécialité, récupération du lit au niveau national
-          - pipeline basé sur les Github Actions, un outils d'orchestrateur de workflow managé par Github
-          - sur environnement Cloud Run et Github Runner: exécution des tests e2e sur Cloud run et les autres types de tests sur un Github Runner
-          il s'agissait de ma propre machine avec les caractéristiques suivnates: 6 cpu, 16Go de ram
+          - En ce qui concerne le scénario d'éxecution, on remarque que nous commencons avec 400 requestes par secondes progrssisment
+          atteintes en 10 secondes puis nous ajoutons 400 requetes afin de satisfaire aux contraintes de l'hypothèse de développement.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
+        <img style="margin: -5px;" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/performance_response_time.png?token=GHSAT0AAAAAABSXEB4VGCIYA2ZR7VBCTGH6YTL75KQ" />
+        <aside class="notes">
+          - Sur ce graphique présentant le temps de réponse en ms classés par centile, on remarque qu'aucune réponse ne dépassent les 100ms hormis au démarrage
+          du test
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
+        <img style="margin: -5px;max-width:140%" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/performance_db.png?token=GHSAT0AAAAAABSXEB4VYUUGBXETZNTGSDUOYTMAB2A" />
+        <aside class="notes">
+          - Le profiling des requetes à la base de données dans les memes condition de test que le tests de performance précèdent montre
+          qu'en moyenne le temps de réponse de la base de données est de 5.5 micro secondes
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Les rapports de tests</p>
+        <img style="margin: -20px;" width="60%" src="projet11/surefire-test.PNG" />
+        <aside class="notes">
+          - Comme on le remarque Les rapports sont générés par le plugin maven Surefire.
+          - 34 tests unitaires, beaucoup sont générés par Jhipster.
+          - 27 tests d'integration, avec quelques lenteurs du au démarrage d'un conteneur mongoDB.
+          - aucun tests en échec
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Résultats et des recommendations: </span>Les tests d'acceptance</p>
+        <img style="margin: -20px;" width="130%" src="projet11/cucumber.PNG" />
+        <aside class="notes">
+          - Les tests d'acceptance sont basés sur un scénario écrit dans le langage gherkin.
+          - Les tests sont réalisé sur une instance déployée du microservice (en local ou en préproduction sur GCP)
+          - Tous les exemples sont conformes aux contraintes de la POC
 
         </aside>
       </section>
-    
+
       <section>
         <p><span class="complementaire">Résultats et des recommendations: </span>Mes recommendations</p>
         <p class="fragment fade-in fonce">
-          séparer le traitement de la disponibilité des lits
+          Ajouter la distance avec les hopitaux
         </p>
         <p class="fragment fade-in">
-          mettre en place du sharding en fonction des secteurs géographique
+          proposer un itinéraire routier
         </p>
         <p class="fragment fade-in fonce">
-          utiliser un framework cloud native
+          PoC pour expérimenter Quarkus
         </p>
         <aside class="notes">
-          - séparer le traitement de la disponibilité des lits c'est à dire créer 2 endpoints, un pour la gestion des lits les plus proches 
-          en fonction de la spécialité désirée, un pour la gestion des lits les plus proches quelque soit la spécialité et au niveau national
-          - mettre en place du sharding en fonction des secteurs géographique: mettre en place un cluster avec MongoDB pour améliorer la performance
-          de la base, et mettre en place un load balancer géosharder
-          - utiliser un framework cloud native: avec Quarkus la performance d'appel d'un endpoint avec désérialisation JSON est de 160ms en moyenne
-
+          - ce calcul pourrait être effectué par une agrégation de type $geoNear et la récupération du champ "distanceField" dans MongoDB
+          - avec l'hébergement d'une solution comme Graphopper
+          - PoC pour expérimenter Quarkus du au manque de temps pour se faire une idée définitive sur le framework et voir
+          si il améliore les performances
         </aside>
       </section>
 
       <section>
         <p><span class="complementaire">Résultats et des recommendations: </span>Mes recommendations</p>
         <p class="fragment fade-in fonce">
-          assurer la scalabilité du service avec la plateforme Google Cloud
+          sharding en fonction des secteurs géographiques
         </p>
         <p class="fragment fade-in">
-          se séparer de la stack Java
-        </p>
-        <p class="fragment fade-in fonce">
-          mettre en place un appel d'offre
+          employer des technologies moins gourmandes
         </p>
         <aside class="notes">
-          - assurer la scalabilité du service avec la plateforme Google Cloud: cela ne permet pas toutefois prendre en compte
-          la contraintes de 800 req / sec pour une seule instance mais garantit le support de la charge
-          - employer des technologies moins gourmandes en terme de ressources comme le Go ou le NodeJs (voir benchmark ?)
-          - mettre en place un appel d'offre afin de mettre en concurrence des prestataires selectionnés sur critères d'évaluation et
-          sur cahier des charges 
-        </aside>
-      </section>
-
-      <section>
-        <p><span class="complementaire">Document TOGAF: </span>Ennoncé somaire des travaux</p>
-        <p class="fragment fade-in fonce">
-          Mise à jour des KPIs
-        </p>
-        <p class="fragment fade-in">
-          KPIs basées sur:
-        </p>
-        <p class="fragment fade-in fonce">
-          la disponibilité (SLA)
-        </p>
-        <p class="fragment fade-in fonce">
-          sur le temps de réponse
-        </p>
-        <p class="fragment fade-in fonce">
-          temps d'éxecution du pipeline CI / CD
-        </p>
-        <p class="fragment fade-in fonce">
-          mais aussi des KPIs bussiness
-        </p>
-        <aside class="notes">
-          - mais aussi des KPIs bussiness: nombre de patient pris en charge par le sytème d'intervention 
-          pendant une période de temps donnée
-          - nombre de patient qui ont trouvé un lit dans la bonne spécialité
-          - distance des trajets comparés à la distance de l'itinér'air GPS
-          - nombre de requetes aux systèmes d'intervention lors d'une réservation concurentielle
-        </aside>
-      </section>
-
-      <section>
-        <p><span class="complementaire">KPIs: </span>Autres indicateurs de performance</p>
-        <p class="fragment fade-in fonce">
-          Deployment Frequency
-        </p>
-        <p class="fragment fade-in fonce">
-          Change Failure Rate
-        </p>
-        <p class="fragment fade-in fonce">
-          MTTR
-        </p>
-        <p class="fragment fade-in fonce">
-          Lead Time for Changes
-        </p>
-        <aside class="notes">
-          - avec des métriques qui permettent également de mesurer la vélocité mais aussi la stabilité.
-          - Fréquence de déploiement afin de mesurer combien de fois l'organisation déploie avec succès ces release en production
-          - Change Failure Rate c'est à dire le pourcentage de déploiement causant une défaillances en production
-          - Mean time to recovery (MTTR) ou combien de temps met l'organisation à se remettre d'une défaillance en production
-          - Lead Time for Changes c'est à dire le temps moyen pour lequel le dernier commit se trouve en production
-
+          -  déploiement d'un cluster MongoDB avec comme index de sharding le secteur géographique
+          - évaluer à travers des benchmarks les performances de Go, Rust, ou NodeJs
         </aside>
       </section>
 
@@ -288,13 +273,13 @@
         <p class="fragment fade-in">
           Framework Spring Boot
         </p>
-        <p class="fragment fade-in">
+        <p class="fragment fade-in fonce">
           Cucumber / Gherkin
         </p>
         <p class="fragment fade-in">
           Github
         </p>
-        <p class="fragment fade-in">
+        <p class="fragment fade-in fonce">
           Google Cloud Platform
         </p>
 
@@ -322,7 +307,7 @@
       <section>
         <p><span class="complementaire">Autres documents: </span>Plan de tests</p>
         <p class="fragment fade-in fonce">
-          orienté sur la stratégie de test
+          orienté sur
         </p>
         <p class="fragment fade-in fonce">
           les différents types de tests
@@ -338,26 +323,28 @@
         </p>
 
         <aside class="notes">
-          - orienté sur la startégie de test: écriture de user tory et des critères d'acceptances en amont du développement,
-          puis écriture des tests unitaires avec la méthodologie TDD, écriture des tests e2e avec Cucumber et écriture des tests d'intégration avec
+          - orienté sur la startégie de test: écriture de user tory et des critères d'acceptances en amont du
+          développement,
+          puis écriture des tests unitaires avec la méthodologie TDD, écriture des tests e2e avec Cucumber et écriture
+          des tests d'intégration avec
           l'outils de test du framework Spring Boot
-          
+
           - critères d'acceptance au format Gherkin
 
           - les différents types de tests et le moment de leur exécution automatique
 
           - métriques à collecter:
-            - code coverage %
+          - code coverage %
 
-            - % de tests réussis
+          - % de tests réussis
 
-            - % de tests échoués
+          - % de tests échoués
 
-            - durée des tests unitaires / tests intégration / tests aceptance
+          - durée des tests unitaires / tests intégration / tests aceptance
 
-            - temps de latence pour les tests de performance
+          - temps de latence pour les tests de performance
 
-            - consommation des ressources sur les environnements de tests (ex. CPU, RAM) pour les tests de performance
+          - consommation des ressources sur les environnements de tests (ex. CPU, RAM) pour les tests de performance
           - sur les environnements de tests au nombre de deux: dev, preprod
 
         </aside>
@@ -367,10 +354,11 @@
         <p>Conclusion</p>
 
         <aside class="notes">
-          - A travers l'étude du POC, nous avons pu déterminé que les tehcnologies utiliés en tant que standart dans 
-          l'univers de Java et de son pendant web ne correespondent pas aux critères de performances énoncés dans les contraintes du projet.
-          Il nous faudra donc soit du temps et des ressources supplémentaires pour tester d'autres solutions précédementn énnoncés soit 
-          mettre en place un appel d'offre. 
+          - A travers l'étude du POC, nous avons pu déterminé que les tehcnologies utiliés en tant que standart dans
+          l'univers de Java et de son pendant web  correespondent aux critères de performances énoncés dans les
+          contraintes du projet.
+          Nous pouvons affiner l'aspect fonctionnel en rajoutant des fonctionnalités au microservice ou bien
+          et amélirer la performance à travers la planification d'autres Poc
 
           Je vous remercie de votre attention, Avez-vous des questions ?
         </aside>
@@ -393,7 +381,8 @@
           travail (et nous le verrons à l'aide du framework Scrum).
           - D'évaluer les ressources humaines: voir si dans l'équipe actuel, nous pouvons réutiliser des ressources et
           sinon recruter en ayant au préalable fait des fiches de poste avec les compétences associées
-          - D'encadrer les pratiques de l'équipe en indiquant ce que nous réutiliserons du framework Scrum, en indiquant les
+          - D'encadrer les pratiques de l'équipe en indiquant ce que nous réutiliserons du framework Scrum, en indiquant
+          les
           postes clés lié à la gouvernance, et en indiquant les pratiques de développement recommandées
         </aside>
       </section>
@@ -436,7 +425,8 @@
           - La plateforme Github permettra également d'héberger le code de la plateforme ainsi que son pipeline
           d'intégration continue
           - Comme le montre l'export du kanban, les différentes taches décrivent
-          des notes GIthub et pourront être traduites en Github Issue pour décrire par exemple une user story avec ses critères d'acceptance.
+          des notes GIthub et pourront être traduites en Github Issue pour décrire par exemple une user story avec ses
+          critères d'acceptance.
           - Chaque Github issue sera associé à une milestone qui correspondra à une release
           - la résolution d'une story aura lieu à travers une Pull request associé à l'issue créée
 
@@ -474,7 +464,8 @@
           existe t-il des composants réutilisables open source ou propriétaires?
 
 
-          - Les technical stories n’obéissent pas à un formalisme rédactionnel particulier. Ils sont estimés en story points comme les user story.
+          - Les technical stories n’obéissent pas à un formalisme rédactionnel particulier. Ils sont estimés en story
+          points comme les user story.
 
 
           - Les user stories suivent le formatisme suivant:En tant que [rôle de l’utilisateur], je veux que [capacité à
@@ -527,7 +518,8 @@
           estimation: 13 story points
         </p>
         <aside class="notes">
-          - Ce qui implique potentiellement le développement backend d’un package intégrant des APIs tierces de conversion de
+          - Ce qui implique potentiellement le développement backend d’un package intégrant des APIs tierces de
+          conversion de
           devises crypto / non crypto d'ou une estimation importante
         </aside>
       </section>
@@ -563,15 +555,20 @@
           Développeur fullstack Java
         </p>
         <aside class="notes">
-          - Lead développeur Java: il encadre l'équipe de développeurs, collabore étroitement avec le product owner, et met en place les bonnes pratiques
+          - Lead développeur Java: il encadre l'équipe de développeurs, collabore étroitement avec le product owner, et
+          met en place les bonnes pratiques
           établies dans le guide des recommendations
-          - Product Owner: il est responsable de la vision produit, il identifier les besoins et exigences fonctionnels des experts métiers,
+          - Product Owner: il est responsable de la vision produit, il identifier les besoins et exigences fonctionnels
+          des experts métiers,
           il participe à la mise en oeuvre des pratiques du framework Scrum
-          - Architecte cloud Google Cloud Platform: il a la responsabilité de traduire l’architecture cible sur la plateforme GCP, 
+          - Architecte cloud Google Cloud Platform: il a la responsabilité de traduire l’architecture cible sur la
+          plateforme GCP,
           d'automatiser et industrialiser le déploiement, de concevoir la surveillance / monitoring
-          - Développeur frontend senior (Javascript): il selectionne les outils frontend pour l’élaboration de la solution et cadre les différents POC, il aura aussi
+          - Développeur frontend senior (Javascript): il selectionne les outils frontend pour l’élaboration de la
+          solution et cadre les différents POC, il aura aussi
           la responsabilité du développement à savoir l'intégration du backend et du design UX / UI
-          - Développeur fullstack Java:  il aura la responsabilité de développer, de maintenir les services Java et pourra intervenir en soutien sur
+          - Développeur fullstack Java: il aura la responsabilité de développer, de maintenir les services Java et
+          pourra intervenir en soutien sur
           la partie front sur le nouveau projet.
         </aside>
       </section>
@@ -585,13 +582,15 @@
           1 profil déjà disponible: Développeur fullstack Java
         </p>
         <p class="fragment fade-in">
-          mais nécessite de monter en compétences 
+          mais nécessite de monter en compétences
         </p>
         <aside class="notes">
-          - recruter car nous avons besoin sur le long terme d'un  Lead développeur Java et d'un développeur front end senior
-          - missionner pour les besoins de l'implémentation:  Architecte cloud Google Cloud Platform,  Product Owner
+          - recruter car nous avons besoin sur le long terme d'un Lead développeur Java et d'un développeur front end
+          senior
+          - missionner pour les besoins de l'implémentation: Architecte cloud Google Cloud Platform, Product Owner
           - David Merle, Senior Software Engineer, occupera également le poste de développeur Java et
-          viendra en support du développement front. Il sera nécessaire de compléter ses compétences avec une formation sur la plateforme GCP  (réaliser par le cloud architecte si possible)
+          viendra en support du développement front. Il sera nécessaire de compléter ses compétences avec une formation
+          sur la plateforme GCP (réaliser par le cloud architecte si possible)
           ainsi que d’une formation supplémentaire sur le framework front selectionné (Ex. React).
           - Les autres profils présents dans le rooster de l’entreprise n’ont pas été retenus à cause d’un écart trop
           important avec les postes désirés pour la réalisation du projet.
@@ -609,12 +608,14 @@
         <aside class="notes">
           - la vélocité mesure la quantité de travail (un certain nombre de user stories) accomplie dans
           un sprint
-          - la vélocité sera représentée par un Sprint Burndown Chart lors d'un sprint et permettra 
+          - la vélocité sera représentée par un Sprint Burndown Chart lors d'un sprint et permettra
           de suivre l’évolution de la quantité de travail restante pour une période donnée
-          
-          -  l’humeur de l’équipe pourra être évaluée en établissant des points réguliers avec les colla-
-          borateurs ou encore la mise en place de tableaux de bord affichéx lors de chaque retropsective permettant aux collaborateurs 
-          d'indiquer avec des smileys leur humeur à la manière des équipes de Spotify, sur par exemple la valeur estimée du travail de l'équipe, la vitesse de l'équipe et bien 
+
+          - l’humeur de l’équipe pourra être évaluée en établissant des points réguliers avec les colla-
+          borateurs ou encore la mise en place de tableaux de bord affichéx lors de chaque retropsective permettant aux
+          collaborateurs
+          d'indiquer avec des smileys leur humeur à la manière des équipes de Spotify, sur par exemple la valeur estimée
+          du travail de l'équipe, la vitesse de l'équipe et bien
           d'autres indicateurs
         </aside>
       </section>
@@ -635,9 +636,11 @@
         </p>
         <aside class="notes">
           - avec des métriques qui permettent également de mesurer la vélocité mais aussi la stabilité.
-          - Fréquence de déploiement afin de mesurer combien de fois l'organisation déploie avec succès ces release en production
+          - Fréquence de déploiement afin de mesurer combien de fois l'organisation déploie avec succès ces release en
+          production
           - Change Failure Rate c'est à dire le pourcentage de déploiement causant une défaillances en production
-          - Mean time to recovery (MTTR) ou combien de temps met l'organisation à se remettre d'une défaillance en production
+          - Mean time to recovery (MTTR) ou combien de temps met l'organisation à se remettre d'une défaillance en
+          production
           - Lead Time for Changes c'est à dire le temps moyen pour lequel le dernier commit se trouve en production
 
         </aside>
@@ -675,10 +678,10 @@
           ce que celui-ci réponde aux attentes des utilisateurs mais également aux besoins du client
           - Le Scrum master a pour objectif de faciliter l’organisation de l’équipe autour des
           bonnes pratiques proposées par le framework Scrum. Il sera partagé par l'équipe de développement.
-        - Le rôle du lead développeur est d’accompagner toute une équipe de déve-
-        loppeurs afin de garantir la réussite du développement technique du projet
+          - Le rôle du lead développeur est d’accompagner toute une équipe de déve-
+          loppeurs afin de garantir la réussite du développement technique du projet
         </aside>
-      </section>      
+      </section>
 
       <section>
         <p><span class="complementaire">Guide de Recommandations: </span>Elements de Scrum utilisés</p>
@@ -692,20 +695,28 @@
           Rétrospective de sprint
         </p>
         <aside class="notes">
-          - Sprint Planning: Le Sprint Planning est une réunion dont la durée peut aller jusqu'a 2h et qui a pour but de définir le contenu du sprint
-          à venir et clarifier tous les éléments du backlog du sprint. C'est à ce moment que l'équipe de développement procéde à l'estimation des user stories
-          - Revue de sprint: la revue de sprint (Sprint Review) est le moment où l'équipe de développement présente le travail effectué lors 
-          du sprint aux différentes parties prenantes du projet à la fin du sprint courant. On ne montre que les fonctionnalités entièrement fini. La revue de sprint
+          - Sprint Planning: Le Sprint Planning est une réunion dont la durée peut aller jusqu'a 2h et qui a pour but de
+          définir le contenu du sprint
+          à venir et clarifier tous les éléments du backlog du sprint. C'est à ce moment que l'équipe de développement
+          procéde à l'estimation des user stories
+          - Revue de sprint: la revue de sprint (Sprint Review) est le moment où l'équipe de développement présente le
+          travail effectué lors
+          du sprint aux différentes parties prenantes du projet à la fin du sprint courant. On ne montre que les
+          fonctionnalités entièrement fini. La revue de sprint
           devra durée 2h
-          - Rétrospective de sprint:  Elle a lieu après la revue de sprint et son objectif est d’identifier les dysfonctionnements dans l’organisation de l’équipe 
-          afin de pouvoir définir des actions concrètes à mettre en place dans les sprints suivants et les résoudre. Sa durée sera de 1h30 compte tenu de la durée d'un sprint qui est 
+          - Rétrospective de sprint: Elle a lieu après la revue de sprint et son objectif est d’identifier les
+          dysfonctionnements dans l’organisation de l’équipe
+          afin de pouvoir définir des actions concrètes à mettre en place dans les sprints suivants et les résoudre. Sa
+          durée sera de 1h30 compte tenu de la durée d'un sprint qui est
           de 1 semaine.
 
-          J'aura également pui citer le daily scrum: le principe de cette pratique consiste à réunir l'équipe de développement chaque matin pour
-          une durée maximale de 15min afin de partager le travail de la veille, ce qu'on compte faire aujourd'hui et les éventuels points de blocages
+          J'aura également pui citer le daily scrum: le principe de cette pratique consiste à réunir l'équipe de
+          développement chaque matin pour
+          une durée maximale de 15min afin de partager le travail de la veille, ce qu'on compte faire aujourd'hui et les
+          éventuels points de blocages
         </aside>
       </section>
-      
+
       <section>
         <p><span class="complementaire">Guide de Recommandations: </span>Méthodes de travail</p>
         <p class="fragment fade-in fonce">
@@ -719,13 +730,19 @@
         </p>
         <aside class="notes">
           - Test driven Development: Le Test Driven Development (Développement Dirigé par les Tests),
-           est une technique de développement qui impose l’écriture de tests avant même l’écriture de la première ligne de code. L’intérêt de cette technique est qu’elle permet d'améliorer le design du code de la solution et d'avoir
-           une meilleure couverture de tests.
-           - Behavior driven development:  il s'agit d'une méthodologie dont le but est de s'assurer que l'ensemble des parties prenantes du développement logiciel 
-           partagent la même compréhension du comportement logiciel attendu. Pour cela, les équipes métiers et technique rédigent ensemble des scénarios pour décrire le comportement
-           du logiciel et les développeurs automatisent ces scénarios sous la forme de tests exécutables.
-           - La revue de code est l'occcasion pour le lead développeur de passer en revue le code développé par un des membres de son équipe avant une fusion
-           avec le code de production. Le lead développeur vérifie à cette occasion que le code repecte les standards de qualité du projet.           
+          est une technique de développement qui impose l’écriture de tests avant même l’écriture de la première ligne
+          de code. L’intérêt de cette technique est qu’elle permet d'améliorer le design du code de la solution et
+          d'avoir
+          une meilleure couverture de tests.
+          - Behavior driven development: il s'agit d'une méthodologie dont le but est de s'assurer que l'ensemble des
+          parties prenantes du développement logiciel
+          partagent la même compréhension du comportement logiciel attendu. Pour cela, les équipes métiers et technique
+          rédigent ensemble des scénarios pour décrire le comportement
+          du logiciel et les développeurs automatisent ces scénarios sous la forme de tests exécutables.
+          - La revue de code est l'occcasion pour le lead développeur de passer en revue le code développé par un des
+          membres de son équipe avant une fusion
+          avec le code de production. Le lead développeur vérifie à cette occasion que le code repecte les standards de
+          qualité du projet.
         </aside>
       </section>
 
@@ -738,13 +755,17 @@
           Logiciel de gestion de version décentralisé
         </p>
         <aside class="notes">
-          - Intégration continue: L'intégration continue est un ensemble de pratiques utilisées en génie logiciel, consistant à vérifier, 
-          à chaque modification réalisés par de multiples développeur dans le code source que le résultat des modifications ne produit pas de régression dans l'application développée
+          - Intégration continue: L'intégration continue est un ensemble de pratiques utilisées en génie logiciel,
+          consistant à vérifier,
+          à chaque modification réalisés par de multiples développeur dans le code source que le résultat des
+          modifications ne produit pas de régression dans l'application développée
           lors de l'intégration du travail de chacun.
-          
-          - Logiciel de gestion de version décentralisé: 
-          un système de gestion de versions est un système qui enregistre toutes les modifications apportées à une liste de fichiers. 
-          Le fait qu'il soit décentralisé fait qu’il est possible de travailler en mode déconnecté avec son dépôt de code tout en gardant des fonctionnalités avancées de collaboration lorsqu’on est connecté
+
+          - Logiciel de gestion de version décentralisé:
+          un système de gestion de versions est un système qui enregistre toutes les modifications apportées à une liste
+          de fichiers.
+          Le fait qu'il soit décentralisé fait qu’il est possible de travailler en mode déconnecté avec son dépôt de
+          code tout en gardant des fonctionnalités avancées de collaboration lorsqu’on est connecté
           je recommande l'usage de Git et d'un système de gestion des branches nommé Gitflow.
         </aside>
       </section>
@@ -753,12 +774,16 @@
         <p>Conclusion</p>
 
         <aside class="notes">
-          - A travers une première version du backlog, j'ai décrit les fonctionnalités qui pourraient être développées, qu'elle soit technique ou non. 
-          La planifications de chacune de ces fonctionnalités se retrouve dans le gantt, qui sera modifié régulièrement par rapport aux priorités de 
-          l'equipe de développement ou encore de sa vélocité. J'ai donné l'ensemble des éléments pour constituer l'équipe de développement à travers la création
+          - A travers une première version du backlog, j'ai décrit les fonctionnalités qui pourraient être développées,
+          qu'elle soit technique ou non.
+          La planifications de chacune de ces fonctionnalités se retrouve dans le gantt, qui sera modifié régulièrement
+          par rapport aux priorités de
+          l'equipe de développement ou encore de sa vélocité. J'ai donné l'ensemble des éléments pour constituer
+          l'équipe de développement à travers la création
           de fiches de postes ou la réutilisation d'une ressource déjà disponible en interne.
-          Afin que l'implémentation de l'architecture soit respecté, j'ai indiqué le cadre de gouvernance de l'équipe, les éléments
-          du framework Scrum à réutiliser et les méthodes de développement utiles à la réalisation du projet 
+          Afin que l'implémentation de l'architecture soit respecté, j'ai indiqué le cadre de gouvernance de l'équipe,
+          les éléments
+          du framework Scrum à réutiliser et les méthodes de développement utiles à la réalisation du projet
 
           Je vous remercie de votre attention, Avez-vous des questions ?
         </aside>
