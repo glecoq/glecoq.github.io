@@ -10,12 +10,12 @@
     <div class="slides">
       <section>
         <p class="complementaire">Objectifs</p>
-        <h2>Présentation du POC</h2>
-        lié au
+        <h2>Présentation de la POC</h2>
+        liée au
         <h2>système d'intervention d'urgence</h2>
         <p>en date du 29 Avril 2022</p>
         <aside class="notes">
-          - Présentation du POC à travers les élèments du
+          - à travers les élèments du
           dépot architectural et le code associé
         </aside>
       </section>
@@ -30,30 +30,30 @@
           <li>Rappel du contexte</li>
           <li>Analyse de la méthodologie et des hypothèses</li>
           <li>Présentation des résultats et des recommendations</li>
-          <li>Présentation des documents TOGAF et du plan de tests</li>
+          <li>Présentation des documents TOGAF et de la stratégie de tests</li>
           <li>Conclusion</li>
         </ol>
         <aside class="notes">
           Afin d'organiser le contenu de ma présentation
-          - je ferai un bref rappel du contexte à savoir le besoin de vérifier la faisabilité technique du système
-          d'urgence face
-          à des problématiques temps réel
-          - j'introduirai la méthodologie utilisée pour l'évaluation du POC à savoir l'usage de rapports générés par le
+          - je ferai un bref rappel du contexte à savoir le besoin de vérifier la faisabilité technique du système d'intervention
+          d'urgence face à des problématiques liées à la performance
+          - j'introduirai la méthodologie utilisée pour l'évaluation de la POC à savoir l'usage de rapports générés par l'execution des tests sur le
           pipeline d'intégration continue
-          - je présenterai le travail, les résultats et j'indiquerai mes recommendations sur la suite à données aux poc
-          - je présenterai les documents TOGAF rédigés
-          - je finirai par récapituler
+          - je présenterai ensuite les éléments produits,les résultats et j'indiquerai mes recommendations sur la suite à données à la POC
+          - je présenterai également les documents TOGAF rédigés ainsi que le document de stratégie de tests
+          - je finirai par conclure
         </aside>
       </section>
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
-        <img style="margin: 0;" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/domain-model.png?token=GHSAT0AAAAAABSXEB4VFMYRWBDER5JEEXEYYTL74LQ" />
+        <img style="margin: 0;" src="projet11/domain-model.png" />
         <aside class="notes">
-          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous, des
-          ressources humaines, et de
-          l'accès au dossier médical du patient donc l'objectif final est d'améliorer l'accès aux soins dispensés aux
+          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous, de la gestion de la disponibilité
+          des ressources humaines, de
+          l'accès au dossier médical du patient et de la prise de décision en temps réel pour permettre de rediriger ce dernier vers les services compétents
+          L'objectif final est donc d'améliorer l'accès aux soins dispensés aux
           patients.
-          Ce projet est initié par un consortium de 5 organisations.
+          Ce projet est initié par notre un consortium MedHead composé de 4 sociétés, expertes dans les différents domaines que devra contenir la plateforme.
         </aside>
       </section>
 
@@ -61,27 +61,25 @@
         <p><span class="complementaire">Rappel du contexte: </span>Architecture existante</p>
         <img style="margin: 0;" src="projet11/architecture_existante.png" />
         <aside class="notes">
-          - Comme on le remarque sur le schéma, la synchronisation des systèmes se fait manuellement, les échanges entre
-          les hopitaux
-          ne sont pas en temps réel et la prise en charge est plus longue.
-          au sein de la société.
+          - Comme on le remarque sur le schéma, la synchronisation des différents systèmes s'effectue de manière manuelle, les échanges entre
+          les hopitaux ne sont donc pas en temps réel, ce qui rend la prise en charge est plus longue, voire difficile (il est par exmple impossible d'attribuer 
+          un cas spécifique à l'établissement approprié)
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Rappel du contexte: </span>La nouvelle architecture</p>
+        <p><span class="complementaire">Rappel du contexte: </span>L'architecture cible</p>
         <img style="margin: 0;" src="projet11/architecture_cible.png" />
         <aside class="notes">
-          L'architecture cible de la plateforme présente un découpage des différents domaines d'activité vu dans le 
-          modèle en microservice. Ces derniers communiqueront entre eux en utilisant un bus d'évènement (nous verrons les simplifications
-          proposées par le POC à ce sujet), se découvriront avec un service discovery (comme Consul) 
-          et l'observabilité sera assuré par l'intermédiare de container de type side car proxy. Les microservices sur le schéma sont orchestré par une API
-          gateway.
+          L'architecture cible de la plateforme présente un découpage des différents domaines d'activité en un ensemble de microservices. Ces derniers communiqueront entre eux en utilisant un bus d'évènement ou une API REST documentées
+          (nous verrons plus tard les simplifications proposées par la POC à ce sujet), ces micorservices se découvriront avec l'aide  d'un service discovery (comme Consul) 
+          et l'observabilité sera assuré par l'intermédiare d'un container de type side car proxy. Nous pouvons égalemtn remarquer que les microservices sur le schéma sont orchestrés par une API
+          gateway. Je vous recommande la lecture du document de définition de l'architecture pour avoir plus de détails sur l'architecte cible.
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Rappel du contexte: </span>Le POC</p>
+        <p><span class="complementaire">Rappel du contexte: </span>La POC</p>
         <p class="fragment fade-in">
           autour du <span class="fonce" style="font-size: 1.3em;">système d'intervention d'urgence</span>
         </p>
@@ -89,14 +87,13 @@
           étude de la <span class="fonce" style="font-size: 1.3em;">faisabilité technique du projet</span>
         </p>
         <p class="fragment fade-in">
-          face aux <span class="fonce" style="font-size: 1.3em;">risques</span>
+          face aux <span class="fonce" style="font-size: 1.3em;">contraintes</span> et aux <span class="fonce" style="font-size: 1.3em;">risques</span>
         </p>
         <aside class="notes">
-          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir quelle tehnologie vont être utilisés
-          et de les comparer pour
-          définir si elles répondent aux critères établis
-          - face aux contraintes par exemple l'emploi d'une architecture microservice
-          - et aux risques potentiellement présents: la latence des requetes du microservice, l'exactitude des informations
+          - uniquement autour du système d'intervention d'urgence
+          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir si des technologies répondent au besoin
+          - face aux contraintes: comme le développement de la POC en tant que microservice exposant une API REST
+          - et aux risques potentiellement présents: une latence trop élévée des requetes du microservice, ou encore l'inexactitude des informations
         </aside>
       </section>
 
@@ -185,7 +182,7 @@
 
       <section>
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
-        <img style="margin: -5px;" width="80%" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/performances.png?token=GHSAT0AAAAAABSXEB4VHKNDKMO6DNM7KY5MYTL7UGA" />
+        <img style="margin: -5px;" width="80%" src="projet11/performances.png" />
         <aside class="notes">
           - En ce qui concerne le scénario d'éxecution, on remarque que nous commencons avec 400 requestes par secondes progrssisment
           atteintes en 10 secondes puis nous ajoutons 400 requetes afin de satisfaire aux contraintes de l'hypothèse de développement.
@@ -194,7 +191,7 @@
 
       <section>
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
-        <img style="margin: -5px;" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/performance_response_time.png?token=GHSAT0AAAAAABSXEB4VGCIYA2ZR7VBCTGH6YTL75KQ" />
+        <img style="margin: -5px;" src="projet11/performance_response_time.png" />
         <aside class="notes">
           - Sur ce graphique présentant le temps de réponse en ms classés par centile, on remarque qu'aucune réponse ne dépassent les 100ms hormis au démarrage
           du test
@@ -203,7 +200,7 @@
 
       <section>
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
-        <img style="margin: -5px;max-width:140%" src="https://raw.githubusercontent.com/glecoq/depot-architectural-medhead/master/images/performance_db.png?token=GHSAT0AAAAAABSXEB4VYUUGBXETZNTGSDUOYTMAB2A" />
+        <img style="margin: -5px;max-width:140%" src="projet11/performance_db.png" />
         <aside class="notes">
           - Le profiling des requetes à la base de données dans les memes condition de test que le tests de performance précèdent montre
           qu'en moyenne le temps de réponse de la base de données est de 5.5 micro secondes
