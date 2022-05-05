@@ -13,7 +13,7 @@
         <h2>Présentation de la POC</h2>
         liée au
         <h2>système d'intervention d'urgence</h2>
-        <p>en date du 29 Avril 2022</p>
+        <p>en date du 5 mai 2022</p>
         <aside class="notes">
           - à travers les élèments du
           dépot architectural et le code associé
@@ -48,9 +48,10 @@
         <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
         <img style="margin: 0;" src="projet11/domain-model.png" />
         <aside class="notes">
-          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous, de la gestion de la disponibilité
-          des ressources humaines, de
-          l'accès au dossier médical du patient et de la prise de décision en temps réel pour permettre de rediriger ce dernier vers les services compétents
+          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous médicaux, de la gestion de la disponibilité
+          des ressources humaines en milieu hospitalier.
+          La plateforme facilitera également
+          l'accès au dossier médical du patient avec une prise de décision en temps réel pour permettre de rediriger ce dernier vers les services compétents
           L'objectif final est donc d'améliorer l'accès aux soins dispensés aux
           patients.
           Ce projet est initié par notre un consortium MedHead composé de 4 sociétés, expertes dans les différents domaines que devra contenir la plateforme.
@@ -63,7 +64,7 @@
         <aside class="notes">
           - Comme on le remarque sur le schéma, la synchronisation des différents systèmes s'effectue de manière manuelle, les échanges entre
           les hopitaux ne sont donc pas en temps réel, ce qui rend la prise en charge est plus longue, voire difficile (il est par exmple impossible d'attribuer 
-          un cas spécifique à l'établissement approprié)
+          un patient à l'établissement qui sera le plus adapté pour le soigner)
         </aside>
       </section>
 
@@ -93,21 +94,23 @@
           - uniquement autour du système d'intervention d'urgence
           - afin d'étudier la faisabilité technique du projet: il s'agit de savoir si des technologies répondent au besoin
           - face aux contraintes: comme le développement de la POC en tant que microservice exposant une API REST
-          - et aux risques potentiellement présents: une latence trop élévée des requetes du microservice, ou encore l'inexactitude des informations
+          - et aux risques potentiellement présents: une latence trop élévée des requetes du microservice, ou encore l'inexactitude des informations renvoyées
+          ce qui est critique pour le système d'intervention d'urgence
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>La méthodologie du POC</p>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>La méthodologie de la POC</p>
         <img style="margin: 0;" src="https://solopracticeuniversity.com/files/2018/01/kpi.jpg" />
         <aside class="notes">
-          - Basée sur les KPIs définis en amont du PoC
-          Pour donner quelques exmples de KPI:
-          - rapport de requêtes HTTP en erreur sur sur le nombre de requêtes en succès
-          - côut par requête HTTP (prise en compte des ressources: nombres d'instance, CPU / RAM consommé)
-          - temps de réponse de l'algorithme chargé du calcul des hopitaux les proches
+          - Basée sur les KPIs définis en amont de la PoC
+          Pour donner quelques exemples de KPI:
+          - taux de requêtes HTTP en erreur sur sur le nombre de requêtes HTTP en succès
+          - côut pour chaque requête HTTP (cela inclut les ressources tels que nombres d'instance déployé sur la plateforme cloud, le pourcentage de 
+          CPU / RAM consommé)
+          - ou encore une KPI basée sur temps de réponse de l'algorithme chargé du calcul des hopitaux les proches
           
-          - Ces KPIs sont mesurées à partir des rapports générés des tests exécutés dans le pipeline d'intégration continue
+          - Ces KPIs sont mesurées à partir des rapports générés par l'exécution de différents tests dans le pipeline d'intégration continue
           et de déploiment continu
         </aside>
       </section>
@@ -131,26 +134,20 @@
           de 200 millisecondes avec une charge 
           de travail allant jusqu'à 800 requêtes par seconde, par instance de service
           - calcul orthodromique  c'est à dire à vol d'oiseau car  le coût d'une API externe semble élevé
-          - le rayon couvert par la recherche sera de 50km du à  la contrainte de temps de traitement d'une urgence (12 minutes souhaitées)
+          - le rayon couvert par la recherche sera de 50km du à  la contrainte du temps de traitement d'une urgence (qui doit être de 12 minutes 
+          du moins c'est ce qui est souhaité)
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Les simplifications</p>
-        <p class="fragment fade-in fonce">
-          2 endpoints pour la recherche
-        </p>
-        <p class="fragment fade-in">
-          1 endpoint pour la réservation d'un lit
-        </p>
-        <p class="fragment fade-in fonce">
-          communication REST entre microservices
-        </p>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Simplifications</p>
+        <img style="margin: 0;" src="projet11/swagger.png" />
         <aside class="notes">
-          - 1 endpoint pour la recherche d'un lit disponible sans mentionner la spécialité
-          - 1 endpoint pour la recherche d'un lit dans la spécialité demandé<em>
-          - 1 endpoint de mise à jour des informations sur les données d'un hopital
-          - communication REST entre microservices au lieu d'une communication à travers un bus de données. Cela évite
+          - 1 endpoint pour la réservation d'un lit qui permet aussi la mise à jour des informations sur les données d'un hopital
+          - 1 endpoint pour la recherche d'un lit disponible sans mentionner la spécialité: on cherche l'hopital le plus proche avec 
+          un lit disponible dans un rayin de 50km
+          - 1 endpoint pour la recherche d'un lit dans la spécialité demandé si un lit est disponible dans un rayon de 50km
+          - communication REST entre microservices au lieu d'une communication à travers un bus de données pour la mise à jour. Cela évite
           pour les besoins du POC de créer un consommateur à l'écoute d'évènement.
           </em>
         </aside>
@@ -175,7 +172,7 @@
           - MongoDB pour stocker les données d'un hopital et surtout calculer la proximité des hopitaux
           - Github action pour mettre en place un pipeline CI / CD
           - GCP pour exécuter les tests de performance dans un environnement dédié et pour profiter des
-          avantages d'une plateforme cloud (par exemple la scalabilité, offre de produit)
+          avantages d'une plateforme cloud (par exemple la scalabilité, offre de produit basé sur les conteneurs)
           </em>
         </aside>
       </section>
@@ -184,8 +181,9 @@
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
         <img style="margin: -5px;" width="80%" src="projet11/performances.png" />
         <aside class="notes">
-          - En ce qui concerne le scénario d'éxecution, on remarque que nous commencons avec 400 requestes par secondes progrssisment
-          atteintes en 10 secondes puis nous ajoutons 400 requetes afin de satisfaire aux contraintes de l'hypothèse de développement.
+          - En ce qui concerne le scénario d'éxecution du test de performance Gatling, on remarque que nous commencons avec 400 requestes par secondes progrssisment
+          atteintes en 10 secondes puis nous ajoutons 400 requetes supplémentaires afin de satisfaire aux contraintes de l'hypothèse de développement.
+          Un exemple d'un rapport de performance est à votre disposition dans le dépot de code dans le dossier à la racine nommé "reports"
         </aside>
       </section>
 
@@ -202,8 +200,8 @@
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
         <img style="margin: -5px;max-width:140%" src="projet11/performance_db.png" />
         <aside class="notes">
-          - Le profiling des requetes à la base de données dans les memes condition de test que le tests de performance précèdent montre
-          qu'en moyenne le temps de réponse de la base de données est de 5.5 micro secondes
+          - Le profiling des requetes à la base de données lors des tests de performance précèdents montre
+          que le temps de réponse moyen est de 5.5 micro secondes. Ce profiling est réalisé avec la soltion Jprofiler.
         </aside>
       </section>
 
@@ -235,15 +233,16 @@
           Ajouter la distance avec les hopitaux
         </p>
         <p class="fragment fade-in">
-          proposer un itinéraire routier
+          Proposer un itinéraire routier
         </p>
         <p class="fragment fade-in fonce">
           PoC pour expérimenter Quarkus
         </p>
         <aside class="notes">
           - ce calcul pourrait être effectué par une agrégation de type $geoNear et la récupération du champ "distanceField" dans MongoDB
-          - avec l'hébergement d'une solution comme Graphopper
-          - PoC pour expérimenter Quarkus du au manque de temps pour se faire une idée définitive sur le framework et voir
+          - avec l'hébergement d'une solution comme Graphopper, ce qui rendrait aussi plus précis les distances à parcourir
+          - la plannification d'une nouvelle PoC pour expérimenter Quarkus, ce qui n'a pas pu etre réaliser avec exaustivité du au manque de temps.
+          Il reste quand meme à se faire une idée définitive sur le framework et voir
           si il améliore les performances
         </aside>
       </section>
@@ -257,14 +256,14 @@
           employer des technologies moins gourmandes
         </p>
         <aside class="notes">
-          -  déploiement d'un cluster MongoDB avec comme index de sharding le secteur géographique
-          - évaluer à travers des benchmarks les performances de Go, Rust, ou NodeJs
+          -  c'est à dire le déploiement d'un cluster MongoDB avec comme index de sharding le secteur géographique
+          - pour cela , il faudrait évaluer à travers des benchmarks les performances de Go, Rust, ou NodeJs dans des conditions similaires
         </aside>
       </section>
 
       <section>
         <p><span class="complementaire">Document TOGAF: </span>SBB</p>
-        <p class="fragment fade-in fonce">
+        <p class="fragment fade-in complementaire" style="font-weight: bold;">
           Modules de construction génériques:
         </p>
         <p class="fragment fade-in">
@@ -287,7 +286,7 @@
 
       <section>
         <p><span class="complementaire">Document TOGAF: </span>SBB</p>
-        <p class="fragment fade-in fonce">
+        <p class="fragment fade-in complementaire" style="font-weight: bold;">
           Modules de construction de la preuve de concept:
         </p>
         <p class="fragment fade-in">
@@ -302,35 +301,24 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Autres documents: </span>Plan de tests</p>
-        <p class="fragment fade-in fonce">
-          orienté sur
-        </p>
-        <p class="fragment fade-in fonce">
-          les différents types de tests
-        </p>
-        <p class="fragment fade-in fonce">
-          sur les métriques à collecter
-        </p>
-        <p class="fragment fade-in fonce">
-          sur les environnements de tests
-        </p>
-        <p class="fragment fade-in fonce">
-          l'organisation des branches Git
-        </p>
-
+        <p><span class="complementaire">Autres documents: </span>Stratégie de tests</p>
+        <img style="margin: -5px;max-width:100%" src="https://user.oc-static.com/upload/2019/08/17/15660719394662_P1CH1_pyramid.png" />
         <aside class="notes">
-          - orienté sur la startégie de test: écriture de user tory et des critères d'acceptances en amont du
-          développement,
-          puis écriture des tests unitaires avec la méthodologie TDD, écriture des tests e2e avec Cucumber et écriture
-          des tests d'intégration avec
-          l'outils de test du framework Spring Boot
+          - orienté sur la pyramide des tests: 
+          - pour chaque type de tests, le document indique à quel moment le test doit etre réalisé, la méthodologie de test souhaités
+          avec par exemple l'emploi de la méthodologie BDD.
+          Mais aussi le document indique la structure des tests dans le dépot de code.
 
-          - critères d'acceptance au format Gherkin
+        </aside>
+      </section>
 
-          - les différents types de tests et le moment de leur exécution automatique
-
-          - métriques à collecter:
+      <section>
+        <p><span class="complementaire">Autres documents: </span>Stratégie de tests</p>
+        <h3>Les métriques</h3>
+        <img style="margin: -5px;max-width:100%" src="https://4.bp.blogspot.com/-B6fDXYBIdHM/XVViuv2m98I/AAAAAAAABjY/jnFmWY_nMx8so4hOgo0wIoyYXySLqZPkACLcBGAs/s1600/bug_report.png" />
+        <aside class="notes">
+          - le document de test décrit les métriques à collecter à travers les différents rapport de test:
+          
           - code coverage %
 
           - % de tests réussis
@@ -341,8 +329,21 @@
 
           - temps de latence pour les tests de performance
 
-          - consommation des ressources sur les environnements de tests (ex. CPU, RAM) pour les tests de performance
-          - sur les environnements de tests au nombre de deux: dev, preprod
+
+        </aside>
+      </section>
+      
+
+      <section>
+        <p><span class="complementaire">Autres documents: </span>Stratégie de tests</p>
+        <h3>Les environnements d'exécution des tests</h3>
+        <div style="display: grid;grid-template-columns: repeat(2, 1fr);justify-content:center;">
+          <img src="https://www.lebigdata.fr/wp-content/uploads/2021/03/DataLab_-_Chapitre_0_-_Fabriquer_sa_station_de_mesure_connect_e_github-logo-640x320-1.png" />
+          <img src="https://integragen.com/wp-content/uploads/google-cloud.jpg" />
+        </div>
+        <aside class="notes">
+          - Et enfin le document de stratégie de test décrit les environnements sur lesquels les tests vont être exécuté à savoir 
+          en local sur la machine du développeur, sur les runners de Github Action, ou sur l'environnement cloud de Google Cloud Platform
 
         </aside>
       </section>
