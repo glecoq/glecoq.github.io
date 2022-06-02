@@ -10,10 +10,10 @@
     <div class="slides">
       <section>
         <p class="complementaire">Objectifs</p>
-        <h2>Présentation de la POC</h2>
+        <h2>Présentation de la demande de changement</h2>
         liée au
-        <h2>système d'intervention d'urgence</h2>
-        <p>en date du 5 mai 2022</p>
+        <h2>l'implémentation de l'architecture cible</h2>
+        <p>en date du 9 juin 2022</p>
         <aside class="notes">
           - à travers les élèments du
           dépot architectural et le code associé
@@ -21,61 +21,285 @@
       </section>
       <section>
         <p>Guillaume Lecoq</p>
-        <p class="gris">Architecte logiciel</p>
-        Société MedHead
+        <p class="gris">Architecte logiciel (freelance)</p>
+        responsable de la définition de la nouvelle architecture
       </section>
       <section>
         <h2 class="gris">Sommaire</h2>
         <ol class="maliste">
           <li>Rappel du contexte</li>
-          <li>Analyse de la méthodologie et des hypothèses</li>
-          <li>Présentation des résultats et des recommendations</li>
-          <li>Présentation des documents TOGAF et de la stratégie de tests</li>
+          <li>Analyse des deux solutions proposées</li>
+          <li>Présentation du choix retenu</li>
+          <li>Présentation des impacts</li>
           <li>Conclusion</li>
         </ol>
         <aside class="notes">
           Afin d'organiser le contenu de ma présentation
-          - je ferai un bref rappel du contexte à savoir le besoin de vérifier la faisabilité technique du système d'intervention
-          d'urgence face à des problématiques liées à la performance
-          - j'introduirai la méthodologie utilisée pour l'évaluation de la POC à savoir l'usage de rapports générés par l'execution des tests sur le
-          pipeline d'intégration continue
-          - je présenterai ensuite les éléments produits,les résultats et j'indiquerai mes recommendations sur la suite à données à la POC
-          - je présenterai également les documents TOGAF rédigés ainsi que le document de stratégie de tests
+          - je ferai un bref rappel du contexte à savoir le projet d'implémentation de la nouvelle architecture, la
+          demande d'ajout de fonctionnalités en
+          cours de cette dernière
+          - je proposerai ensuite deux solutions permettant de répondre à la demande de changement dans les délais
+          impartis
+          - je présenterai ensuite la solution retenue et j'expliquerai en quoi elle est plus viable
+          - je présenterai les impacts de l'implémentation de la solution que se soit aussi bien sur la plannification,
+          le cout ou
+          les modifications techniques à réaliser
           - je finirai par conclure
-        </aside>
-      </section>
-      <section>
-        <p><span class="complementaire">Rappel du contexte: </span>Le projet</p>
-        <img style="margin: 0;" src="projet11/domain-model.png" />
-        <aside class="notes">
-          Le projet consiste en la création d'une plateforme de service autour de la planification des rendez-vous médicaux, de la gestion de la disponibilité
-          des ressources humaines en milieu hospitalier.
-          La plateforme facilitera également
-          l'accès au dossier médical du patient avec une prise de décision en temps réel pour permettre de rediriger ce dernier vers les services compétents
-          L'objectif final est donc d'améliorer l'accès aux soins dispensés aux
-          patients.
-          Ce projet est initié par notre un consortium MedHead composé de 4 sociétés, expertes dans les différents domaines que devra contenir la plateforme.
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Rappel du contexte: </span>Architecture existante</p>
-        <img style="margin: 0;" src="projet11/architecture_existante.png" />
+        <p><span class="complementaire">Contexte : </span>Développement d'une nouvelle architecture</p>
+        <p class="fragment fade-in">
+          autour d'un <span class="fonce" style="font-size: 1.3em;">système pour générer et maintenir des sites Web
+            rapidement et efficacement</span>
+        </p>
         <aside class="notes">
-          - Comme on le remarque sur le schéma, la synchronisation des différents systèmes s'effectue de manière manuelle, les échanges entre
-          les hopitaux ne sont donc pas en temps réel, ce qui rend la prise en charge est plus longue, voire difficile (il est par exmple impossible d'attribuer 
-          un patient à l'établissement qui sera le plus adapté pour le soigner)
+          TODO
         </aside>
       </section>
+
+      <section>
+        <p><span class="complementaire">Contexte : </span>Développement d'une nouvelle architecture</p>
+        <p class="fragment fade-in">
+          découverte de <span class="fonce" style="font-size: 1.3em;">fonctionnalités en cours du projet</span>
+        </p>
+        <p class="fragment fade-in">
+          besoin de <span class="fonce" style="font-size: 1.3em;">respecter les contraintes initiales du projet</span>
+        </p>
+        <aside class="notes">
+          découverte de fonctionnalités en cours du projet:
+
+          - segmenter les ressources d'un client
+
+          - assurer la confidentialité de certaines données
+
+          - mettre en place un processus de mise à jour centralisé et parallélisable
+
+          - faire valider la demande de modification par le client lors de la modification de son site internet
+
+          besoin de respecter les contraintes initiales du projet:
+
+          - 10 jours ouvrés restant avant la livraison finale de l'architecture cible
+
+          - cette date de livraison ne doit être absolument respecter
+
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Contexte : </span>L'architecture en semaine 6</p>
+        <img style="margin: 0;" src="projet12/17_High_Level_Architecture.png" />
+        <aside class="notes">
+          Comme on le remarque sur le schéma, l'architecture est constituée :
+          - d'un serveur unique contenant à la fois ce que je nomme le "Site Builder"
+          qui va gérer l'assemblage et l'indexation des sites atoms et des template pour créer les sites clients.
+          On remarque également que le serveur webstreet va servir à héberger les sites clients.
+
+          et enfin la présence d'une seule base de données contenant l'ensemble des données clients et des données
+          relatives au site builder.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Solutions : </span>Solution A</p>
+        <p class="fragment fade-in">
+          privilégier <span class="fonce" style="font-size: 1.3em;">l'aspect commercial au détriment de l'aspect technique</span>
+        </p>
+        <p class="fragment fade-in">
+          en ajoutant plus d'exigences fonctionnelles
+        </p>
+        <aside class="notes">
+          en ajoutant plus d'exigences fonctionnelles parmi lesquelles:
+          - mise en jour centralisée et au même instant réalisée par Webstreet grâce à un planificateur de tâches
+
+          - validation du client lors de modifications réalisées sur son site avant mise en production
+
+          - contenu volumineux sur le serveur du client
+
+          - fourniture du site internet au client avant validation
+
+        - déploiement en production du site internet client sur l'infrastructure de Webstreet
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Solution A: </span>Architecture</p>
+        <img style="margin: 0;" src="projet12/SolutionA.png" />
+        <aside class="notes">
+          Comme on le remarque sur le schéma, l'architecture est constituée :
+          - d'un service de mise à jour qui se déclenchera à interval régulier et aura la responsabilité
+          de mettre à jour les dépot git clonés pour la diffusion des sites client concernés par une modification
+          - le processus de mise à jour peut etre synthétisé de la manière suivante:
+            1. l'équipe de développement  envoie une notification au client.
+            2. le client est notifié par mail ou par un sms: il doit récupérer manuellement le site internet sur le dépôt Git mise à disposition par l'équipe de développement
+            3. le client donne son accord pour une mise en production par mail
+            4. l'équipe de développement envoie à travers le site builder un évènement de validation
+            5. à intervalles réguliers, un planificateur de tâche (de type "cron") va vider la queue dédiée dans le broker et 
+            mettre à jour au même instant l'ensemble des sites validés par les différents clients
+
+          - Sur le schéma on remarque également que le client peut héberger les données sur son infrastrcuture (ou le déléguer à l'agence
+          webstreet par l'intermédiaire de sa base de donnés unique divisé par schéma, nous aurons donc un schéma par client)
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Justification de l'éviction de la solution A: </span>exemples</p>
+        <p class="fragment fade-in fonce">
+          couplage fort avec la base de données ou le système de fichiers partagé
+        </p>
+        <p class="fragment fade-in">
+          principe du moindre privilège non respecté
+        </p>
+        <p class="fragment fade-in fonce">
+          pas de tests automatisés
+        </p>
+        <aside class="notes">
+          Bien que l'architecture répond à davantage d'exigences fonctionnelles, elle introduit également les risques suivants:
+
+          - couplage fort avec la base de données ou le système de fichiers partagé,  ce qui limite l'évolutivité du système d'information (ex. possibilité de changer de base de données ou de CMS)
+          - principe du moindre privilège non respecté: par exemple le serveur de Webstreet doit disposer d'un accès complet à la base de données clients
+          - pas de tests automatisés en particulier les tests d'aceptances ce qui introduit une perte de productivité, 
+          un oubli de certains tests entraînant une régression
+        
+          Et de nombreux autres autres points tel que:
+          - le risque d'avoir des environnements divergents entre l'env de production et l'env du client
+          - une scalabilité réduite par les ressources sur le serveur de Webstreet
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Solutions : </span>Solution B</p>
+        <p class="fragment fade-in">
+          privilégier <span class="fonce" style="font-size: 1.3em;">le côté technique au détriment du côté commercial</span>
+        </p>
+        <p class="fragment fade-in">
+          en introduisant plus de qualités non-fonctionnelles
+        </p>
+        <aside class="notes">
+         TODO ou passer à la suite
+        </aside>
+      </section>
+
+
+      <section>
+        <p><span class="complementaire">Solution B: </span>Architecture contextuelle</p>
+        <img style="margin: 0;" src="projet12/solutionB_Context.png" />
+        <aside class="notes">
+          Comme on le remarque sur le schéma, l'architecture est de type multitenant hybride.
+          En effet, le client 1 héberge lui meme ses données, peut modifier le contenu grace à l'usage d'un CMS
+          et expose ses données à travers une API REST: il s'agit d'une mode d'isolation le plus strict.
+          Le client 2 utilise également un CMS et une API REST mais ces deniers sont provisionnés sur l'infrastructure géré par 
+          l'agence. 
+          Nous verrons dans un diagramme d'architecture technologique que les données du client 2 sont stockés sur une base de 
+          données communes pour tous les clients de Webstreet ayant choisi cette modalité d'hébergement.
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Architecture technologique: </span>Single-Tenant</p>
+        <img style="margin: 0;" src="projet12/archi-techno-isolated-tenant.png" />
+        <aside class="notes">
+          Comme on le remarque sur le schéma, l'architecture lorsque le client souhaite isolé ses données
+          
+
+        </aside>
+      </section>
+
+
+      <section>
+        <p><span class="complementaire">Architecture technologique: </span>Multi-Tenant</p>
+        <img style="margin: 0;" width="80%" src="projet12/archi-techno-shared-tenant.png" />
+        <aside class="notes">
+          TODO
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Solution B: </span>Les avantages</p>
+        <p class="fragment fade-in fonce">
+          meilleure maintenabilité / modularité</span>
+        </p>
+        <p class="fragment fade-in">
+          mesures de sécurité adaptés
+        </p>
+        <p class="fragment fade-in fonce">
+          portabilité accrue
+        </p>
+        <p class="fragment fade-in">
+          meilleure disponibilité
+        </p>
+        <aside class="notes">
+          Les avantages de ce type de déploiement:
+          - meilleure maintenabilité de la solution grâce à l'utilisation de méthodes d'ingénieurie éprouvées comme l'ajout 
+          d'un pipeline CI / CD et meilleure modularité avec l'emploi de site ayant une architecture monolitique modulaire
+          - des mesures de sécurité adaptés pour assurer la confidentialité des données ou la prévention des vulnérabilité
+          - portabilité accrue avec l'usage de technologies à base de conteneurs
+          - meilleure disponibilité assurés par le fournisseur cloud Google Cloud Platform
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Architecture technologique: </span>Pipeline CI / CD</p>
+        <img style="margin: 0;" width="55%" src="projet12/pipeline-ci.png" />
+        <aside class="notes">
+          TODO
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Solution B: </span>Plannnig</p>
+        <img style="margin: 0;" width="80%" src="projet12/gantt.png" />
+        <aside class="notes">
+          TODO
+        </aside>
+      </section>
+
+      <section>
+        <p><span class="complementaire">Solution B: </span>Coûts additionnels</p>
+        <p class="fragment fade-in fonce">
+          2 jours de travail supplémentaires
+        </p>
+        <p class="fragment fade-in">
+          pour un coût de <span class="fonce" style="font-size: 1.3em;">1200 euros</span>
+        </p>
+        <aside class="notes">
+          La solution B n'introduit pas de ressources supplémentaires, je pourrais réaliser la solution B dans les délais
+          impartis. Comme on a pu le voir dans le gantt, les deux jours de travail supplémentaires seront donc travaillés le samedi afin de ne pas perturber le planning initial
+        </aside>
+      </section>
+
+
+      <section>
+        <p>Conclusion</p>
+
+        <aside class="notes">
+          - Afin de répondre à la demande de changement, j'ai pu envisagé deux solutions différentes (A et B pour les nommer), toutes introduisant différents compromis.
+          J'ai selectionné la solution B car elle répondra d'avantage aux enjeux d'évolutivité que la solution A et permettra à la société
+          Webstreet d'étendre son portefeuille client sans envisagé une refonte de toute l'architecture.
+          Enfin l'implémentation de la solution B respecte les délais impartis et le cout addionnel reste résonnable pour ce type de changement.
+
+          Je vous remercie de votre attention, Avez-vous des questions ?
+        </aside>
+      </section>
+
+
+
+
 
       <section>
         <p><span class="complementaire">Rappel du contexte: </span>L'architecture cible</p>
         <img style="margin: 0;" src="projet11/architecture_cible.png" />
         <aside class="notes">
-          L'architecture cible de la plateforme présente un découpage des différents domaines d'activité en un ensemble de microservices. Ces derniers communiqueront entre eux en utilisant un bus d'évènement ou une API REST documentées
-          (nous verrons plus tard les simplifications proposées par la POC à ce sujet), ces micorservices se découvriront avec l'aide  d'un service discovery (comme Consul) 
-          et l'observabilité sera assuré par l'intermédiare d'un container de type side car proxy. Nous pouvons égalemtn remarquer que les microservices sur le schéma sont orchestrés par une API
-          gateway. Je vous recommande la lecture du document de définition de l'architecture pour avoir plus de détails sur l'architecte cible.
+          L'architecture cible de la plateforme présente un découpage des différents domaines d'activité en un ensemble
+          de microservices. Ces derniers communiqueront entre eux en utilisant un bus d'évènement ou une API REST
+          documentées
+          (nous verrons plus tard les simplifications proposées par la POC à ce sujet), ces micorservices se
+          découvriront avec l'aide d'un service discovery (comme Consul)
+          et l'observabilité sera assuré par l'intermédiare d'un container de type side car proxy. Nous pouvons égalemtn
+          remarquer que les microservices sur le schéma sont orchestrés par une API
+          gateway. Je vous recommande la lecture du document de définition de l'architecture pour avoir plus de détails
+          sur l'architecte cible.
         </aside>
       </section>
 
@@ -88,29 +312,35 @@
           étude de la <span class="fonce" style="font-size: 1.3em;">faisabilité technique du projet</span>
         </p>
         <p class="fragment fade-in">
-          face aux <span class="fonce" style="font-size: 1.3em;">contraintes</span> et aux <span class="fonce" style="font-size: 1.3em;">risques</span>
+          face aux <span class="fonce" style="font-size: 1.3em;">contraintes</span> et aux <span class="fonce"
+            style="font-size: 1.3em;">risques</span>
         </p>
         <aside class="notes">
           - uniquement autour du système d'intervention d'urgence
-          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir si des technologies répondent au besoin
+          - afin d'étudier la faisabilité technique du projet: il s'agit de savoir si des technologies répondent au
+          besoin
           - face aux contraintes: comme le développement de la POC en tant que microservice exposant une API REST
-          - et aux risques potentiellement présents: une latence trop élévée des requetes du microservice, ou encore l'inexactitude des informations renvoyées
+          - et aux risques potentiellement présents: une latence trop élévée des requetes du microservice, ou encore
+          l'inexactitude des informations renvoyées
           ce qui est critique pour le système d'intervention d'urgence
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>La méthodologie de la POC</p>
+        <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>La méthodologie de la POC
+        </p>
         <img style="margin: 0;" src="https://solopracticeuniversity.com/files/2018/01/kpi.jpg" />
         <aside class="notes">
           - Basée sur les KPIs définis en amont de la PoC
           Pour donner quelques exemples de KPI:
           - taux de requêtes HTTP en erreur sur sur le nombre de requêtes HTTP en succès
-          - côut pour chaque requête HTTP (cela inclut les ressources tels que nombres d'instance déployé sur la plateforme cloud, le pourcentage de 
+          - côut pour chaque requête HTTP (cela inclut les ressources tels que nombres d'instance déployé sur la
+          plateforme cloud, le pourcentage de
           CPU / RAM consommé)
           - ou encore une KPI basée sur temps de réponse de l'algorithme chargé du calcul des hopitaux les proches
-          
-          - Ces KPIs sont mesurées à partir des rapports générés par l'exécution de différents tests dans le pipeline d'intégration continue
+
+          - Ces KPIs sont mesurées à partir des rapports générés par l'exécution de différents tests dans le pipeline
+          d'intégration continue
           et de déploiment continu
         </aside>
       </section>
@@ -118,7 +348,7 @@
       <section>
         <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Les hypothèses</p>
         <p class="fragment fade-in fonce">
-          temps de réponse de moins de 200 millisecondes 
+          temps de réponse de moins de 200 millisecondes
         </p>
         <p class="fragment fade-in">
           calcul orthodromique
@@ -130,11 +360,12 @@
           il existe au moins un hôpital dans un rayon de 50km
         </p>
         <aside class="notes">
-          - un temps de réponse de moins 
-          de 200 millisecondes avec une charge 
+          - un temps de réponse de moins
+          de 200 millisecondes avec une charge
           de travail allant jusqu'à 800 requêtes par seconde, par instance de service
-          - calcul orthodromique  c'est à dire à vol d'oiseau car  le coût d'une API externe semble élevé
-          - le rayon couvert par la recherche sera de 50km du à  la contrainte du temps de traitement d'une urgence (qui doit être de 12 minutes 
+          - calcul orthodromique c'est à dire à vol d'oiseau car le coût d'une API externe semble élevé
+          - le rayon couvert par la recherche sera de 50km du à la contrainte du temps de traitement d'une urgence (qui
+          doit être de 12 minutes
           du moins c'est ce qui est souhaité)
         </aside>
       </section>
@@ -143,11 +374,15 @@
         <p><span class="complementaire">Analyse de la méthodologie et des hypothèses: </span>Simplifications</p>
         <img style="margin: 0;" src="projet11/swagger.png" />
         <aside class="notes">
-          - 1 endpoint pour la réservation d'un lit qui permet aussi la mise à jour des informations sur les données d'un hopital
-          - 1 endpoint pour la recherche d'un lit disponible sans mentionner la spécialité: on cherche l'hopital le plus proche avec 
+          - 1 endpoint pour la réservation d'un lit qui permet aussi la mise à jour des informations sur les données
+          d'un hopital
+          - 1 endpoint pour la recherche d'un lit disponible sans mentionner la spécialité: on cherche l'hopital le plus
+          proche avec
           un lit disponible dans un rayin de 50km
-          - 1 endpoint pour la recherche d'un lit dans la spécialité demandé si un lit est disponible dans un rayon de 50km
-          - communication REST entre microservices au lieu d'une communication à travers un bus de données pour la mise à jour. Cela évite
+          - 1 endpoint pour la recherche d'un lit dans la spécialité demandé si un lit est disponible dans un rayon de
+          50km
+          - communication REST entre microservices au lieu d'une communication à travers un bus de données pour la mise
+          à jour. Cela évite
           pour les besoins du POC de créer un consommateur à l'écoute d'évènement.
           </em>
         </aside>
@@ -181,9 +416,12 @@
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
         <img style="margin: -5px;" width="80%" src="projet11/performances.png" />
         <aside class="notes">
-          - En ce qui concerne le scénario d'éxecution du test de performance Gatling, on remarque que nous commencons avec 400 requestes par secondes progrssisment
-          atteintes en 10 secondes puis nous ajoutons 400 requetes supplémentaires afin de satisfaire aux contraintes de l'hypothèse de développement.
-          Un exemple d'un rapport de performance est à votre disposition dans le dépot de code dans le dossier à la racine nommé "reports"
+          - En ce qui concerne le scénario d'éxecution du test de performance Gatling, on remarque que nous commencons
+          avec 400 requestes par secondes progrssisment
+          atteintes en 10 secondes puis nous ajoutons 400 requetes supplémentaires afin de satisfaire aux contraintes de
+          l'hypothèse de développement.
+          Un exemple d'un rapport de performance est à votre disposition dans le dépot de code dans le dossier à la
+          racine nommé "reports"
         </aside>
       </section>
 
@@ -191,7 +429,8 @@
         <p><span class="complementaire">Résultats et des recommendations: </span>La performance</p>
         <img style="margin: -5px;" src="projet11/performance_response_time.png" />
         <aside class="notes">
-          - Sur ce graphique présentant le temps de réponse en ms classés par centile, on remarque qu'aucune réponse ne dépassent les 100ms hormis au démarrage
+          - Sur ce graphique présentant le temps de réponse en ms classés par centile, on remarque qu'aucune réponse ne
+          dépassent les 100ms hormis au démarrage
           du test
         </aside>
       </section>
@@ -239,9 +478,12 @@
           PoC pour expérimenter Quarkus
         </p>
         <aside class="notes">
-          - ce calcul pourrait être effectué par une agrégation de type $geoNear et la récupération du champ "distanceField" dans MongoDB
-          - avec l'hébergement d'une solution comme Graphopper, ce qui rendrait aussi plus précis les distances à parcourir
-          - la plannification d'une nouvelle PoC pour expérimenter Quarkus, ce qui n'a pas pu etre réaliser avec exaustivité du au manque de temps.
+          - ce calcul pourrait être effectué par une agrégation de type $geoNear et la récupération du champ
+          "distanceField" dans MongoDB
+          - avec l'hébergement d'une solution comme Graphopper, ce qui rendrait aussi plus précis les distances à
+          parcourir
+          - la plannification d'une nouvelle PoC pour expérimenter Quarkus, ce qui n'a pas pu etre réaliser avec
+          exaustivité du au manque de temps.
           Il reste quand meme à se faire une idée définitive sur le framework et voir
           si il améliore les performances
         </aside>
@@ -256,8 +498,9 @@
           employer des technologies moins gourmandes
         </p>
         <aside class="notes">
-          -  c'est à dire le déploiement d'un cluster MongoDB avec comme index de sharding le secteur géographique
-          - pour cela , il faudrait évaluer à travers des benchmarks les performances de Go, Rust, ou NodeJs dans des conditions similaires
+          - c'est à dire le déploiement d'un cluster MongoDB avec comme index de sharding le secteur géographique
+          - pour cela , il faudrait évaluer à travers des benchmarks les performances de Go, Rust, ou NodeJs dans des
+          conditions similaires
         </aside>
       </section>
 
@@ -302,10 +545,12 @@
 
       <section>
         <p><span class="complementaire">Autres documents: </span>Stratégie de tests</p>
-        <img style="margin: -5px;max-width:100%" src="https://user.oc-static.com/upload/2019/08/17/15660719394662_P1CH1_pyramid.png" />
+        <img style="margin: -5px;max-width:100%"
+          src="https://user.oc-static.com/upload/2019/08/17/15660719394662_P1CH1_pyramid.png" />
         <aside class="notes">
-          - orienté sur la pyramide des tests: 
-          - pour chaque type de tests, le document indique à quel moment le test doit etre réalisé, la méthodologie de test souhaités
+          - orienté sur la pyramide des tests:
+          - pour chaque type de tests, le document indique à quel moment le test doit etre réalisé, la méthodologie de
+          test souhaités
           avec par exemple l'emploi de la méthodologie BDD.
           Mais aussi le document indique la structure des tests dans le dépot de code.
 
@@ -315,10 +560,11 @@
       <section>
         <p><span class="complementaire">Autres documents: </span>Stratégie de tests</p>
         <h3>Les métriques</h3>
-        <img style="margin: -5px;max-width:100%" src="https://4.bp.blogspot.com/-B6fDXYBIdHM/XVViuv2m98I/AAAAAAAABjY/jnFmWY_nMx8so4hOgo0wIoyYXySLqZPkACLcBGAs/s1600/bug_report.png" />
+        <img style="margin: -5px;max-width:100%"
+          src="https://4.bp.blogspot.com/-B6fDXYBIdHM/XVViuv2m98I/AAAAAAAABjY/jnFmWY_nMx8so4hOgo0wIoyYXySLqZPkACLcBGAs/s1600/bug_report.png" />
         <aside class="notes">
           - le document de test décrit les métriques à collecter à travers les différents rapport de test:
-          
+
           - code coverage %
 
           - % de tests réussis
@@ -332,18 +578,21 @@
 
         </aside>
       </section>
-      
+
 
       <section>
         <p><span class="complementaire">Autres documents: </span>Stratégie de tests</p>
         <h3>Les environnements d'exécution des tests</h3>
         <div style="display: grid;grid-template-columns: repeat(2, 1fr);justify-content:center;">
-          <img src="https://www.lebigdata.fr/wp-content/uploads/2021/03/DataLab_-_Chapitre_0_-_Fabriquer_sa_station_de_mesure_connect_e_github-logo-640x320-1.png" />
+          <img
+            src="https://www.lebigdata.fr/wp-content/uploads/2021/03/DataLab_-_Chapitre_0_-_Fabriquer_sa_station_de_mesure_connect_e_github-logo-640x320-1.png" />
           <img src="https://integragen.com/wp-content/uploads/google-cloud.jpg" />
         </div>
         <aside class="notes">
-          - Et enfin le document de stratégie de test décrit les environnements sur lesquels les tests vont être exécuté à savoir 
-          en local sur la machine du développeur, sur les runners de Github Action, ou sur l'environnement cloud de Google Cloud Platform
+          - Et enfin le document de stratégie de test décrit les environnements sur lesquels les tests vont être exécuté
+          à savoir
+          en local sur la machine du développeur, sur les runners de Github Action, ou sur l'environnement cloud de
+          Google Cloud Platform
 
         </aside>
       </section>
@@ -353,7 +602,7 @@
 
         <aside class="notes">
           - A travers l'étude du POC, nous avons pu déterminé que les tehcnologies utiliés en tant que standart dans
-          l'univers de Java et de son pendant web  correespondent aux critères de performances énoncés dans les
+          l'univers de Java et de son pendant web correespondent aux critères de performances énoncés dans les
           contraintes du projet.
           Nous pouvons affiner l'aspect fonctionnel en rajoutant des fonctionnalités au microservice ou bien
           et amélirer la performance à travers la planification d'autres Poc
