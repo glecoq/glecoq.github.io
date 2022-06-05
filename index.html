@@ -17,8 +17,7 @@
         <h2>l'implémentation de l'architecture cible</h2>
         <p>en date du 9 juin 2022</p>
         <aside class="notes">
-          - à travers les élèments du
-          dépot architectural et le code associé
+          - à travers les documents fournis
         </aside>
       </section>
       <section>
@@ -40,13 +39,11 @@
         <aside class="notes">
           Afin d'organiser le contenu de ma présentation
           - je ferai un bref rappel du contexte à savoir le projet d'implémentation de la nouvelle architecture, la
-          demande d'ajout de fonctionnalités en
-          cours de cette dernière
-          - je proposerai ensuite deux solutions permettant de répondre à la demande de changement dans les délais
-          impartis
+          demande d'ajout de fonctionnalités en cours de cette dernière
+          - je proposerai ensuite deux solutions permettant de répondre à la demande de changement 
           - après avoir peser les pour et les contre de chaque solution, j'indiquerai la solution qui a retenue mon attention
-          - je présenterai les impacts de l'implémentation de la solution que se soit aussi bien sur la plannification,
-          le cout ou les modifications techniques à réaliser
+          - je présenterai les impacts de l'implémentation de la solution retenue que se soit aussi bien sur la plannification,
+          le coût ou l'impact technique
           - je finirai par conclure
         </aside>
       </section>
@@ -58,7 +55,8 @@
             rapidement et efficacement</span>
         </p>
         <aside class="notes">
-          TODO
+          Pour rappeler brièvement le contexte du projet, il s'agit du développement de l'architecture d'un système pour générer et maintenir des sites Web à bas prix 
+          avec des objectifs de performances. Nous en sommes à la sixième semaine sur les 8 prévues et un livrable à déjà été présenté.
         </aside>
       </section>
 
@@ -71,7 +69,7 @@
           besoin de <span class="fonce" style="font-size: 1.3em;">respecter les contraintes initiales du projet</span>
         </p>
         <aside class="notes">
-          découverte de fonctionnalités en cours du projet:
+          Cepedant, des fonctionnalités ont été découvertes en cours du projet. Ces dernières consistent par exemple:
 
           - segmenter les ressources d'un client
 
@@ -79,13 +77,13 @@
 
           - mettre en place un processus de mise à jour centralisé et parallélisable
 
-          - faire valider la demande de modification par le client lors de la modification de son site internet
+          - faire valider la demande de modification par le client de son site internet
 
-          besoin de respecter les contraintes initiales du projet:
+          il faut donc prioriser ces fonctionnalités tout en respectant les contraintes initiales du projet:
 
-          - 10 jours ouvrés restant avant la livraison finale de l'architecture cible
+          - à savoir qu'il nous reste 10 jours ouvrés avant la livraison finale de l'architecture cible
 
-          - cette date de livraison ne doit être absolument respecter
+         et que cette date de livraison doit être absolument respecter
 
         </aside>
       </section>
@@ -94,12 +92,13 @@
         <p class="header"><span class="complementaire">L'architecture en semaine 6</span></p>
         <img style="margin: 0;" src="projet12/17_High_Level_Architecture.png" />
         <aside class="notes">
-          Comme on le remarque sur le schéma, l'architecture est constituée :
-          - d'un serveur unique contenant à la fois ce que je nomme le "Site Builder"
-          qui va gérer l'assemblage et l'indexation des sites atoms et des template pour créer les sites clients.
-          On remarque également que le serveur webstreet va servir à héberger les sites clients.
+          Comme on le remarque sur le schéma, l'architecture en semaine 6 est constituée :
+          - d'un serveur unique contenant à la fois l'outils
+          qui va gérer l'assemblage et l'indexation des sites atoms et des template pour créer les sites clients, un outils que  nomme 
+          par la suite "Site Builder".
+          On remarque que le serveur webstreet va servir à héberger les sites clients.
 
-          et enfin la présence d'une seule base de données contenant l'ensemble des données clients et des données
+          et enfin la présence d'une seule base de données contenant l'ensemble des données clientes et des données
           relatives au site builder.
         </aside>
       </section>
@@ -113,16 +112,17 @@
           en insistant sur les exigences fonctionnelles
         </p>
         <aside class="notes">
-          en ajoutant plus d'exigences fonctionnelles parmi lesquelles:
-          - mise en jour centralisée et au même instant réalisée par Webstreet grâce à un planificateur de tâches
+          Concernant la première solution que je vais vous présenter, cette dernière va privilégier l'aspect commercial, c'est à dire
+          minimiser les impacts sur l'architecture et insister sur l'ajout des exigences fonctionnelles demandées parmi lesquelles:
+          - la mise en jour centralisée et au même instant réalisée par Webstreet grâce à un planificateur de tâches
 
-          - validation du client lors de modifications réalisées sur son site avant mise en production
+          - la validation du client lors de modifications réalisées sur son site avant mise en production
 
-          - contenu volumineux sur le serveur du client
+          - l'hébergement des contenus volumineux sur le serveur du client
 
-          - fourniture du site internet au client avant validation
+          - la fourniture du site internet au client avant validation
 
-        - déploiement en production du site internet client sur l'infrastructure de Webstreet
+        - et enfin le déploiement en production du site internet client sur l'infrastructure de Webstreet
         </aside>
       </section>
 
@@ -130,10 +130,22 @@
         <p class="header"><span class="complementaire">Solution A</span></p>
         <img style="margin: 0;" width="80%" src="projet12/SolutionA.png" />
         <aside class="notes">
-          Comme on le remarque sur le schéma, l'architecture est constituée :
-          - d'un service de mise à jour qui se déclenchera à interval régulier et aura la responsabilité
-          de mettre à jour les dépot git clonés pour la diffusion des sites client concernés par une modification
-          - le processus de mise à jour peut etre synthétisé de la manière suivante:
+          Comme on le remarque sur le schéma, l'architecture de la solution A est composé d'un nouveau bloc:
+          - le service de mise à jour qui va se déclencher à interval régulier et aura la responsabilité
+          de mettre à jour les sites internet grace à Git
+          
+
+          j'ai voulu également montrer sur ce schéma le cas ou le client souhaite héberger ces données sur sa propre infrastructure:
+          le site du client lui sera héberger sur l'infrastrcuture de Webstreet et communiquera avec la base de données du client ainsi
+          qu'avec l'espace de stockage dédiée au différents assets du site.
+          Nous concervons toutefois la possibilité pour une majorité de clients un déploiement des données sur l'infrastructure de Webstreet grâce à la conservation
+          de la base de données initiale. 
+
+          
+          Le client pourra ausso récupérer son site à tout moment grâce à ses accès a un dépot Git fourni par Webstreet.
+
+
+          - le processus de mise à jour d'un site client peut etre synthétisé de la manière suivante:
             1. l'équipe de développement  envoie une notification au client.
             2. le client est notifié par mail ou par un sms: il doit récupérer manuellement le site internet sur le dépôt Git mise à disposition par l'équipe de développement
             3. le client donne son accord pour une mise en production par mail
@@ -141,8 +153,6 @@
             5. à intervalles réguliers, un planificateur de tâche (de type "cron") va vider la queue dédiée dans le broker et 
             mettre à jour au même instant l'ensemble des sites validés par les différents clients
 
-          - Sur le schéma on remarque également que le client peut héberger les données sur son infrastrcuture (ou le déléguer à l'agence
-          webstreet par l'intermédiaire de sa base de donnés unique divisé par schéma, nous aurons donc un schéma par client)
         </aside>
       </section>
 
@@ -153,16 +163,14 @@
         </p>
         <aside class="notes">
           - La solution A minimise l’impact des changements sur l’architecture en cours de développement
-          et permet par effet de bord l’ajout d’un plus grand nombre de fonctionnalités demandées et de respecter le calendier initiale suivants
-          surcout
+          et permet par effet de bord l’ajout d’un plus grand nombre de fonctionnalités demandées ou d'une moins une correspondance plus proche avec les besoins 
+          et surtout de respecter le calendier initiale sans surcout
 
-          - En terme d'impact nous avons:
-          - ajout de la gestion d’un workflow de publication de site sur le composant site builder
-          - la mise à jour de la configuration de la base de données pour les sites dont la base de données se trouvent chez le client
-          - ou encore la mise à jour de l’infrastructure de Webstreet avec le logiciel de gestion de versions décentralisé
-          Git
+          - En terme d'impact technique nous avons:
+          - l'ajout de la gestion d’un workflow de publication de site sur le composant site builder
+          - la mise à jour de la configuration de la base de données pour les sites dont la base de données et l'espace de stockage dédiée aux assets
+          se trouvent chez le client
 
-          Nous concervons également la possibilité pour une majorité de clients un déploiement des données sur l'infrastructure de Webstreet 
         </aside>
       </section>
 
@@ -178,14 +186,14 @@
           pas de tests automatisés
         </p>
         <aside class="notes">
-          Bien que l'architecture répond à davantage d'exigences fonctionnelles, elle introduit également les risques suivants:
+          Bien que l'architecture répond à davantage aux exigences fonctionnelles, elle introduit également les risques suivants:
 
           - couplage fort avec la base de données ou le système de fichiers partagé,  ce qui limite l'évolutivité du système d'information (ex. possibilité de changer de base de données ou de CMS)
           - principe du moindre privilège non respecté: par exemple le serveur de Webstreet doit disposer d'un accès complet à la base de données clients
           - pas de tests automatisés en particulier les tests d'aceptances ce qui introduit une perte de productivité, 
           un oubli de certains tests entraînant une régression
         
-          Et de nombreux autres autres points tel que:
+          Et de nombreux autres autres inconvénients que:
           - le risque d'avoir des environnements divergents entre l'env de production et l'env du client
           - une scalabilité réduite par les ressources sur le serveur de Webstreet
         </aside>
@@ -197,10 +205,10 @@
           privilégier <span class="fonce" style="font-size: 1.3em;">le côté technique au détriment du côté commercial</span>
         </p>
         <p class="fragment fade-in">
-          en introduisant plus de qualités non-fonctionnelles
+          en insistant sur les qualités non-fonctionnelles
         </p>
         <aside class="notes">
-          en introduisant plus de qualités non-fonctionnelles, ce que je présenterai plus tard comme les avantages de la solution B
+          en insistant sur les qualités non-fonctionnelles que je présenterai plus tard et la selection et l'éventuelle adaptation des exigences fonctionnelles
         </aside>
       </section>
 
@@ -209,13 +217,16 @@
         <p class="header"><span class="complementaire">Solution B</span></p>
         <img style="margin: 0;" src="projet12/solutionB_Context.png" />
         <aside class="notes">
-          Comme on le remarque sur le schéma, l'architecture est de type multitenant hybride.
-          En effet, le client 1 héberge lui meme ses données, peut modifier le contenu grace à l'usage d'un CMS
+          Comme on le remarque sur le diagramme de contexte suivant, l'architecture est de type multitenant hybride.
+          Sur le coté gauche, le client 1 héberge lui meme ses données, peut modifier le contenu grace à l'usage d'un CMS
           et expose ses données à travers une API REST: il s'agit d'une mode d'isolation le plus strict.
-          Le client 2 utilise également un CMS et une API REST mais ces deniers sont provisionnés sur l'infrastructure géré par 
+
+          Sur le coté droit du schéma, Le client 2 utilise également un CMS et une API REST mais ces deniers sont provisionnés et gérés par 
           l'agence. 
           Nous verrons dans un diagramme d'architecture technologique que les données du client 2 sont stockés sur une base de 
           données communes pour tous les clients de Webstreet ayant choisi cette modalité d'hébergement.
+
+          Le processus de mise à jour est assurée par un pipeline d'intégration et de déploiement continu pour chaque site client.
         </aside>
       </section>
 
