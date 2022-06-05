@@ -13,7 +13,8 @@
         <h2>Présentation</h2>
         liée à
         <h2>la demande de changement</h2>
-        <h2> et à l'implémentation de l'architecture cible</h2>
+        et à
+        <h2>l'implémentation de l'architecture cible</h2>
         <p>en date du 9 juin 2022</p>
         <aside class="notes">
           - à travers les élèments du
@@ -23,7 +24,9 @@
       <section>
         <p>Guillaume Lecoq</p>
         <p class="gris">Architecte logiciel (freelance)</p>
-        responsable de la définition de la nouvelle architecture
+        <aside class="notes">
+          responsable de la définition de la nouvelle architecture
+        </aside>
       </section>
       <section>
         <h2 class="gris">Sommaire</h2>
@@ -41,17 +44,16 @@
           cours de cette dernière
           - je proposerai ensuite deux solutions permettant de répondre à la demande de changement dans les délais
           impartis
-          - je présenterai ensuite la solution retenue et j'expliquerai en quoi elle est plus viable
+          - après avoir peser les pour et les contre de chaque solution, j'indiquerai la solution qui a retenue mon attention
           - je présenterai les impacts de l'implémentation de la solution que se soit aussi bien sur la plannification,
-          le cout ou
-          les modifications techniques à réaliser
+          le cout ou les modifications techniques à réaliser
           - je finirai par conclure
         </aside>
       </section>
 
       <section>
-        <p><span class="complementaire">Contexte : </span>Développement d'une nouvelle architecture</p>
-        <p class="fragment fade-in">
+        <p class="header"><span class="complementaire">Développement d'une nouvelle architecture</span></p>
+        <p class="fragment fade-in marging">
           autour d'un <span class="fonce" style="font-size: 1.3em;">système pour générer et maintenir des sites Web
             rapidement et efficacement</span>
         </p>
@@ -61,8 +63,8 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Contexte : </span>Développement d'une nouvelle architecture</p>
-        <p class="fragment fade-in">
+        <p class="header"><span class="complementaire">Développement d'une nouvelle architecture</span></p>
+        <p class="fragment fade-in marging">
           découverte de <span class="fonce" style="font-size: 1.3em;">fonctionnalités en cours du projet</span>
         </p>
         <p class="fragment fade-in">
@@ -89,7 +91,7 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Contexte : </span>L'architecture en semaine 6</p>
+        <p class="header"><span class="complementaire">L'architecture en semaine 6</span></p>
         <img style="margin: 0;" src="projet12/17_High_Level_Architecture.png" />
         <aside class="notes">
           Comme on le remarque sur le schéma, l'architecture est constituée :
@@ -103,12 +105,12 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Solutions : </span>Solution A</p>
-        <p class="fragment fade-in">
+        <p class="header"><span class="complementaire">Solution A</span></p>
+        <p class="fragment fade-in marging">
           privilégier <span class="fonce" style="font-size: 1.3em;">l'aspect commercial au détriment de l'aspect technique</span>
         </p>
         <p class="fragment fade-in">
-          en ajoutant plus d'exigences fonctionnelles
+          en insistant sur les exigences fonctionnelles
         </p>
         <aside class="notes">
           en ajoutant plus d'exigences fonctionnelles parmi lesquelles:
@@ -125,8 +127,8 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Solution A: </span>Architecture</p>
-        <img style="margin: 0;" src="projet12/SolutionA.png" />
+        <p class="header"><span class="complementaire">Solution A</span></p>
+        <img style="margin: 0;" width="80%" src="projet12/SolutionA.png" />
         <aside class="notes">
           Comme on le remarque sur le schéma, l'architecture est constituée :
           - d'un service de mise à jour qui se déclenchera à interval régulier et aura la responsabilité
@@ -145,8 +147,28 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Justification de l'éviction de la solution A: </span>exemples</p>
-        <p class="fragment fade-in fonce">
+        <p class="header"><span class="complementaire">Avantage de la solution A</span></p>
+        <p class="fragment fade-in marging">
+          minimise l’impact des changements
+        </p>
+        <aside class="notes">
+          - La solution A minimise l’impact des changements sur l’architecture en cours de développement
+          et permet par effet de bord l’ajout d’un plus grand nombre de fonctionnalités demandées et de respecter le calendier initiale suivants
+          surcout
+
+          - En terme d'impact nous avons:
+          - ajout de la gestion d’un workflow de publication de site sur le composant site builder
+          - la mise à jour de la configuration de la base de données pour les sites dont la base de données se trouvent chez le client
+          - ou encore la mise à jour de l’infrastructure de Webstreet avec le logiciel de gestion de versions décentralisé
+          Git
+
+          Nous concervons également la possibilité pour une majorité de clients un déploiement des données sur l'infrastructure de Webstreet 
+        </aside>
+      </section>
+
+      <section>
+        <p class="header"><span class="complementaire">Inconvénients de la solution A</span></p>
+        <p class="fragment fade-in fonce marging">
           couplage fort avec la base de données ou le système de fichiers partagé
         </p>
         <p class="fragment fade-in">
@@ -170,21 +192,21 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Solutions : </span>Solution B</p>
-        <p class="fragment fade-in">
+        <p class="header"><span class="complementaire">Solution B</span></p>
+        <p class="fragment fade-in marging">
           privilégier <span class="fonce" style="font-size: 1.3em;">le côté technique au détriment du côté commercial</span>
         </p>
         <p class="fragment fade-in">
           en introduisant plus de qualités non-fonctionnelles
         </p>
         <aside class="notes">
-         TODO ou passer à la suite
+          en introduisant plus de qualités non-fonctionnelles, ce que je présenterai plus tard comme les avantages de la solution B
         </aside>
       </section>
 
 
       <section>
-        <p><span class="complementaire">Solution B: </span>Architecture contextuelle</p>
+        <p class="header"><span class="complementaire">Solution B</span></p>
         <img style="margin: 0;" src="projet12/solutionB_Context.png" />
         <aside class="notes">
           Comme on le remarque sur le schéma, l'architecture est de type multitenant hybride.
@@ -198,10 +220,13 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Architecture technologique: </span>Single-Tenant</p>
+        <p class="header"><span class="complementaire">Architecture technologique: </span>single-tenant</p>
         <img style="margin: 0;" src="projet12/archi-techno-isolated-tenant.png" />
         <aside class="notes">
           Comme on le remarque sur le schéma, l'architecture lorsque le client souhaite isolé ses données
+
+          TODO: Dire pour l'architecture technologique que le choix de cloud run s'est aussi fait sur la base que
+          peu importe la technoilogie si il est possible de la dockeriser c'est bon
           
 
         </aside>
@@ -209,7 +234,7 @@
 
 
       <section>
-        <p><span class="complementaire">Architecture technologique: </span>Multi-Tenant</p>
+        <p class="header"><span class="complementaire">Architecture technologique: </span>multi-tenant</p>
         <img style="margin: 0;" width="80%" src="projet12/archi-techno-shared-tenant.png" />
         <aside class="notes">
           TODO
@@ -217,12 +242,25 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Solution B: </span>Les avantages</p>
+        <p class="header"><span class="complementaire">Inconvénients de la solution B</span></p>
+        <p class="fragment fade-in marging">
+          introduction d'un nouveau socle technologique
+        </p>
         <p class="fragment fade-in fonce">
-          meilleure maintenabilité / modularité</span>
+          dépendance liée à l'infrastructure cliente
+        </p>
+        <aside class="notes">
+          dépendance liée à l'infrastructure cliente entrainant des latences réseaux
+        </aside>
+      </section>
+
+      <section>
+        <p class="header"><span class="complementaire">Avantages de la solution B</span></p>
+        <p class="fragment fade-in fonce marging">
+          meilleure maintenabilité / modularité
         </p>
         <p class="fragment fade-in">
-          mesures de sécurité adaptés
+          mesures de sécurité adaptées
         </p>
         <p class="fragment fade-in fonce">
           portabilité accrue
@@ -241,15 +279,17 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Architecture technologique: </span>Pipeline CI / CD</p>
+        <p class="header"><span class="complementaire">Architecture technologique: </span>Pipeline CI / CD</p>
         <img style="margin: 0;" width="55%" src="projet12/pipeline-ci.png" />
         <aside class="notes">
           TODO
         </aside>
       </section>
 
+
+
       <section>
-        <p><span class="complementaire">Solution B: </span>Plannnig</p>
+        <p class="header"><span class="complementaire">Solution B: </span>Plannnig</p>
         <img style="margin: 0;" width="80%" src="projet12/gantt.png" />
         <aside class="notes">
           TODO
@@ -257,8 +297,8 @@
       </section>
 
       <section>
-        <p><span class="complementaire">Solution B: </span>Coûts additionnels</p>
-        <p class="fragment fade-in fonce">
+        <p class="header"><span class="complementaire">Solution B: </span>Coûts additionnels</p>
+        <p class="fragment fade-in fonce marging">
           2 jours de travail supplémentaires
         </p>
         <p class="fragment fade-in">
@@ -272,7 +312,7 @@
 
 
       <section>
-        <p>Conclusion</p>
+        <h2 class="gris" style="font-weight: bold;">Conclusion</h2>
 
         <aside class="notes">
           - Afin de répondre à la demande de changement, j'ai pu envisagé deux solutions différentes (A et B pour les nommer), toutes introduisant différents compromis.

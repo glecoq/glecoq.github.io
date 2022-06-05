@@ -316,3 +316,10 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 
 .reveal .complementaire {
   color: #826325; }
+
+.reveal .marging {
+  margin-top: calc(min(10vh, 50px)); }
+
+.reveal .header {
+  font-size: 0.8em;
+  font-weight: bold; }

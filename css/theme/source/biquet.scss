@@ -77,3 +77,12 @@ $listColor: darken( $headingColor , 10% );
 .reveal .complementaire {
     color:  #826325;
 }
+
+.reveal .marging {
+    margin-top: calc(min(10vh, 50px));
+}
+
+.reveal .header {
+    font-size: 0.8em;
+    font-weight: bold;
+}
