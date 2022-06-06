@@ -208,7 +208,8 @@
           en insistant sur les qualités non-fonctionnelles
         </p>
         <aside class="notes">
-          en insistant sur les qualités non-fonctionnelles que je présenterai plus tard et la selection et l'éventuelle adaptation des exigences fonctionnelles
+          en insistant sur les qualités non-fonctionnelles que je présenterai plus tard mais aussi par la selection et l'éventuelle adaptation des exigences fonctionnelles
+          liées à la demande de changement
         </aside>
       </section>
 
@@ -217,16 +218,17 @@
         <p class="header"><span class="complementaire">Solution B</span></p>
         <img style="margin: 0;" src="projet12/solutionB_Context.png" />
         <aside class="notes">
-          Comme on le remarque sur le diagramme de contexte suivant, l'architecture est de type multitenant hybride.
+          Comme on le remarque sur le diagramme de contexte C4 suivant, l'architecture est de type multitenant hybride.
           Sur le coté gauche, le client 1 héberge lui meme ses données, peut modifier le contenu grace à l'usage d'un CMS
-          et expose ses données à travers une API REST: il s'agit d'une mode d'isolation le plus strict.
+          et expose ses données à travers une API REST propre au secteur d'activité du client: il s'agit d'une mode d'isolation le plus strict.
+          Bien sur le site internet reste héberger sur l'infrastruture de Webstreet, nous verrons avec quelle technologie dans les slides suivantes.
 
           Sur le coté droit du schéma, Le client 2 utilise également un CMS et une API REST mais ces deniers sont provisionnés et gérés par 
-          l'agence. 
+          Webstreet. 
           Nous verrons dans un diagramme d'architecture technologique que les données du client 2 sont stockés sur une base de 
           données communes pour tous les clients de Webstreet ayant choisi cette modalité d'hébergement.
 
-          Le processus de mise à jour est assurée par un pipeline d'intégration et de déploiement continu pour chaque site client.
+          Le processus de mise à jour est quant à lui assuré par un pipeline d'intégration et de déploiement continu pour chaque site client.
         </aside>
       </section>
 
@@ -234,7 +236,19 @@
         <p class="header"><span class="complementaire">Architecture technologique : </span>single-tenant</p>
         <img style="margin: 0;" src="projet12/archi-techno-isolated-tenant.png" />
         <aside class="notes">
-          Comme on le remarque sur le schéma, l'architecture lorsque le client souhaite isolé ses données
+          L'architecture technologique est divisé en deux diagrammes, celui à l'écran décrit les spécificatés de l'architecture single tenant.
+          Avant de détailler les spécificités de l'architecture single tenant, on peut remarquer que le code source des sites
+          sera hébergé sur la plateforme Github et que le pipeline d'intégration continue sera implémenté avec Github Actions sous forme de fichier yaml.
+          Pour le reste, nous utiliserons massivement l'usage de la plateforme cloud Google Cloud Platform, avec des services comme Artefacts Registry,
+          nous permettant de disposer d'un Registry Docker pour sotcker les images docker des sites internet et des API REST.
+          Les sites internets seront hébergés coté webstreet mais déployé sur des instance de cloud run séparées. La gestion du monitoring et
+          de l'observabilité passera par des services tel que cloud monitoring. La gestion des secrets partagés avec GCP secret manager.
+          
+          On remarque d'ailleurs que dans l'architecture de type single tenant pour accéder au données hébergées et gérées par le client, 
+          le site internet a besoin d'une api key l'autorisant à consulter les ressources de l'API REST et que toutes les communications sont chiffrées.
+          Nous proposerons au client des scripts suivant la mouvance de l'infrastrcuture as code, afin qu'il puisse déployer l'API REST, le CMS 
+          sur Google cloud platform avec l'utilisation des services automangés comme la base de données Cloud SQL sur base postgresql ou encore
+          le service de stockage de fichiers Google cloud storage.
 
           TODO: Dire pour l'architecture technologique que le choix de cloud run s'est aussi fait sur la base que
           peu importe la technoilogie si il est possible de la dockeriser c'est bon
@@ -248,7 +262,9 @@
         <p class="header"><span class="complementaire">Architecture technologique : </span>multi-tenant</p>
         <img style="margin: 0;" width="80%" src="projet12/archi-techno-shared-tenant.png" />
         <aside class="notes">
-          TODO
+          Lorsque le client souhaite déléguer l'hébergement de ces données à Webstreet, nous allons créer une instance de Google cloud run sur l'infrastrcuture 
+          de webstreet. L'API REST et le CMS communiqueront avec la base de données mutualisé pour ce genre de client: la segmentation se fera sur la base de schéma
+          séparé au sein de la meme base de données. Cela aura pour avantage de réduire les couts sur la plateforme cloud.
         </aside>
       </section>
 
@@ -256,7 +272,11 @@
         <p class="header"><span class="complementaire">Architecture technologique : </span>Pipeline CI / CD</p>
         <img style="margin: 0;" width="55%" src="projet12/pipeline-ci.png" />
         <aside class="notes">
-          TODO
+          le pipeline CI / CD est constitué de 8 job Github Actions permettant:
+          - d'exécuter les tests unitaires, tests d'intégration, tests d'acceptance
+          - mais aussi d'exécuter des tests complémentaires de sécurité (statique et dynamique)
+          Le pipeline permet le provisionnement d'un environnement de préproduction, le stockage des images docker
+          dans un registry privé, et le déploiement d'un site internet sur son environnement de production
         </aside>
       </section>
 
@@ -269,7 +289,12 @@
           dépendance liée à l'infrastructure cliente
         </p>
         <aside class="notes">
-          dépendance liée à l'infrastructure cliente entrainant des latences réseaux
+          introduction d'un nouveau socle technologique avec l'usage de la plateforme cloud, la conteneurisation des sites clients et l'ajout d'une API REST et d'un CMS.
+          Ce implique de former les équipes techniques en place, en particulier les experts du groupe AMG
+          (Architecture Method Guardians)
+
+          dépendance liée à l'infrastructure cliente entrainant par exemple de la latence à réseau avec l’API REST hébergée sur l’infrastructure client, ce qui
+          nous obligera à Utiliser des techniques de réduction de la latence : CDN, caching, lazy loading, minifying.
         </aside>
       </section>
 
