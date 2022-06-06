@@ -313,12 +313,18 @@
           meilleure disponibilité
         </p>
         <aside class="notes">
-          Les avantages de ce type de déploiement:
-          - meilleure maintenabilité de la solution grâce à l'utilisation de méthodes d'ingénieurie éprouvées comme l'ajout 
+          pour citer quelques avantages de cette solution:
+          - une meilleure maintenabilité de la solution grâce à l'utilisation de méthodes d'ingénieurie éprouvées comme l'ajout 
           d'un pipeline CI / CD et meilleure modularité avec l'emploi de site ayant une architecture monolitique modulaire
           - des mesures de sécurité adaptés pour assurer la confidentialité des données ou la prévention des vulnérabilité
-          - portabilité accrue avec l'usage de technologies à base de conteneurs
-          - meilleure disponibilité assurés par le fournisseur cloud Google Cloud Platform
+          - une portabilité accrue avec l'usage de technologies à base de conteneurs
+          - une meilleure disponibilité assurés par le fournisseur cloud Google Cloud Platform
+
+          Je pourrais rajouter que l'ajout de l'API REST permet de faire évoluer le site internet inédpendemment du modèle de données
+          ou de l'intégration du CMS, ou encore que l'API REST permet une meilleure gestion de l'accès des données sur le long terme.
+          Nous pourrions envisager de déléguer certains calculs complexes sur cette API REST hébergé coté client 
+
+          La solution B est donc la solution que j'ai retenue
         </aside>
       </section>
 
@@ -326,7 +332,11 @@
         <p class="header"><span class="complementaire">Solution B : </span>Plannnig</p>
         <img style="margin: 0;" width="80%" src="projet12/gantt.png" />
         <aside class="notes">
-          TODO
+          Dans le document Roadmap, je détaille exhaustivement les taches à accomplir, que nous pouvons retrouver sur ce gantt.
+          Ce qu'il faut retenir du gantt, c'est la présence de deux jours supplémentaires sur le planning travaillés les samedis.
+          En ce qui concerne les taches les plus longues (à savoir 3 jours de travail chacunes), elles concernent le développement du pipeline CI / CD, l'intégration d'un template de projet pour l'API REST et le CMS avec
+          la solution strapi potentiellement réutilisable sur les premiers sites migrés.
+        
         </aside>
       </section>
 
@@ -340,7 +350,9 @@
         </p>
         <aside class="notes">
           La solution B n'introduit pas de ressources supplémentaires, je pourrais réaliser la solution B dans les délais
-          impartis. Comme on a pu le voir dans le gantt, les deux jours de travail supplémentaires seront donc travaillés le samedi afin de ne pas perturber le planning initial
+          impartis. Et Compte tenu du temps restant pour respecter le planning initial, il serait difficile de
+          recruter / missioner un autre intervenant aussi expert sur le sujet.
+          Le cout sera donc de 1200 euros considérant un taux journalier moyen de 600 euros.
         </aside>
       </section>
 
