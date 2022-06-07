@@ -17,7 +17,7 @@
         <h2>l'implémentation de l'architecture cible</h2>
         <p>en date du 9 juin 2022</p>
         <aside class="notes">
-          - à travers les documents fournis
+          - de l'agence Webstreet
         </aside>
       </section>
       <section>
@@ -43,7 +43,7 @@
           - je proposerai ensuite deux solutions permettant de répondre à la demande de changement 
           - après avoir peser les pour et les contre de chaque solution, j'indiquerai la solution qui a retenue mon attention
           - je présenterai les impacts de l'implémentation de la solution retenue que se soit aussi bien sur la plannification,
-          le coût ou l'impact technique
+          le coût ou en terme d'impact technique
           - je finirai par conclure
         </aside>
       </section>
@@ -56,7 +56,8 @@
         </p>
         <aside class="notes">
           Pour rappeler brièvement le contexte du projet, il s'agit du développement de l'architecture d'un système pour générer et maintenir des sites Web à bas prix 
-          avec des objectifs de performances. Nous en sommes à la sixième semaine sur les 8 prévues et un premier livrable à déjà été présenté.
+          avec pour objectf principal de livrer les sites internet aux clients rapidement. le projet dure 8 semaines et Nous en sommes à la sixième semaine. Un premier livrable à déjà été présenté, celui ci
+          portait sur la génération et la mise en place d'un modèle de site web standardisé,
         </aside>
       </section>
 
@@ -69,25 +70,25 @@
           besoin de <span class="fonce" style="font-size: 1.3em;">respecter les contraintes initiales du projet</span>
         </p>
         <aside class="notes">
-          des fonctionnalités ont été découvertes en cours du projet. Ces dernières consistent par exemple:
+          Et en semaine 6, j'ai été informé d'une demande de changement . la direction de Webstreet souhaite ajouter de nouvelles fonctionnalités dont cetaines impactes
+          l'architecture en cours de développement. On peut citer à ce sujet:
 
-          - à segmenter les ressources d'un client
+          - le besoin de segmenter les ressources d'un client
 
-          - à assurer la confidentialité de certaines données
+          - d'assurer la confidentialité de certaines données
 
-          - à mettre en place un processus de mise à jour centralisé et parallélisable
-
-          - à faire valider la demande de modification par le client de son site internet
+          - de mettre en place un processus de mise à jour centralisé
 
 
           il faut donc prioriser ces fonctionnalités tout en respectant les contraintes initiales du projet:
 
-          - à savoir qu'il nous reste 10 jours ouvrés avant la livraison finale de l'architecture cible
+          - sachant qu'il nous reste 10 jours ouvrés avant la livraison finale de l'architecture cible
 
          et que cette date de livraison doit être absolument respecter.
 
-         Si la demande de changement n'avait pas été traité, l'agence Webstreet aurait pu s'exposer à la perte potentielle de client 
-         dans certains secteurs d'activité sur le long terme, qui requiert l'hébergement de données sensibles sur leur propre infrastructure par exemple.
+         Dans l'hypothèse ou la demande de changement n'aurait pas été traité, l'agence Webstreet aurait pu s'exposer à la perte potentielle de client 
+         dans certains secteurs d'activité, en particulier les clients qui requiert l'hébergement de données sensibles sur leur propre infrastructure pour ne citer
+         que cette exemple.
 
         </aside>
       </section>
@@ -100,10 +101,10 @@
           - d'un serveur unique contenant à la fois l'outils
           qui va gérer l'assemblage et l'indexation des sites atoms et des template pour créer les sites clients, un outils que  nomme 
           par la suite "Site Builder".
-          On remarque que le serveur webstreet va servir à héberger les sites clients.
+          Le serveur webstreet va également héberger les sites clients.
 
-          et enfin la présence d'une seule base de données contenant l'ensemble des données clientes et des données
-          relatives au site builder.
+          On remarquera finalement que l'ensemble des données clientes et des données
+          relatives au site builder se retrouve au sein d'une mem base de données.
         </aside>
       </section>
 
@@ -148,15 +149,6 @@
           
           Le client pourra ausso récupérer son site à tout moment grâce à ses accès a un dépot Git fourni par Webstreet.
 
-
-          - le processus de mise à jour d'un site client peut etre synthétisé de la manière suivante:
-            1. l'équipe de développement  envoie une notification au client.
-            2. le client est notifié par mail ou par un sms: il doit récupérer manuellement le site internet sur le dépôt Git mise à disposition par l'équipe de développement
-            3. le client donne son accord pour une mise en production par mail
-            4. l'équipe de développement envoie à travers le site builder un évènement de validation
-            5. à intervalles réguliers, un planificateur de tâche (de type "cron") va vider la queue dédiée dans le broker et 
-            mettre à jour au même instant l'ensemble des sites validés par les différents clients
-
         </aside>
       </section>
 
@@ -166,14 +158,14 @@
           minimise l’impact des changements
         </p>
         <aside class="notes">
+          - En terme d'impact technique nous avons par exemple:
+          - l'ajout de la gestion d’un workflow de publication de site sur le composant site builder
+          - ou encore la mise à jour de la configuration de la base de données pour certains sites
+
           - La solution A minimise l’impact des changements sur l’architecture en cours de développement
           et permet par effet de bord l’ajout d’un plus grand nombre de fonctionnalités demandées ou d'une moins une correspondance plus proche avec les besoins 
           et surtout de respecter le calendier initiale sans surcout
 
-          - En terme d'impact technique nous avons:
-          - l'ajout de la gestion d’un workflow de publication de site sur le composant site builder
-          - la mise à jour de la configuration de la base de données pour les sites dont la base de données et l'espace de stockage dédiée aux assets
-          se trouvent chez le client
 
         </aside>
       </section>
@@ -190,14 +182,13 @@
           pas de tests automatisés
         </p>
         <aside class="notes">
-          Bien que l'architecture répond à davantage aux exigences fonctionnelles, elle introduit également les risques suivants:
-
           - couplage fort avec la base de données ou le système de fichiers partagé,  ce qui limite l'évolutivité du système d'information (ex. possibilité de changer de base de données ou de CMS)
-          - principe du moindre privilège non respecté: par exemple le serveur de Webstreet doit disposer d'un accès complet à la base de données clients
+          - principe du moindre privilège non respecté: en effet le serveur de Webstreet doit disposer d'un accès complet à la base de données clients, ce qui peut proser problèmes en cas de fuites des
+          données
           - pas de tests automatisés en particulier les tests d'aceptances ce qui introduit une perte de productivité, 
-          un oubli de certains tests entraînant une régression
+          entraine une regréssion car la revue se fait manuellement par le client
         
-          Et de nombreux autres autres inconvénients que:
+          Et de nombreux autres autres inconvénients que je présente dans le document de définition de l'architecture:
           - le risque d'avoir des environnements divergents entre l'env de production et l'env du client
           - une scalabilité réduite par les ressources sur le serveur de Webstreet
         </aside>
@@ -240,8 +231,10 @@
         <p class="header"><span class="complementaire">Architecture technologique : </span>single-tenant</p>
         <img style="margin: 0;" src="projet12/archi-techno-isolated-tenant.png" />
         <aside class="notes">
-          L'architecture technologique est divisé en deux diagrammes, celui à l'écran décrit les spécificatés de l'architecture single tenant.
-          Avant de détailler les spécificités de l'architecture single tenant, on peut remarquer que le code source des sites
+          L'architecture technologique est divisé en deux diagrammes, ce diagramme présente l'architecture sous sa vue single tenant.
+          Mais avant de détailler les spécificités de cette vue, je peux d'or et déjà vous présenter l'ensemble des tehnologies utilisés.
+          
+          on peut remarquer que le code source des sites
           sera hébergé sur la plateforme Github et que le pipeline d'intégration continue sera implémenté avec Github Actions sous forme de fichier yaml.
           Pour le reste, nous utiliserons massivement l'usage de la plateforme cloud Google Cloud Platform, avec des services comme Artefacts Registry,
           nous permettant de disposer d'un Registry Docker pour sotcker les images docker des sites internet et des API REST.
