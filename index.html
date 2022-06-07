@@ -56,7 +56,7 @@
         </p>
         <aside class="notes">
           Pour rappeler brièvement le contexte du projet, il s'agit du développement de l'architecture d'un système pour générer et maintenir des sites Web à bas prix 
-          avec pour objectf principal de livrer les sites internet aux clients rapidement. le projet dure 8 semaines et Nous en sommes à la sixième semaine. Un premier livrable à déjà été présenté, celui ci
+          avec pour objectf principal de réduire le délai de livraison des sites internet. le projet dure 8 semaines et Nous en sommes à la sixième semaine. Un premier livrable à déjà été présenté, celui ci
           portait sur la génération et la mise en place d'un modèle de site web standardisé,
         </aside>
       </section>
@@ -70,14 +70,12 @@
           besoin de <span class="fonce" style="font-size: 1.3em;">respecter les contraintes initiales du projet</span>
         </p>
         <aside class="notes">
-          Et en semaine 6, j'ai été informé d'une demande de changement . la direction de Webstreet souhaite ajouter de nouvelles fonctionnalités dont cetaines impactes
-          l'architecture en cours de développement. On peut citer à ce sujet:
+          Et en semaine 6, j'ai été informé d'une demande de changement . la direction de Webstreet souhaite ajouter de nouvelles fonctionnalités dont cetaines pourraient 
+          impacter l'architecture en cours de développement. On peut citer à ce sujet:
 
           - le besoin de segmenter les ressources d'un client
 
-          - d'assurer la confidentialité de certaines données
-
-          - de mettre en place un processus de mise à jour centralisé
+          - ou encore le besoin d'assurer la confidentialité de certaines données
 
 
           il faut donc prioriser ces fonctionnalités tout en respectant les contraintes initiales du projet:
@@ -87,8 +85,7 @@
          et que cette date de livraison doit être absolument respecter.
 
          Dans l'hypothèse ou la demande de changement n'aurait pas été traité, l'agence Webstreet aurait pu s'exposer à la perte potentielle de client 
-         dans certains secteurs d'activité, en particulier les clients qui requiert l'hébergement de données sensibles sur leur propre infrastructure pour ne citer
-         que cette exemple.
+         dans certains secteurs d'activité, en particulier les clients qui doivent héberger eux même leurs données pour respecter des contraintes légales par exemple.
 
         </aside>
       </section>
@@ -104,7 +101,7 @@
           Le serveur webstreet va également héberger les sites clients.
 
           On remarquera finalement que l'ensemble des données clientes et des données
-          relatives au site builder se retrouve au sein d'une mem base de données.
+          relatives au site builder se retrouve au sein d'une même base de données.
         </aside>
       </section>
 
@@ -119,15 +116,13 @@
         <aside class="notes">
           Concernant la première solution que je vais vous présenter, cette dernière va privilégier l'aspect commercial, c'est à dire
           minimiser les impacts sur l'architecture et insister sur l'ajout des exigences fonctionnelles demandées parmi lesquelles:
-          - la mise en jour centralisée et au même instant réalisée par Webstreet grâce à un planificateur de tâches
-
-          - la validation du client lors de modifications réalisées sur son site avant mise en production
+          - la mise en jour centralisée réalisée par Webstreet et ordonnée grace à un planificateur de tâches
 
           - l'hébergement des contenus volumineux sur le serveur du client
 
-          - la fourniture du site internet au client avant validation
+          - la fourniture du site internet au client
 
-        - et enfin le déploiement en production du site internet client sur l'infrastructure de Webstreet
+        - (et enfin le déploiement en production du site internet client sur l'infrastructure de Webstreet)
         </aside>
       </section>
 
@@ -136,18 +131,21 @@
         <img style="margin: 0;" width="80%" src="projet12/SolutionA.png" />
         <aside class="notes">
           Comme on le remarque sur le schéma, l'architecture de la solution A est composé d'un nouveau bloc:
+
           - le service de mise à jour qui va se déclencher à interval régulier et aura la responsabilité
-          de mettre à jour les sites internet grace à Git
+          de mettre à jour les sites internet grace au logiciel Git
           
 
-          j'ai voulu également montrer sur ce schéma le cas ou le client souhaite héberger ces données sur sa propre infrastructure:
-          le site du client lui sera héberger sur l'infrastrcuture de Webstreet et communiquera avec la base de données du client ainsi
+          
+          - j'ai voulu également montrer sur ce schéma le cas ou le client souhaite héberger ses données sur sa propre infrastructure, son propre serveur.
+          Dans tous les cas, le site du client lui sera héberger sur l'infrastrcuture de Webstreet et communiquera avec la base de données du client ainsi
           qu'avec l'espace de stockage dédiée au différents assets du site.
+
           Nous concervons toutefois la possibilité pour une majorité de clients un déploiement des données sur l'infrastructure de Webstreet grâce à la conservation
-          de la base de données initiale. 
+          de la base de données initiale que nous pourrons segmenter. 
 
           
-          Le client pourra ausso récupérer son site à tout moment grâce à ses accès a un dépot Git fourni par Webstreet.
+          Le client pourra aussi récupérer son site à tout moment grâce à un dépot Git fourni par Webstreet.
 
         </aside>
       </section>
@@ -158,14 +156,14 @@
           minimise l’impact des changements
         </p>
         <aside class="notes">
-          - En terme d'impact technique nous avons par exemple:
-          - l'ajout de la gestion d’un workflow de publication de site sur le composant site builder
-          - ou encore la mise à jour de la configuration de la base de données pour certains sites
 
           - La solution A minimise l’impact des changements sur l’architecture en cours de développement
-          et permet par effet de bord l’ajout d’un plus grand nombre de fonctionnalités demandées ou d'une moins une correspondance plus proche avec les besoins 
-          et surtout de respecter le calendier initiale sans surcout
+          et permet par effet de bord l’ajout d’un plus grand nombre de fonctionnalités demandées ou d'une moins une correspondance plus proche avec les besoins
+          initiaux et surtout de respecter le calendier initiale sans surcout
 
+          En terme d'impact technique nous aurons par exemple:
+          - l'ajout de la gestion d’un workflow de publication de site sur le composant site builder
+          - ou encore la mise à jour de la configuration de la base de données pour certains sites
 
         </aside>
       </section>
@@ -183,12 +181,14 @@
         </p>
         <aside class="notes">
           - couplage fort avec la base de données ou le système de fichiers partagé,  ce qui limite l'évolutivité du système d'information (ex. possibilité de changer de base de données ou de CMS)
-          - principe du moindre privilège non respecté: en effet le serveur de Webstreet doit disposer d'un accès complet à la base de données clients, ce qui peut proser problèmes en cas de fuites des
-          données
+          
+          - principe du moindre privilège non respecté: en effet le serveur de Webstreet doit disposer d'un accès complet à la base de données clients, 
+          ce qui peut poser des problèmes en cas de fuites des données
+
           - pas de tests automatisés en particulier les tests d'aceptances ce qui introduit une perte de productivité, 
           entraine une regréssion car la revue se fait manuellement par le client
         
-          Et de nombreux autres autres inconvénients que je présente dans le document de définition de l'architecture:
+          Et de nombreux autres autres inconvénients que je présente dans le document de définition de l'architecture...
           - le risque d'avoir des environnements divergents entre l'env de production et l'env du client
           - une scalabilité réduite par les ressources sur le serveur de Webstreet
         </aside>
@@ -214,9 +214,9 @@
         <img style="margin: 0;" src="projet12/solutionB_Context.png" />
         <aside class="notes">
           Comme on le remarque sur le diagramme de contexte C4 suivant, l'architecture est de type multitenant hybride.
-          Sur le coté gauche, le client 1 héberge lui meme ses données, peut modifier le contenu grace à l'usage d'un CMS
-          et expose ses données à travers une API REST propre au secteur d'activité du client: il s'agit d'une mode d'isolation le plus strict.
-          Bien sur le site internet reste héberger sur l'infrastruture de Webstreet, nous verrons avec quelle technologie dans les slides suivantes.
+          Sur le coté gauche, le client 1 héberge lui meme ses données, peut modifier le contenu grace à l'usage d'un CMS que nous lui founirons
+          et exposera ses données à travers une API REST propre au secteur d'activité du client: il s'agit d'une mode d'isolation le plus strict.
+          Le site internet reste héberger sur l'infrastruture géré par Webstreet, nous verrons avec quelle technologie dans les slides suivantes.
 
           Sur le coté droit du schéma, Le client 2 utilise également un CMS et une API REST mais ces deniers sont provisionnés et gérés par 
           Webstreet. 
@@ -231,21 +231,21 @@
         <p class="header"><span class="complementaire">Architecture technologique : </span>single-tenant</p>
         <img style="margin: 0;" src="projet12/archi-techno-isolated-tenant.png" />
         <aside class="notes">
-          L'architecture technologique est divisé en deux diagrammes, ce diagramme présente l'architecture sous sa vue single tenant.
+          L'architecture technologique est divisé en deux diagrammes, ce diagramme présente l'architecture d'un point de vue single tenant.
           Mais avant de détailler les spécificités de cette vue, je peux d'or et déjà vous présenter l'ensemble des tehnologies utilisés.
           
-          on peut remarquer que le code source des sites
-          sera hébergé sur la plateforme Github et que le pipeline d'intégration continue sera implémenté avec Github Actions sous forme de fichier yaml.
+          on peut remarquer sur le schema que le code source des sites
+          sera hébergé sur la plateforme Github et que le pipeline d'intégration continue sera implémenté avec Github Actions.
           Pour le reste, nous utiliserons massivement l'usage de la plateforme cloud Google Cloud Platform, avec des services comme Artefacts Registry,
-          nous permettant de disposer d'un Registry Docker pour sotcker les images docker des sites internet et des API REST.
-          Les sites internets seront hébergés coté webstreet mais déployé sur des instance de cloud run séparées. La gestion du monitoring et
-          de l'observabilité passera par des services tel que cloud monitoring. La gestion des secrets partagés avec GCP secret manager.
+          nous permettant de disposer d'un Registry pour stocker les images docker des sites internet, et du combo CMS / API REST.
+          Les sites internets seront hébergés coté webstreet et déployés sur des instance de cloud run séparées. La gestion du monitoring et
+          de l'observabilité passera par le service cloud monitoring. La gestion des secrets partagés avec secret manager.
           
-          On remarque d'ailleurs que dans l'architecture de type single tenant pour accéder au données hébergées et gérées par le client, 
-          le site internet a besoin d'une api key l'autorisant à consulter les ressources de l'API REST et que toutes les communications sont chiffrées.
-          Nous proposerons au client des scripts suivant la mouvance de l'infrastrcuture as code, afin qu'il puisse déployer l'API REST, le CMS 
-          sur Google cloud platform avec l'utilisation des services automangés comme la base de données Cloud SQL sur base postgresql ou encore
-          le service de stockage de fichiers Google cloud storage.
+          On remarque d'ailleurs qu'en adoptant le point de vue single tenant, la solution API REST et CMS intégrée avec strapi sera héberger sur l'infrastructure du client.
+          Nous proposerons au client des scripts afin qu'il puisse déployer l'API REST, le CMS 
+          sur Google cloud platform avec l'utilisation des services automangés comme la base de données Cloud SQL (sur base postgresql) ou encore
+          le service de stockage de fichiers Google cloud storage. Le client pourra toutefois décider d'utiliser un autre fournisseur cloud utilisant 
+          des services à base de conteneur Docker.
 
           TODO: Dire pour l'architecture technologique que le choix de cloud run s'est aussi fait sur la base que
           peu importe la technoilogie si il est possible de la dockeriser c'est bon
@@ -321,7 +321,7 @@
           ou de l'intégration du CMS, ou encore que l'API REST permet une meilleure gestion de l'accès des données sur le long terme.
           Nous pourrions envisager de déléguer certains calculs complexes sur cette API REST hébergé coté client 
 
-          La solution B est donc la solution que j'ai retenue
+          La solution B est donc la solution que j'ai retenue car elle présente plus d'avantage sur le long terme que la solution A.
         </aside>
       </section>
 
@@ -330,9 +330,8 @@
         <img style="margin: 0;" width="80%" src="projet12/gantt.png" />
         <aside class="notes">
           Dans le document Roadmap, je détaille exhaustivement les taches à accomplir, que nous pouvons retrouver sur ce gantt.
-          Ce qu'il faut retenir du gantt, c'est la présence de deux jours supplémentaires sur le planning travaillés les samedis.
-          En ce qui concerne les taches les plus longues (à savoir 3 jours de travail chacunes), elles concernent le développement du pipeline CI / CD, l'intégration d'un template de projet pour l'API REST et le CMS avec
-          la solution strapi potentiellement réutilisable sur les premiers sites migrés.
+          Ce qu'il faut retenir de ce gantt, c'est l'ajout de deux jours supplémentaires sur le planning et ces derniers seront travaillés le samedi pour respecter
+          la date de livraison.
         
         </aside>
       </section>
@@ -340,7 +339,7 @@
       <section>
         <p class="header"><span class="complementaire">Solution B : </span>Coûts additionnels</p>
         <p class="fragment fade-in fonce marging">
-          2 jours de travail supplémentaires
+          1 architecte logiciel
         </p>
         <p class="fragment fade-in">
           pour un coût de <span class="fonce" style="font-size: 1.3em;">1200 euros</span>
